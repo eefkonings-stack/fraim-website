@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Case: MX Meals — FRAIM</title>
+<meta name="description" content="Greenfield — van geen email-programma naar een volledig systeem in 14 dagen." />
+<style>
+:root {
+  --bg:    #0A0D04;
+  --olive: #141A06;
+  --olive2:#1A2209;
+  --ivory: #FAFFF3;
+  --green: #C0F53D;
+  --dim:   rgba(250,255,243,0.58);
+  --muted: rgba(250,255,243,0.38);
+  --border:rgba(250,255,243,0.07);
+  --max-w: 1120px;
+  --r:     8px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--green); text-decoration: none; }
+a:hover { text-decoration: underline; }
+em { color: var(--green); }
+strong { color: var(--ivory); }
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px); }
+nav.top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.1rem 0;
+  background: rgba(10,13,4,0.9);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+nav.top .container { display: flex; align-items: center; justify-content: space-between; }
+.wordmark {
+  font-size: 1.2rem; font-weight: 900; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ivory);
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+.wordmark .macron { position: relative; display: inline-block; }
+.wordmark .macron::after {
+  content: ''; position: absolute; top: -3px; left: 0; right: 0;
+  height: 2px; background: var(--green); border-radius: 1px;
+}
+.nav-back { font-size: 0.82rem; color: var(--muted); transition: color 0.18s; text-decoration: none; }
+.nav-back:hover { color: var(--ivory); text-decoration: none; }
+.page-wrap { padding: 120px 0 100px; }
+.page-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.page-header .label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--green); margin-bottom: 1rem; display: block;
+}
+.page-header h1 {
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 900;
+  letter-spacing: -0.03em; line-height: 1.05; color: var(--ivory); margin-bottom: 0.75rem;
+}
+.page-header .meta { font-size: 0.8rem; color: var(--muted); }
+.content { max-width: 720px; }
+.content h2 {
+  font-size: 1.15rem; font-weight: 800; color: var(--ivory);
+  letter-spacing: -0.01em; margin: 2.5rem 0 0.75rem;
+  padding-top: 2.5rem; border-top: 1px solid var(--border);
+}
+.content h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.content h3 { font-size: 0.95rem; font-weight: 700; color: var(--ivory); margin: 1.75rem 0 0.5rem; }
+.content p { font-size: 0.92rem; color: var(--dim); line-height: 1.75; margin-bottom: 0.75rem; }
+.content ul { margin: 0.5rem 0 0.75rem 0; display: flex; flex-direction: column; gap: 0.4rem; }
+.content ul li {
+  font-size: 0.92rem; color: var(--dim); line-height: 1.65;
+  padding-left: 1.25rem; position: relative;
+}
+.content ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-size: 0.8rem; }
+.content table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 1.25rem 0; }
+.content table th {
+  text-align: left; padding: 0.6rem 1rem 0.6rem 0;
+  border-bottom: 1px solid rgba(250,255,243,0.12);
+  color: var(--muted); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em;
+}
+.content table td {
+  padding: 0.55rem 1rem 0.55rem 0; color: var(--dim);
+  border-bottom: 1px solid var(--border); vertical-align: top;
+}
+.content table td:first-child { color: var(--ivory); font-weight: 600; white-space: nowrap; padding-right: 1.5rem; }
+.content a { color: var(--green); }
+.disclosure {
+  background: var(--olive); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 1.25rem 1.5rem; margin: 2rem 0;
+}
+.disclosure p { font-size: 0.85rem; color: var(--muted); margin-bottom: 0; }
+.cta-block { margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
+.cta-block p { margin-bottom: 1rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.8rem 1.55rem; border-radius: var(--r);
+  font-size: 0.875rem; font-weight: 700;
+  background: var(--green); color: var(--bg); text-decoration: none;
+}
+.btn:hover { opacity: 0.86; text-decoration: none; }
+footer { background: var(--olive2); border-top: 1px solid var(--border); padding: 2.5rem 0; margin-top: 6rem; }
+.foot-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 2rem; font-size: 0.72rem; color: rgba(250,255,243,0.2); flex-wrap: wrap;
+}
+.foot-bottom a { color: var(--muted); text-decoration: none; }
+.foot-bottom a:hover { color: var(--ivory); }
+@media (max-width: 600px) {
+  .page-header h1 { font-size: 1.8rem; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="container">
+    <a href="fraim-index.html" class="wordmark">FR<span class="macron">AI</span>M</a>
+    <a href="fraim-index.html" class="nav-back">← Terug naar home</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="container">
+    <div class="page-header">
+      <span class="label">Case 02 · MX Meals</span>
+      <h1>Greenfield: vanaf nul gebouwd.</h1>
+      <p class="meta">Van geen email-programma naar een volledig systeem in 14 dagen.</p>
+    </div>
+
+    <div class="content">
+
+      <h2>Wat dit verhaal toont</h2>
+      <p>Niet elk merk start vanuit de fasen die FuelYourBody doorliep. Sommige merken zijn nieuw genoeg dat ze nog niet eens een bureau hebben gehad. Geen flows, geen voice-document, geen klantgeschiedenis om uit te putten.</p>
+      <p>De vraag voor dat soort merken: hoe bouw je een retentie-programma als je nog niets hebt om op te bouwen? MX Meals is daar het voorbeeld van.</p>
+
+      <h2>Het vertrekpunt</h2>
+      <p>MX Meals is een meal-prep merk in NL. Toen we begonnen met het Fraim-systeem:</p>
+      <ul>
+        <li>Klaviyo-account aanwezig maar grotendeels leeg</li>
+        <li>Geen actieve flows</li>
+        <li>Lijst in opbouw</li>
+        <li>Geen merkstem-document, geen klantcitatenarchief</li>
+        <li>Geen referentie-mails uit het verleden om voice op te kalibreren</li>
+      </ul>
+      <p>Met andere woorden: greenfield. Niets om kapot te maken, ook niets om op door te bouwen.</p>
+
+      <h2>Wat we hebben gebouwd</h2>
+      <p>In 14 dagen, volgens het standaard Fraim-protocol — met de aanpassing dat we extra tijd besteedden aan de fundering omdat er minder bestaande bronnen waren.</p>
+
+      <h3>Fundament (extra zwaar in deze case)</h3>
+      <p>Bij een greenfield-merk is fase 1–3 (baseline + merkstem-extractie) intensiever. We hadden geen jaren content om uit te putten. Wat we wel hadden:</p>
+      <ul>
+        <li>Founder-content (LinkedIn, eventueel podcast-interviews)</li>
+        <li>Productpagina's en website-copy</li>
+        <li>Reviews op externe platforms en social media reacties</li>
+        <li>Direct contact met het team voor brand voice clarificatie</li>
+      </ul>
+      <p>Daaruit gebouwd:</p>
+      <ul>
+        <li><strong>Merkstem-document</strong> met vijf voice-rules, gekalibreerd op de beschikbare bronnen</li>
+        <li><strong>Customer Language Library</strong> met early customer feedback</li>
+        <li><strong>Design-briefing</strong> voor visuele consistentie</li>
+      </ul>
+
+      <h3>Vier flows live</h3>
+      <ul>
+        <li><strong>Welcome</strong> — 6 mails + 2 SMS sub-nodes</li>
+        <li><strong>Abandoned cart</strong> — 3 mails + 1 SMS</li>
+        <li><strong>Post-purchase</strong> — 4 mails over 30 dagen</li>
+        <li><strong>Win-back</strong> — 3 mails (klaar voor wanneer de eerste cohort 90 dagen inactief is)</li>
+      </ul>
+
+      <h3>Operationele laag</h3>
+      <ul>
+        <li>Promptbibliotheek met 25 prompts</li>
+        <li>Klaviyo-map voor self-edit</li>
+        <li>Maandrapport ingericht voor zodra er meetbare data is</li>
+      </ul>
+
+      <h2>Wat we hebben geleerd</h2>
+
+      <h3>Greenfield is in sommige opzichten makkelijker</h3>
+      <p>Geen erfenis-problemen. Geen oude flows die moeten worden uitgezet. Geen klantverwachtingen vanuit eerder werk om mee om te gaan. Een schoon canvas.</p>
+
+      <h3>En in andere opzichten moeilijker</h3>
+      <p>Voice-extractie zonder jaren content is een uitdaging. Bij een merk met drie jaar emails, social posts en founder-interviews kun je gemakkelijk patronen herkennen. Bij een greenfield-merk moet je veel meer in gesprek met het team om de voice scherp te krijgen — en je moet accepteren dat de voice-rules na de eerste paar maanden sends mogelijk verfijnd worden.</p>
+
+      <h3>Het systeem werkt al, maar het verhaal komt later</h3>
+      <p>Wat we nu hebben opgezet werkt. Mails gaan eruit. Flows triggeren. Het systeem draait. Maar de echte test — wat doen open rates, conversion, en revenue over een periode van drie tot zes maanden — is nu pas begonnen.</p>
+
+      <h2>Resultaten</h2>
+      <p>Op dit moment: <strong>te vroeg voor representatieve cijfers.</strong></p>
+      <table>
+        <tr><th>Onderdeel</th><th>Status</th></tr>
+        <tr><td>Flows live</td><td>✓</td></tr>
+        <tr><td>Eerste campagnes verstuurd</td><td>In uitvoering</td></tr>
+        <tr><td>60-dagen meetbare data</td><td>Volgt</td></tr>
+      </table>
+      <p>Concrete cijfers volgen zodra het systeem 60+ dagen heeft gedraaid. Voor nu: vraag ernaar in de eerste call, dan delen we de meest recente stand.</p>
+
+      <h2>Wat hieraan overdraagbaar is</h2>
+      <p><strong>1. Greenfield is geen handicap.</strong> Een merk dat vanaf nul start mist wat historische context, maar heeft ook geen technical debt. Het systeem kan precies zo worden opgezet als het hoort, zonder compromissen.</p>
+      <p><strong>2. De fundering verdient extra aandacht.</strong> Bij een greenfield-merk vraagt het merkstem-document meer iteraties. Niet omdat het systeem het niet aankan, maar omdat er minder bronnen zijn. Reken op één à twee extra rondes voice-review in de eerste maand.</p>
+      <p><strong>3. Verwachtingsmanagement is anders.</strong> Een merk dat overstapt van eigen beheer naar Fraim ziet binnen weken een verschil — er was iets, het wordt beter. Een greenfield-merk bouwt van nul af aan, dus de eerste meetbare resultaten komen later.</p>
+
+      <div class="disclosure">
+        <p><em>Eerlijke disclosure:</em> MX Meals is een merk uit dezelfde portfolio als Fraim. Dat maakt deze case een interne test van het systeem, geen externe klantrelatie in commerciële zin. Wat dit alsnog waardevol maakt als case: het laat zien hoe greenfield-bouw op Fraim praktisch werkt. Niet wat we hopen dat het systeem kan, maar wat we hebben gedaan op een echt merk.</p>
+      </div>
+
+      <div class="cta-block">
+        <p>Sta je op het punt om een merk te lanceren? Of heb je een jong merk dat nog geen serieus email-programma heeft?</p>
+        <a href="mailto:info@yourfraim.nl?subject=Strategie-gesprek" class="btn">Neem contact op ↗</a>
+        <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">Eén gesprek van 30 minuten. Past het, dan plannen we je kickoff. Zo niet, dan zeg ik je met wie je beter kunt praten.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="foot-bottom">
+      <a href="fraim-index.html" class="wordmark">FR<span class="macron">AI</span>M</a>
+      <span>© 2026 FRAIM — KvK 42058158 · NL / BE</span>
+      <a href="privacy.html">Privacyverklaring</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

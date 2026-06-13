@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Privacyverklaring — FRAIM</title>
+<meta name="description" content="Privacyverklaring van FRAIM, handelsnaam van Eef Konings." />
+<style>
+:root {
+  --bg:    #0A0D04;
+  --olive: #141A06;
+  --olive2:#1A2209;
+  --ivory: #FAFFF3;
+  --green: #C0F53D;
+  --dim:   rgba(250,255,243,0.58);
+  --muted: rgba(250,255,243,0.38);
+  --border:rgba(250,255,243,0.07);
+  --max-w: 1120px;
+  --r:     8px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--green); text-decoration: none; }
+a:hover { text-decoration: underline; }
+em {
+  color: var(--green);
+}
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 60px);
+}
+
+/* Nav */
+nav.top {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.1rem 0;
+  background: rgba(10,13,4,0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+nav.top .container { display: flex; align-items: center; justify-content: space-between; }
+.wordmark {
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+.wordmark .macron {
+  position: relative;
+  display: inline-block;
+}
+.wordmark .macron::after {
+  content: '';
+  position: absolute;
+  top: -3px; left: 0; right: 0;
+  height: 2px;
+  background: var(--green);
+  border-radius: 1px;
+}
+.nav-back {
+  font-size: 0.82rem;
+  color: var(--muted);
+  transition: color 0.18s;
+  text-decoration: none;
+}
+.nav-back:hover { color: var(--ivory); text-decoration: none; }
+
+/* Page content */
+.page-wrap {
+  padding: 120px 0 100px;
+}
+.page-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-header .label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 1rem;
+  display: block;
+}
+.page-header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--ivory);
+  margin-bottom: 0.75rem;
+}
+.page-header .meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Content */
+.content {
+  max-width: 720px;
+}
+.content h2 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--ivory);
+  letter-spacing: -0.01em;
+  margin: 2.5rem 0 0.75rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+.content h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.content p {
+  font-size: 0.92rem;
+  color: var(--dim);
+  line-height: 1.75;
+  margin-bottom: 0.75rem;
+}
+.content ul {
+  margin: 0.5rem 0 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.content ul li {
+  font-size: 0.92rem;
+  color: var(--dim);
+  line-height: 1.65;
+  padding-left: 1.25rem;
+  position: relative;
+}
+.content ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-size: 0.8rem;
+}
+.placeholder {
+  display: inline-block;
+  background: rgba(192,245,61,0.1);
+  border: 1px solid rgba(192,245,61,0.3);
+  border-radius: 3px;
+  padding: 0 0.35rem;
+  font-size: 0.82rem;
+  color: var(--green);
+  font-style: italic;
+}
+.content a { color: var(--green); }
+
+/* Footer */
+footer {
+  background: var(--olive2);
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 0;
+  margin-top: 6rem;
+}
+.foot-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  font-size: 0.72rem;
+  color: rgba(250,255,243,0.2);
+  flex-wrap: wrap;
+}
+.foot-bottom em { font-style: italic; color: rgba(250,255,243,0.3); }
+.foot-bottom a { color: var(--muted); text-decoration: none; }
+.foot-bottom a:hover { color: var(--ivory); }
+
+@media (max-width: 600px) {
+  .page-header h1 { font-size: 1.8rem; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="container">
+    <a href="fraim-index.html" class="wordmark">FR<span class="macron">AI</span>M</a>
+    <a href="fraim-index.html" class="nav-back">← Terug naar home</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="container">
+    <div class="page-header">
+      <span class="label">Juridisch</span>
+      <h1>Privacy&shy;verklaring</h1>
+      <p class="meta">Laatst bijgewerkt: juni 2026 &nbsp;·&nbsp; yourfraim.nl</p>
+    </div>
+
+    <div class="content">
+
+      <h2>1. Wie zijn wij?</h2>
+      <p>FRAIM is een handelsnaam van een eenmanszaak ingeschreven bij de Kamer van Koophandel onder nummer 42058158.</p>
+      <p>
+        E-mail: <a href="mailto:info@yourfraim.nl">info@yourfraim.nl</a><br>
+        Website: <a href="https://www.yourfraim.nl">www.yourfraim.nl</a>
+      </p>
+      <p>Voor formele correspondentie kun je per post contact opnemen via bovenstaand e-mailadres. We verstrekken een postadres op verzoek.</p>
+
+      <h2>2. Welke persoonsgegevens verwerken wij?</h2>
+      <p>Wij verwerken alleen persoonsgegevens die je <strong>zelf aan ons verstrekt</strong> — bijvoorbeeld wanneer je contact met ons opneemt via e-mail of het contactformulier op de website. Het gaat om:</p>
+      <ul>
+        <li>Naam</li>
+        <li>E-mailadres</li>
+        <li>Bedrijfsnaam en eventuele omzetinformatie die je vrijwillig deelt</li>
+        <li>De inhoud van je bericht of vraag</li>
+      </ul>
+      <p>Wij vragen nooit meer gegevens dan noodzakelijk voor het beantwoorden van jouw verzoek.</p>
+
+      <h2>3. Waarvoor gebruiken wij jouw gegevens?</h2>
+      <p>Jouw gegevens gebruiken wij uitsluitend voor:</p>
+      <ul>
+        <li>Het beantwoorden van jouw contact- of informatieaanvraag</li>
+        <li>De voorbereiding en uitvoering van een eventuele overeenkomst met FRAIM</li>
+        <li>Het nakomen van wettelijke verplichtingen</li>
+      </ul>
+      <p>Wij verkopen jouw gegevens nooit aan derden en delen ze niet met andere partijen, tenzij dat strikt noodzakelijk is voor de uitvoering van onze dienst of wettelijk verplicht.</p>
+
+      <h2>4. Op welke grondslag verwerken wij jouw gegevens?</h2>
+      <p>Wij verwerken jouw gegevens op basis van:</p>
+      <ul>
+        <li><strong>Uitvoering van een overeenkomst</strong> — wanneer je klant wordt bij FRAIM</li>
+        <li><strong>Gerechtvaardigd belang</strong> — wanneer je contact opneemt of een informatieaanvraag doet, en het redelijkerwijs te verwachten is dat je een reactie wil ontvangen</li>
+        <li><strong>Wettelijke verplichting</strong> — voor zover van toepassing (bijv. bewaarplicht voor facturen)</li>
+      </ul>
+
+      <h2>5. Hoe lang bewaren wij jouw gegevens?</h2>
+      <p>Wij bewaren jouw persoonsgegevens niet langer dan noodzakelijk:</p>
+      <ul>
+        <li>Contactverzoeken zonder vervolgrelatie: maximaal <strong>1 jaar</strong> na het laatste contact</li>
+        <li>Klantgegevens bij actieve of afgelopen samenwerking: maximaal <strong>7 jaar</strong> (wettelijke bewaarplicht voor administratie)</li>
+      </ul>
+
+      <h2>6. Cookies en externe diensten</h2>
+      <p>De website yourfraim.nl maakt <strong>geen gebruik van tracking- of advertentiecookies</strong>.</p>
+      <p>Wij maken wel gebruik van <strong>Google Fonts</strong> (lettertype via Google's servers). Hierbij wordt je IP-adres technisch overgedragen aan Google. Dit is noodzakelijk voor het correct weergeven van de website. Google's privacybeleid is van toepassing op deze verwerking. Voor meer informatie: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
+
+      <h2>7. Jouw rechten</h2>
+      <p>Op grond van de AVG heb je de volgende rechten:</p>
+      <ul>
+        <li><strong>Recht op inzage</strong> — je kunt opvragen welke gegevens wij van je hebben</li>
+        <li><strong>Recht op correctie</strong> — onjuiste gegevens laten aanpassen</li>
+        <li><strong>Recht op verwijdering</strong> — in bepaalde gevallen kun je verwijdering verzoeken</li>
+        <li><strong>Recht op bezwaar</strong> — bezwaar maken tegen verwerking op basis van gerechtvaardigd belang</li>
+        <li><strong>Recht op dataportabiliteit</strong> — gegevens opvragen in een overdraagbaar formaat</li>
+        <li><strong>Recht op beperking</strong> — verwerking laten beperken in specifieke situaties</li>
+      </ul>
+      <p>Om een verzoek in te dienen, stuur een e-mail naar <a href="mailto:info@yourfraim.nl">info@yourfraim.nl</a>. Wij reageren binnen 4 weken.</p>
+
+      <h2>8. Beveiliging</h2>
+      <p>Wij nemen passende technische en organisatorische maatregelen om jouw persoonsgegevens te beschermen tegen verlies, misbruik of ongeautoriseerde toegang. Communicatie via de website verloopt via een beveiligde HTTPS-verbinding.</p>
+
+      <h2>9. Klachten</h2>
+      <p>Heb je een klacht over hoe wij omgaan met jouw persoonsgegevens? Neem dan eerst contact met ons op via <a href="mailto:info@yourfraim.nl">info@yourfraim.nl</a>. Je hebt ook het recht om een klacht in te dienen bij de Nederlandse toezichthouder:</p>
+      <p>
+        <strong>Autoriteit Persoonsgegevens</strong><br>
+        <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener">www.autoriteitpersoonsgegevens.nl</a>
+      </p>
+
+      <h2>10. Wijzigingen</h2>
+      <p>Wij kunnen deze privacyverklaring van tijd tot tijd aanpassen. De meest actuele versie staat altijd op deze pagina, met de datum van de laatste wijziging bovenaan vermeld. Bij wezenlijke wijzigingen informeren wij je actief indien je klant bent.</p>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="foot-bottom">
+      <a href="fraim-index.html" class="wordmark">FR<span class="macron">AI</span>M</a>
+      <span>Eenmalig gebouwd. <em>Voor altijd van jou.</em></span>
+      <span>© 2026 FRAIM — KvK 42058158 · NL / BE</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

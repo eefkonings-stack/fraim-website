@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Case: FuelYourBody — FRAIM</title>
+<meta name="description" content="Vier jaar email-marketing in drie aktes — bureau, eigen beheer, en Fraim." />
+<style>
+:root {
+  --bg:    #0A0D04;
+  --olive: #141A06;
+  --olive2:#1A2209;
+  --ivory: #FAFFF3;
+  --green: #C0F53D;
+  --dim:   rgba(250,255,243,0.58);
+  --muted: rgba(250,255,243,0.38);
+  --border:rgba(250,255,243,0.07);
+  --max-w: 1120px;
+  --r:     8px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--green); text-decoration: none; }
+a:hover { text-decoration: underline; }
+em { color: var(--green); }
+strong { color: var(--ivory); }
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 60px);
+}
+nav.top {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.1rem 0;
+  background: rgba(10,13,4,0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+nav.top .container { display: flex; align-items: center; justify-content: space-between; }
+.wordmark {
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+.wordmark .macron { position: relative; display: inline-block; }
+.wordmark .macron::after {
+  content: '';
+  position: absolute;
+  top: -3px; left: 0; right: 0;
+  height: 2px;
+  background: var(--green);
+  border-radius: 1px;
+}
+.nav-back {
+  font-size: 0.82rem;
+  color: var(--muted);
+  transition: color 0.18s;
+  text-decoration: none;
+}
+.nav-back:hover { color: var(--ivory); text-decoration: none; }
+.page-wrap { padding: 120px 0 100px; }
+.page-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-header .label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 1rem;
+  display: block;
+  font-family: system-ui, sans-serif;
+}
+.page-header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--ivory);
+  margin-bottom: 0.75rem;
+}
+.page-header .meta { font-size: 0.8rem; color: var(--muted); }
+.content { max-width: 720px; }
+.content h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ivory);
+  letter-spacing: -0.01em;
+  margin: 2.5rem 0 0.75rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+.content h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.content h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ivory);
+  margin: 1.75rem 0 0.5rem;
+  letter-spacing: -0.01em;
+}
+.content p {
+  font-size: 0.92rem;
+  color: var(--dim);
+  line-height: 1.75;
+  margin-bottom: 0.75rem;
+}
+.content ul {
+  margin: 0.5rem 0 0.75rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.content ul li {
+  font-size: 0.92rem;
+  color: var(--dim);
+  line-height: 1.65;
+  padding-left: 1.25rem;
+  position: relative;
+}
+.content ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-size: 0.8rem;
+}
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin: 1.25rem 0;
+}
+.content table th {
+  text-align: left;
+  padding: 0.6rem 1rem 0.6rem 0;
+  border-bottom: 1px solid rgba(250,255,243,0.12);
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.content table td {
+  padding: 0.55rem 1rem 0.55rem 0;
+  color: var(--dim);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.content table td:first-child { color: var(--ivory); font-weight: 600; white-space: nowrap; padding-right: 1.5rem; }
+.content table td code {
+  background: var(--olive2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.85em;
+  color: var(--muted);
+  font-family: monospace;
+}
+.content a { color: var(--green); }
+.disclosure {
+  background: var(--olive);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.25rem 1.5rem;
+  margin: 2rem 0;
+}
+.disclosure p {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+.cta-block {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+.cta-block p { margin-bottom: 1rem; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.55rem;
+  border-radius: var(--r);
+  font-size: 0.875rem;
+  font-weight: 700;
+  background: var(--green);
+  color: var(--bg);
+  text-decoration: none;
+}
+.btn:hover { opacity: 0.86; text-decoration: none; }
+footer {
+  background: var(--olive2);
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 0;
+  margin-top: 6rem;
+}
+.foot-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  font-size: 0.72rem;
+  color: rgba(250,255,243,0.2);
+  flex-wrap: wrap;
+}
+.foot-bottom a { color: var(--muted); text-decoration: none; }
+.foot-bottom a:hover { color: var(--ivory); }
+@media (max-width: 600px) {
+  .page-header h1 { font-size: 1.8rem; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; }
+  .content table { font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="container">
+    <a href="fraim-index.html" class="wordmark">FR<span class="macron">AI</span>M</a>
+    <a href="fraim-index.html" class="nav-back">← Terug naar home</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="container">
+    <div class="page-header">
+      <span class="label">Case 01 · FuelYourBody</span>
+      <h1>Drie aktes: bureau → eigen beheer → Fraim.</h1>
+      <p class="meta">Vier jaar email-marketing in één pagina. Voor merken die de eerste twee fases hebben doorlopen of nu in fase 2 vastlopen.</p>
+    </div>
+
+    <div class="content">
+
+      <h2>Wat dit verhaal toont</h2>
+      <p>Vrijwel elk DTC-merk doorloopt dezelfde drie fasen rond email-marketing. Eerst een bureau, omdat je geen interne capaciteit hebt. Dan zelf doen, omdat het bureau te duur of te traag werd. En dan op zoek naar een derde optie, omdat zelf doen alle uren opslokt.</p>
+      <p>FuelYourBody (FYB) heeft deze drie fasen volledig doorlopen tussen 2022 en nu. Op deze pagina staat per fase wat het kostte, wat het opleverde, en — eerlijk — wat het probleem was waar de volgende fase op voortbouwde.</p>
+
+      <h2>Akte 1: Het bureau (2022–2024)</h2>
+
+      <h3>De financiële kant</h3>
+      <p>Drie jaar lang werkte FYB met een email-marketing bureau in NL.</p>
+      <ul>
+        <li>Eenmalige opstart: €12.000</li>
+        <li>Maandelijkse fee: €2.000</li>
+        <li>Totaal over drie jaar: ongeveer €84.000</li>
+      </ul>
+      <p>Dit zit aan de hoge kant van de markt voor mid-market DTC-merken, maar niet absurd. Voor wat het bureau leverde — full-service email-marketing met campagnes, flows, design en copy — is dit een verdedigbare prijs.</p>
+
+      <h3>Wat het opleverde</h3>
+      <p>Werk werd gedaan. Mails gingen eruit. Flows werden onderhouden. Niets dramatisch fout.</p>
+
+      <h3>Wat schuurde</h3>
+      <p>Drie patronen die we elke maand opnieuw zagen:</p>
+      <p><strong>1. Doorlooptijd.</strong> Een campagne briefen, reviewen, corrigeren, opnieuw reviewen, opnieuw corrigeren — voor één mail liep er gemiddeld een week tussen brief en send. Voor seizoensgebonden of urgent werk te lang.</p>
+      <p><strong>2. Generieke output.</strong> Het bureau bediende meer DTC-merken. Sommige mails konden zo op een ander merk staan. Onze stem zat er soms doorheen, maar bleef vaak generiek.</p>
+      <p><strong>3. Eigendom.</strong> Na drie jaar samenwerken zat het hele systeem in het bureau. Hun templates, hun kennis van onze flows, hun toegang tot Klaviyo-builds. Toen we wilden stoppen, namen we onze toegang weer terug — maar het systeem dat het bureau in die jaren had opgebouwd, bestond niet apart van het bureau.</p>
+
+      <h2>Akte 2: Eigen beheer (2025–begin 2026)</h2>
+
+      <h3>Wat veranderde</h3>
+      <p>Begin 2025 namen we afscheid van het bureau en trokken alles intern.</p>
+      <ul>
+        <li>Maandelijkse bureau-kosten: €0</li>
+        <li>Tijdsinvestering: 2 tot 3 volle werkdagen per week. Dat is 16 tot 24 uur per week — 64 tot 96 uur per maand.</li>
+      </ul>
+      <p>Wie de tijd van een founder of marketing manager op €50 per uur zet, komt op €3.200 tot €4.800 per maand aan eigen-tijd-investering. Dat is dichtbij wat het bureau kostte — alleen niet zichtbaar op een factuur.</p>
+
+      <h3>Wat won</h3>
+      <p><strong>1. Onze stem werd helderder.</strong> Geen bureau dat onze voice interpreteerde. Wij schreven, dus klonk het als ons.</p>
+      <p><strong>2. Snelheid omhoog.</strong> Geen briefings meer, geen review-rondes. Idee → mail → versturen kon in een uur in plaats van een week.</p>
+      <p><strong>3. Eigendom terug.</strong> Alles in onze handen, onze Klaviyo, onze keuzes.</p>
+
+      <h3>Wat verloor</h3>
+      <p><strong>1. Consistentie.</strong> De ene week ging er drie keer een mail uit. De andere week niets, omdat er geen tijd was. Geen systeem, geen ritme.</p>
+      <p><strong>2. Strategische diepte.</strong> We waren bezig met de mail van vandaag, niet met het maandplan. Wat had moeten zijn een systematische retentie-aanpak, werd reactief werk.</p>
+      <p><strong>3. Tijd voor de rest van de business.</strong> Twee tot drie volle dagen per week aan één kanaal is veel als je ook nog product, supply chain, klantenservice en groei moet runnen. Iets ging eronder lijden. Vaak.</p>
+
+      <h3>Het echte probleem na een jaar</h3>
+      <p>Niet de kosten. We hadden geld bespaard ten opzichte van het bureau. Het probleem was tijd. En dat is een sluipend probleem — je merkt het niet meteen, maar na een jaar realiseer je dat je 100+ werkdagen aan emails hebt besteed in plaats van aan strategie.</p>
+
+      <h2>Akte 3: Fraim (begin 2026–heden)</h2>
+
+      <h3>Wat is gebouwd</h3>
+      <p>In 14 dagen het complete Fraim-systeem opgezet in het FYB Klaviyo-account en Claude-project:</p>
+      <ul>
+        <li>Merkstem-document uit drie jaar bestaande content</li>
+        <li>Customer Language Library uit reviews en supporttickets</li>
+        <li>Vier flows live: welcome, abandoned cart, post-purchase, win-back</li>
+        <li>Promptbibliotheek met 25 prompts voor campagnes en flows</li>
+        <li>Klaviyo-map voor self-edit</li>
+        <li>Maandrapport dat automatisch op de 1e van de maand draait</li>
+      </ul>
+
+      <h3>Tijdsinvestering nu</h3>
+      <p>Op dit moment, in de aanloopfase: <strong>maximaal 1 uur per dag</strong>. Het doel is concreter: <strong>2 tot 3 uur per week</strong> voor fatsoenlijk email-marketing. Niet omdat we minder willen doen, maar omdat het systeem 80% van het werk overneemt.</p>
+
+      <h3>De vergelijking over drie fasen</h3>
+      <table>
+        <tr>
+          <th></th>
+          <th>Bureau (2022–2024)</th>
+          <th>Eigen beheer (2025–2026)</th>
+          <th>Fraim (2026–nu)</th>
+        </tr>
+        <tr>
+          <td>Directe kosten</td>
+          <td>€28K/jaar</td>
+          <td>€0</td>
+          <td>€5.864 jaar 1, €2.364/jaar daarna</td>
+        </tr>
+        <tr>
+          <td>Tijdsinvestering</td>
+          <td>Briefen + reviewen</td>
+          <td>16–24 uur/week</td>
+          <td>Doel: 2–3 uur/week</td>
+        </tr>
+        <tr>
+          <td>Doorlooptijd per mail</td>
+          <td>Dagen tot weken</td>
+          <td>Uren</td>
+          <td>Minuten</td>
+        </tr>
+        <tr>
+          <td>Consistentie</td>
+          <td>Hoog (extern aangedreven)</td>
+          <td>Wisselend</td>
+          <td>Hoog (systeem-aangedreven)</td>
+        </tr>
+        <tr>
+          <td>Eigendom systeem</td>
+          <td>Bureau</td>
+          <td>Versnipperd intern</td>
+          <td>100% in eigen account</td>
+        </tr>
+      </table>
+
+      <h3>Cijfers per kanaal</h3>
+      <table>
+        <tr>
+          <th></th>
+          <th>Voor Fraim</th>
+          <th>Na Fraim</th>
+        </tr>
+        <tr>
+          <td>Email-aandeel in omzet</td>
+          <td><code>[ ]</code></td>
+          <td><code>[ ]</code></td>
+        </tr>
+        <tr>
+          <td>Welcome flow conversie</td>
+          <td><code>[ ]</code></td>
+          <td><code>[ ]</code></td>
+        </tr>
+        <tr>
+          <td>Revenue per recipient</td>
+          <td>€<code>[ ]</code></td>
+          <td>€<code>[ ]</code></td>
+        </tr>
+        <tr>
+          <td>Campagne-frequentie</td>
+          <td><code>[ ]</code>/mnd</td>
+          <td><code>[ ]</code>/mnd</td>
+        </tr>
+      </table>
+      <p>Concrete cijfers delen we tijdens een eerste gesprek. Het algemene patroon: email-aandeel stijgt, welcome flow conversie significant hoger, tijdsinvestering gedaald van uren-per-week naar uren-per-maand.</p>
+
+      <h2>Wat hieraan overdraagbaar is</h2>
+      <p><strong>1. Het patroon van drie fasen.</strong> Bureau → eigen beheer → systeem. De meeste merken doorlopen deze fasen. De vraag is alleen of je ze één voor één doorloopt over vier jaar, of dat je het patroon herkent en direct naar fase drie gaat.</p>
+      <p><strong>2. Tijdsinvestering is de echte kostenpost.</strong> Wanneer mensen "ik doe het zelf" zeggen, vergeten ze meestal dat hun eigen uren een prijs hebben. Soms een hogere prijs dan een bureau.</p>
+      <p><strong>3. Eigendom is een derde dimensie naast prijs en kwaliteit.</strong> Bureau-werk is huur. Eigen werk is bezit, maar fragmentarisch. Een systeem is bezit én geïntegreerd. Dat verschil voel je pas als je 'm hebt.</p>
+
+      <h2>Wat niet overdraagbaar is</h2>
+      <p>Eerlijk over de grenzen:</p>
+      <ul>
+        <li>FYB is een wellness/supplementen merk. Open rates, CTR en revenue-per-recipient zijn categorie-afhankelijk. Een fashion merk of meal-prep merk zal andere cijfers zien.</li>
+        <li>De cijfers van akte 1 (bureau-kosten) zijn die van één specifiek bureau. Andere bureaus rekenen anders.</li>
+        <li>De tijdsinvestering van akte 2 hangt af van wie het doet en hoeveel mails er worden verstuurd.</li>
+      </ul>
+
+      <div class="disclosure">
+        <p><em>Eerlijke disclosure:</em> FuelYourBody is geen externe Fraim-klant. Het is een merk uit dezelfde portfolio als Fraim — wij waren tegelijk de bouwer en de eigenaar. Die voorkennis verklaart deels waarom de oplevering soepel verliep en waarom we de cijfers van akte 1 en 2 zo precies kennen. Wat dit alsnog waardevol maakt als case: het systeem is op FYB volwassen geworden. Wat je nu in Fraim's standaard-build krijgt, is wat hier overleefd heeft.</p>
+      </div>
+
+      <div class="cta-block">
+        <p>Welke akte herken je het meest? Als het akte 1 of akte 2 is, dan herken je het probleem. Akte 3 is een keuze die je maakt op het moment dat je beseft dat de tweede fase ook duur is — alleen op een andere manier.</p>
+        <a href="mailto:info@yourfraim.nl?subject=Strategie-gesprek" class="btn">Neem contact op ↗</a>
+        <p style="margin-top:1rem; font-size:0.85rem; color:var(--muted);">Eén gesprek van 30 minuten. Past het, dan plannen we je kickoff. Zo niet, dan zeg ik je met wie je beter kunt praten.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="foot-bottom">
+      <a href="fraim-index.html" class="wordmark">FR<span class="macron">AI</span>M</a>
+      <span>© 2026 FRAIM — KvK 42058158 · NL / BE</span>
+      <a href="privacy.html">Privacyverklaring</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

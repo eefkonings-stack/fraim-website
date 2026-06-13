@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>De vier flows die elk DTC-merk eerst moet hebben — FRAIM</title>
+<meta name="description" content="Vier flows zorgen voor 80-90% van de email-omzet — als ze in de juiste volgorde staan." />
+<style>
+:root {
+  --bg:    #0A0D04;
+  --olive: #141A06;
+  --olive2:#1A2209;
+  --ivory: #FAFFF3;
+  --green: #C0F53D;
+  --dim:   rgba(250,255,243,0.58);
+  --muted: rgba(250,255,243,0.38);
+  --border:rgba(250,255,243,0.07);
+  --max-w: 1120px;
+  --r:     8px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--ivory);
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem; line-height: 1.6; -webkit-font-smoothing: antialiased;
+}
+a { color: var(--green); text-decoration: none; }
+a:hover { text-decoration: underline; }
+em { color: var(--green); }
+strong { color: var(--ivory); }
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 5vw, 60px); }
+nav.top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.1rem 0; background: rgba(10,13,4,0.9);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+nav.top .container { display: flex; align-items: center; justify-content: space-between; }
+.wordmark {
+  font-size: 1.2rem; font-weight: 900; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ivory);
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+.wordmark .macron { position: relative; display: inline-block; }
+.wordmark .macron::after {
+  content: ''; position: absolute; top: -3px; left: 0; right: 0;
+  height: 2px; background: var(--green); border-radius: 1px;
+}
+.nav-back { font-size: 0.82rem; color: var(--muted); transition: color 0.18s; text-decoration: none; }
+.nav-back:hover { color: var(--ivory); text-decoration: none; }
+.page-wrap { padding: 120px 0 100px; }
+.page-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.page-header .label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--green); margin-bottom: 1rem; display: block;
+}
+.page-header h1 {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900;
+  letter-spacing: -0.03em; line-height: 1.1; color: var(--ivory); margin-bottom: 0.75rem;
+}
+.page-header .meta { font-size: 0.8rem; color: var(--muted); }
+.content { max-width: 720px; }
+.content > p:first-child { font-size: 1rem; color: var(--dim); line-height: 1.8; margin-bottom: 2rem; }
+.content h2 {
+  font-size: 1.25rem; font-weight: 800; color: var(--ivory);
+  letter-spacing: -0.02em; margin: 3rem 0 0.75rem;
+  padding-top: 3rem; border-top: 1px solid var(--border);
+}
+.content h2:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+.content h3 { font-size: 0.95rem; font-weight: 700; color: var(--muted); margin: 1.75rem 0 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75rem; }
+.content p { font-size: 0.92rem; color: var(--dim); line-height: 1.8; margin-bottom: 0.85rem; }
+.content ul { margin: 0.75rem 0 1rem 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.content ul li {
+  font-size: 0.92rem; color: var(--dim); line-height: 1.65;
+  padding-left: 1.25rem; position: relative;
+}
+.content ul li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-size: 0.8rem; }
+.content ol { margin: 0.75rem 0 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.content ol li { font-size: 0.92rem; color: var(--dim); line-height: 1.65; }
+.content ol li strong { color: var(--ivory); }
+.flow-block {
+  background: var(--olive); border: 1px solid var(--border); border-left: 3px solid var(--green);
+  border-radius: var(--r); padding: 1.5rem 1.75rem; margin: 1.5rem 0;
+}
+.flow-block p { font-size: 0.88rem; margin-bottom: 0.5rem; }
+.flow-block p:last-child { margin-bottom: 0; }
+.flow-block strong { color: var(--ivory); }
+.content a { color: var(--green); }
+.cta-block { margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
+.cta-block p { margin-bottom: 1rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.8rem 1.55rem; border-radius: var(--r);
+  font-size: 0.875rem; font-weight: 700;
+  background: var(--green); color: var(--bg); text-decoration: none;
+}
+.btn:hover { opacity: 0.86; text-decoration: none; }
+.byline {
+  margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);
+  font-size: 0.82rem; color: var(--muted); font-style: italic;
+}
+footer { background: var(--olive2); border-top: 1px solid var(--border); padding: 2.5rem 0; margin-top: 6rem; }
+.foot-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 2rem; font-size: 0.72rem; color: rgba(250,255,243,0.2); flex-wrap: wrap;
+}
+.foot-bottom a { color: var(--muted); text-decoration: none; }
+.foot-bottom a:hover { color: var(--ivory); }
+@media (max-width: 600px) {
+  .page-header h1 { font-size: 1.6rem; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="container">
+    <a href="fraim-index.html" class="wordmark">FR<span class="macron">AI</span>M</a>
+    <a href="fraim-index.html" class="nav-back">← Terug naar home</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="container">
+    <div class="page-header">
+      <span class="label">Lezen · FRAIM</span>
+      <h1>De vier flows die elk DTC-merk eerst moet hebben</h1>
+      <p class="meta">En in welke volgorde — want de volgorde maakt uit.</p>
+    </div>
+
+    <div class="content">
+
+      <p>Negen op de tien DTC-merken in NL hebben tussen de 8 en 15 flows aan in Klaviyo. Welcome series, cart abandons, post-purchase, win-backs, replenishment, VIP, sunset, browse abandon, review verzoeken, surveys — alles wat de standaard-templates suggereren.</p>
+      <p>Vraag de eigenaar: <em>"welke flow levert je het meeste op?"</em> en je krijgt meestal stilte. Of een geschat percentage. Of "ik denk de welcome."</p>
+      <p>Hier is waarom: de meeste merken bouwen flows in de volgorde die Klaviyo voorstelt. Dat is templates-volgorde, of populariteit. <strong>Niet in volgorde van wat geld oplevert.</strong></p>
+      <p>In de praktijk zorgen vier flows voor 80–90% van de DTC email-omzet. De rest is leuk-om-te-hebben. Als deze vier niet scherp staan, helpt nog tien extra flows je niets.</p>
+      <p>Hieronder welke vier, in welke volgorde, en waarom.</p>
+
+      <h2>De vier flows die geld opleveren</h2>
+      <ol>
+        <li><strong>Welcome flow</strong> — converteert nieuwe abonnees</li>
+        <li><strong>Abandoned cart</strong> — recovert verloren omzet</li>
+        <li><strong>Post-purchase</strong> — bouwt herhaalaankopen</li>
+        <li><strong>Win-back</strong> — reactiveert slapende klanten</li>
+      </ol>
+      <p>Niet welcome → post-purchase → cart → win-back. Niet alle vier tegelijk. Niet "in willekeurige volgorde aanzetten." <strong>De volgorde maakt uit.</strong></p>
+
+      <h2>Flow 1: Welcome</h2>
+
+      <h3>Waarom als eerste</h3>
+      <p>Een nieuwe abonnee is op zijn warmst in de eerste zeven dagen na inschrijving. Hij heeft zojuist actief gekozen om jou in zijn inbox te laten. Hij verwacht iets. Als die mail niet komt, of als de mail komt maar zwak is, bouw je een gewoonte: deze afzender negeren.</p>
+      <p>Welkomstserie is daarmee de eerste filter van je hele email-programma. <strong>Wat hier niet converteert, doet het later ook niet.</strong></p>
+
+      <h3>Hoe het meestal scheef gaat</h3>
+      <ul>
+        <li>Eén "welkomstmail" met je voorraad geschiedenis en een "thanks for signing up" — dat is geen flow, dat is een bedankje.</li>
+        <li>Te lang wachten met de eerste mail. Vier uur na inschrijving is al laat.</li>
+        <li>Geen aanbod, of een aanbod dat te zwak is om actie te triggeren.</li>
+        <li>Designed templates die op elk merk passen — generieke product showcase zonder verhaal.</li>
+      </ul>
+
+      <h3>Hoe het wel werkt</h3>
+      <p>Zes mails over 14 dagen, met variatie in format:</p>
+      <div class="flow-block">
+        <p><strong>Mail 1</strong> (direct) — aanbod live, korte uitleg, één CTA</p>
+        <p><strong>Mail 2</strong> (dag 1) — merkverhaal in text-based stijl (founder-letter), waarom dit merk bestaat</p>
+        <p><strong>Mail 3</strong> (dag 3) — hoe werkt het + FAQ</p>
+        <p><strong>Mail 4</strong> (dag 5) — laatste kans op het aanbod</p>
+        <p><strong>Mail 5</strong> (dag 8) — founder-letter met uitgebreid aanbod</p>
+        <p><strong>Mail 6</strong> (dag 14) — bonus of community-uitnodiging</p>
+      </div>
+      <p>Plus twee tot drie SMS-nodes voor mensen die mails niet openen.</p>
+      <p>Een goede welkomstserie levert in onze metingen op DTC-merken in NL gemiddeld 15–25% van de nieuwe abonnees als first-time customer. Een zwakke serie blijft onder de 5%.</p>
+
+      <h2>Flow 2: Abandoned Cart</h2>
+
+      <h3>Waarom als tweede</h3>
+      <p>Iedereen die op je checkout is geweest maar niet heeft afgerekend is goud. Hij heeft impliciet interesse, hij kent je merk, hij weet wat hij wil. Hij is alleen iets misgegaan: shipping was te duur, hij werd afgeleid, hij twijfelde over de maat.</p>
+      <p>Dit is de <strong>hoogste-revenue-per-send flow</strong> die je kunt hebben. Eén mail kan 5–10% van de verloren carts terughalen. Met goede serie haal je 15–20%.</p>
+
+      <h3>Hoe het meestal scheef gaat</h3>
+      <ul>
+        <li>"You forgot something" zonder uitleg waarom hij het wel zou willen. Geen objectie-management, geen sociale validatie.</li>
+        <li>Te lang wachten — een uur na cart abandon is het juiste moment voor de eerste mail. Vier uur is grenzig. 24 uur is te laat.</li>
+        <li>Te veel mails — drie is genoeg, vier is zelden beter, vijf irriteert.</li>
+        <li>Aanbod direct in mail 1 — daarmee leer je klanten dat ze hun cart moeten verlaten om korting te krijgen.</li>
+      </ul>
+
+      <h3>Hoe het wel werkt</h3>
+      <p>Drie mails over drie dagen, met SMS-bridging:</p>
+      <div class="flow-block">
+        <p><strong>Mail 1</strong> (na 1 uur) — herinnering met productafbeelding, geen aanbod, alleen "even verder"</p>
+        <p><strong>SMS</strong> (4 uur na mail 1, alleen voor niet-openers) — korte tekst met link</p>
+        <p><strong>Mail 2</strong> (dag 1) — objectie-management (shipping, garantie, sizing) + social proof</p>
+        <p><strong>Mail 3</strong> (dag 2) — eventueel aanbod, alleen als marge het toelaat</p>
+      </div>
+
+      <h2>Flow 3: Post-Purchase</h2>
+
+      <h3>Waarom als derde</h3>
+      <p>De eerste aankoop is geen overwinning. Het is een initiatie. <strong>40–60% van de klanten die eenmaal kopen, kopen nooit meer.</strong> Dat is normaal voor DTC. Het wordt pas een probleem als je niets doet om er iets aan te doen.</p>
+      <p>Post-purchase is waar je een transactie omzet in een relatie. Goed gedaan verdubbel je je customer lifetime value zonder één nieuwe klant te werven.</p>
+
+      <h3>Hoe het meestal scheef gaat</h3>
+      <ul>
+        <li>Alleen een order-bevestiging — dat doet je shop-platform. Dat is geen retentie.</li>
+        <li>Direct upsell in mail 1 — "you bought X, why not buy Y" — werkt zelden zo vroeg.</li>
+        <li>Te lang stilte tussen de transactie en de eerste retentie-mail. Twee weken is te lang.</li>
+        <li>Identieke flow voor first-time en repeat-buyers — andere dynamiek, ander doel.</li>
+      </ul>
+
+      <h3>Hoe het wel werkt</h3>
+      <p>Vier mails over 30 dagen:</p>
+      <div class="flow-block">
+        <p><strong>Mail 1</strong> (dag 2) — welkom-bij-het-merk founder-letter (text-based)</p>
+        <p><strong>Mail 2</strong> (dag 5) — hoe haal je het beste uit je aankoop, educational</p>
+        <p><strong>Mail 3</strong> (dag 10) — review-verzoek met lichte incentive</p>
+        <p><strong>Mail 4</strong> (dag 30) — eerste cross-sell of replenishment-trigger</p>
+      </div>
+      <p>Voor repeat-buyers: aparte versie, gerichter, vaak korter.</p>
+
+      <h2>Flow 4: Win-back</h2>
+
+      <h3>Waarom als vierde</h3>
+      <p>Iemand die ooit kocht en nu 90+ dagen niet meer opent is niet "verloren" — hij is afgeleid. Hij heeft jouw product gekend, hij heeft jouw email gekend, hij is gewoon weggegaan.</p>
+      <p>Een goed gebouwde win-back haalt 5–15% terug. Bij de rest: <strong>tijdelijk je inbox-lijst opschonen voor deliverability</strong>. Beide uitkomsten zijn winst.</p>
+
+      <h3>Hoe het meestal scheef gaat</h3>
+      <ul>
+        <li>Te vroeg trigger — een win-back op dag 30 inactiviteit voelt onnatuurlijk.</li>
+        <li>Direct met korting — leert klanten dat inactiviteit beloond wordt.</li>
+        <li>Geen exit-strategie — onengaged blijft op de lijst, deliverability daalt.</li>
+      </ul>
+
+      <h3>Hoe het wel werkt</h3>
+      <p>Drie mails over 14 dagen, met sunset eronder:</p>
+      <div class="flow-block">
+        <p><strong>Mail 1</strong> (dag 0 na trigger op 90 dagen) — "we missen je" founder-letter</p>
+        <p><strong>Mail 2</strong> (dag 5) — reden om terug te komen — nieuw product, content, of aanbod</p>
+        <p><strong>Mail 3</strong> (dag 14) — soft sunset prompt "moet ik je nog mailen?"</p>
+      </div>
+      <p>Wie hierna nog niet engaged → automatische sunset of unsubscribe.</p>
+
+      <h2>De juiste volgorde — en waarom de meeste merken hem fout doen</h2>
+      <p>De volgorde is niet willekeurig. Hier is waarom welcome eerst:</p>
+      <ol>
+        <li>Welcome zonder de andere drie levert nieuwe klanten op. Win.</li>
+        <li>Cart zonder de andere drie redt omzet. Win.</li>
+        <li>Post-purchase zonder welcome kan vreemd voelen — <em>"waarom hoor ik nu pas iets van je?"</em></li>
+        <li>Win-back zonder post-purchase is symptoombestrijding zonder oorzaak adresseren.</li>
+      </ol>
+      <p>De meeste merken bouwen het in de volgorde die Klaviyo de templates aanbiedt — vaak abandoned cart eerst, omdat dat de meest "voor de hand liggende" flow is. Dat is niet fout, maar je laat geld liggen.</p>
+
+      <p>De juiste volgorde:</p>
+      <ol>
+        <li><strong>Welcome eerst</strong> — de filter voor je hele programma</li>
+        <li><strong>Cart als tweede</strong> — directe omzet recovery</li>
+        <li><strong>Post-purchase als derde</strong> — LTV-investering</li>
+        <li><strong>Win-back als vierde</strong> — pas zinvol als de voorgangers staan</li>
+      </ol>
+
+      <h2>Eén ding nog</h2>
+      <p>Veel merken vragen: <em>"kan ik die vier zelf bouwen?"</em></p>
+      <p>Theoretisch ja. In de praktijk: het ene merk is niet het andere. De voice die op merk A werkt is dezelfde reden waarom merk B zou floppen. De timing die op een wellness-merk werkt verschilt van fashion. Iedere instelling in elke flow is een keuze die afhankelijk is van wie jouw klanten zijn en hoe ze met jouw merk omgaan.</p>
+      <p>Dat is wat ons motiveerde om Fraim te bouwen: één keer een systeem opzetten dat die keuzes voor jouw specifieke merk maakt, met jouw stem, met jouw klant-taal. In 14 dagen. Daarna run jij het.</p>
+
+      <div class="cta-block">
+        <p>Wil je weten hoe dat voor jouw merk eruit zou zien?</p>
+        <a href="mailto:info@yourfraim.nl?subject=Strategie-gesprek" class="btn">Neem contact op ↗</a>
+      </div>
+
+      <p class="byline">Dit stuk is geschreven door Fraim — een retentie-infrastructuur voor DTC-merken die hun email-marketing willen bezitten in plaats van huren.</p>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="foot-bottom">
+      <a href="fraim-index.html" class="wordmark">FR<span class="macron">AI</span>M</a>
+      <span>© 2026 FRAIM — KvK 42058158 · NL / BE</span>
+      <a href="privacy.html">Privacyverklaring</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
