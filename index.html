@@ -505,8 +505,8 @@ footer{
   padding:clamp(3rem,6vw,5rem) 0 2.5rem;
 }
 .foot-top{
-  display:grid;grid-template-columns:1fr 140px 160px;
-  gap:3rem;padding-bottom:3rem;margin-bottom:2.5rem;
+  display:flex;gap:3rem;flex-wrap:wrap;
+  padding-bottom:3rem;margin-bottom:2.5rem;
   border-bottom:1px solid var(--border);
 }
 .foot-brand{
@@ -1027,13 +1027,6 @@ footer .wordmark .macron::after{background:var(--green);}
 <footer>
   <div class="container">
     <div class="foot-top">
-      <div class="foot-signup">
-        <h3><em>Schrijf je in</em> en benut de kracht van FRAIM.</h3>
-        <div class="capture">
-          <span class="ph">E-mailadres</span>
-          <a href="mailto:info@yourfraim.nl" class="go" aria-label="Inschrijven">→</a>
-        </div>
-      </div>
       <div class="foot-col">
         <span class="colhead">Het systeem</span>
         <ul>
