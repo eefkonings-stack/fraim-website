@@ -510,14 +510,16 @@ footer{
   border-bottom:1px solid var(--border);
 }
 .foot-brand{
-  padding:1rem 0 2rem;
+  overflow:hidden;
+  padding:0.75rem 0 1.75rem;
   border-bottom:1px solid var(--border);
   margin-bottom:1.5rem;
 }
 .foot-big-wordmark{
-  font-size:clamp(4rem,13vw,11rem);font-weight:900;
-  letter-spacing:-0.04em;line-height:1;
-  color:var(--text);text-decoration:none;display:block;
+  font-size:22vw;font-weight:900;
+  letter-spacing:-0.04em;line-height:0.92;
+  color:var(--text);text-decoration:none;
+  display:block;white-space:nowrap;
 }
 .foot-signup h3{
   font-size:1rem;font-weight:700;color:var(--text);
@@ -546,6 +548,32 @@ footer{
 .foot-bottom em{font-style:italic;}
 footer .wordmark{color:var(--text);}
 footer .wordmark .macron::after{background:var(--green);}
+
+/* ── Blob drift animations ── */
+@keyframes drift1{
+  0%,100%{transform:translate(0,0) scale(1);}
+  33%{transform:translate(55px,-45px) scale(1.08);}
+  66%{transform:translate(-35px,50px) scale(0.95);}
+}
+@keyframes drift2{
+  0%,100%{transform:translate(0,0) scale(1);}
+  40%{transform:translate(-55px,35px) scale(1.06);}
+  70%{transform:translate(45px,-35px) scale(0.97);}
+}
+@keyframes drift3{
+  0%,100%{transform:translate(0,0) scale(1);}
+  25%{transform:translate(35px,45px) scale(1.05);}
+  60%{transform:translate(-45px,-25px) scale(1.1);}
+}
+.hb1{animation:drift1 20s ease-in-out infinite;}
+.hb2{animation:drift2 25s ease-in-out infinite;}
+.hb3{animation:drift3 18s ease-in-out infinite;}
+.fbg1{animation:drift1 22s ease-in-out infinite;}
+.fbg2{animation:drift2 28s ease-in-out infinite;}
+/* Why-section blobs */
+.why-blobs{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.wb1{width:500px;height:500px;top:-100px;right:-80px;filter:blur(80px);animation:drift2 22s ease-in-out infinite;}
+.wb2{width:380px;height:380px;bottom:-60px;left:8%;filter:blur(90px);animation:drift3 26s ease-in-out infinite;}
 
 /* ── Reveal ── */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);transition-delay:var(--delay,0ms);}
@@ -717,6 +745,10 @@ footer .wordmark .macron::after{background:var(--green);}
 </section>
 
 <section id="why" class="story-section">
+  <div class="why-blobs" aria-hidden="true">
+    <div class="blob blob-lime wb1"></div>
+    <div class="blob blob-teal wb2"></div>
+  </div>
   <div class="container">
     <div class="section-head reveal">
       <span class="num">03 — Waarom Fraim</span>
@@ -1047,9 +1079,11 @@ footer .wordmark .macron::after{background:var(--green);}
         </ul>
       </div>
     </div>
-    <div class="foot-brand">
-      <a href="#top" class="foot-big-wordmark">FRAIM</a>
-    </div>
+  </div>
+  <div class="foot-brand">
+    <a href="#top" class="foot-big-wordmark">FRAIM</a>
+  </div>
+  <div class="container">
     <div class="foot-bottom">
       <span>Eenmalig gebouwd. <em>Voor altijd van jou.</em></span>
       <span>© 2026 FRAIM — KvK 42058158 · NL / BE</span>
@@ -1110,6 +1144,26 @@ footer .wordmark .macron::after{background:var(--green);}
       if (d.open) document.querySelectorAll('details.q').forEach((o) => { if (o !== d) o.open = false; });
     });
   });
+
+  // Full-bleed FRAIM footer wordmark
+  (function() {
+    const el = document.querySelector('.foot-big-wordmark');
+    if (!el) return;
+    function fit() {
+      const parent = el.parentElement;
+      let lo = 1, hi = 3000;
+      el.style.fontSize = hi + 'px';
+      while (lo < hi) {
+        const mid = Math.floor((lo + hi + 1) / 2);
+        el.style.fontSize = mid + 'px';
+        if (el.scrollWidth <= parent.clientWidth) lo = mid;
+        else hi = mid - 1;
+      }
+      el.style.fontSize = lo + 'px';
+    }
+    fit();
+    window.addEventListener('resize', fit, { passive: true });
+  })();
 </script>
 </body>
 </html>
