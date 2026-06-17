@@ -107,6 +107,8 @@ header.hero{
 .hb1{width:580px;height:580px;top:-100px;left:-140px;filter:blur(72px);}
 .hb2{width:500px;height:500px;top:10%;right:-100px;filter:blur(80px);}
 .hb3{width:420px;height:420px;bottom:-80px;left:38%;filter:blur(90px);}
+#heroMeshBg{position:absolute;inset:0;z-index:0;pointer-events:none;}
+#heroMeshBg canvas{width:100%!important;height:100%!important;display:block;}
 .hero-content{position:relative;z-index:1;max-width:800px;}
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:0.6rem;
@@ -673,6 +675,7 @@ footer .wordmark .macron::after{background:var(--green);}
 <a id="top"></a>
 
 <header class="hero">
+  <div id="heroMeshBg" aria-hidden="true"></div>
   <div class="hero-blobs" aria-hidden="true">
     <div class="blob blob-lime hb1"></div>
     <div class="blob blob-purple hb2"></div>
@@ -1247,6 +1250,23 @@ footer .wordmark .macron::after{background:var(--green);}
     fit();
     window.addEventListener('resize', fit, { passive: true });
   })();
+</script>
+<script type="module">
+import { ShaderMount, meshGradientFragmentShader, getShaderColorFromString }
+  from 'https://esm.sh/@paper-design/shaders@0.0.76';
+const el = document.getElementById('heroMeshBg');
+if (!el) return;
+const colors = ['#F8F8F5', '#EFEFE9', '#E8F7D4', '#F5FCF0'];
+try {
+  new ShaderMount(el, meshGradientFragmentShader, {
+    u_colors: colors.map(getShaderColorFromString),
+    u_colorsCount: colors.length,
+    u_distortion: 0.8,
+    u_swirl: 0.5,
+    u_grainMixer: 0.0,
+    u_grainOverlay: 0.0,
+  }, undefined, undefined, 0.2);
+} catch(e) {}
 </script>
 </body>
 </html>
