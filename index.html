@@ -271,41 +271,86 @@ h1.hero-headline em{font-style:italic;color:var(--text);}
 .pack ul li .ix{color:var(--muted);flex-shrink:0;font-size:0.75rem;padding-top:0.1em;}
 .pack ul li .qty{color:var(--muted);font-size:0.8rem;margin-left:0.35rem;}
 
-/* ── Cases ── */
-.cases-section{background:var(--bg-alt);}
-.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem;}
-.case-card{
-  background:#fff;border:1px solid var(--border);
-  border-radius:var(--r);padding:2.25rem 2rem 2rem;
-  display:flex;flex-direction:column;gap:1.25rem;
-  box-shadow:var(--shadow);
+/* ── Cases Carousel ── */
+.cases-section{background:var(--bg-alt);overflow:hidden;}
+.cases-carousel-head{display:flex;align-items:center;justify-content:flex-end;margin-top:2rem;margin-bottom:1.5rem;}
+.cases-carousel-arrows{display:flex;gap:0.5rem;}
+.cases-arrow-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--border);background:transparent;
+  color:var(--text);cursor:pointer;
+  transition:background 0.15s,border-color 0.15s;
 }
-.case-card .case-label{
+.cases-arrow-btn svg{display:block;}
+.cases-arrow-btn:hover:not(:disabled){background:rgba(17,17,16,0.07);}
+.cases-arrow-btn:disabled{opacity:0.25;cursor:default;pointer-events:none;}
+.cases-scroll{
+  display:flex;gap:20px;
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding-left:max(clamp(20px,5vw,60px),calc((100vw - 1120px) / 2 + 60px));
+  padding-right:max(clamp(20px,5vw,60px),calc((100vw - 1120px) / 2 + 60px));
+  padding-bottom:4px;
+}
+.cases-scroll::-webkit-scrollbar{display:none;}
+.case-slide{
+  flex:0 0 480px;scroll-snap-align:start;
+  border-radius:12px;overflow:hidden;
+  position:relative;aspect-ratio:5/4;min-height:320px;
+  text-decoration:none;display:block;flex-shrink:0;
+}
+.case-slide img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  transition:transform 0.35s ease;
+}
+.case-slide:hover img{transform:scale(1.05);}
+.case-slide-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(14,16,32,0) 0%,rgba(14,16,32,0.3) 40%,rgba(14,16,32,0.84) 100%);
+}
+.case-slide-content{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:2rem 2.25rem;color:#fff;
+}
+.case-slide-label{
   font-family:'CSAliceMono',monospace;
-  font-size:0.6rem;font-weight:700;letter-spacing:0.14em;
-  text-transform:uppercase;color:var(--glabel);font-style:normal;
+  font-size:0.58rem;font-weight:700;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--green);
+  margin-bottom:0.65rem;display:block;
 }
-.case-card h3{font-size:1.1rem;font-weight:800;line-height:1.3;letter-spacing:-0.015em;}
-.case-card .case-pitch{font-size:0.88rem;color:var(--dim);line-height:1.65;}
-.case-card table{width:100%;border-collapse:collapse;font-size:0.82rem;}
-.case-card table th{
-  text-align:left;padding:0.5rem 0;
-  border-bottom:1px solid var(--border);
-  color:var(--muted);font-size:0.72rem;font-weight:600;letter-spacing:0.05em;
+.case-slide-content h3{
+  font-size:1.2rem;font-weight:800;line-height:1.25;
+  letter-spacing:-0.02em;margin-bottom:0.55rem;
 }
-.case-card table td{
-  padding:0.4rem 0;color:var(--dim);
-  border-bottom:1px solid rgba(17,17,16,0.04);vertical-align:top;
+.case-slide-desc{
+  font-size:0.86rem;line-height:1.6;
+  color:rgba(255,255,255,0.75);
+  display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;
+  margin-bottom:1.5rem;
 }
-.case-card table td:first-child{color:var(--text);font-weight:600;padding-right:1rem;white-space:nowrap;}
-.case-card .case-cta{
-  display:inline-flex;align-items:center;gap:0.35rem;
-  font-size:0.85rem;font-weight:700;color:var(--glabel);
-  margin-top:auto;
+.case-slide-cta{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  font-size:0.83rem;font-weight:700;color:#fff;
+  transition:gap 0.2s;
 }
-.case-card .case-cta:hover{text-decoration:underline;}
-.cases-note{margin-top:2rem;font-size:0.8rem;color:var(--muted);line-height:1.65;max-width:640px;}
-.cases-note em{font-style:italic;color:var(--dim);}
+.case-slide:hover .case-slide-cta{gap:0.7rem;}
+.cases-dots{display:flex;justify-content:center;gap:8px;margin-top:1.75rem;}
+.cases-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(17,17,16,0.18);
+  border:none;cursor:pointer;padding:0;
+  transition:background 0.2s;
+}
+.cases-dot.active{background:var(--text);}
+@media(max-width:768px){
+  .cases-carousel-arrows{display:none;}
+  .case-slide{flex:0 0 min(300px,82vw);}
+}
 
 /* ── Process ── */
 .process{
@@ -597,7 +642,6 @@ footer .wordmark .macron::after{background:var(--green);}
   .deliv{grid-template-columns:1fr;}
   .who{grid-template-columns:1fr;}
   .price-grid{grid-template-columns:1fr;}
-  .cases-grid{grid-template-columns:1fr;}
   .lezen-grid{grid-template-columns:1fr 1fr;}
   .foot-top{grid-template-columns:1fr;gap:2rem;}
   .ip-row{grid-template-columns:32px 1fr;}
@@ -818,31 +862,43 @@ footer .wordmark .macron::after{background:var(--green);}
       <h2>Cases — <em>twee perspectieven.</em></h2>
       <span class="sub">Elk merk zit op een ander punt. We delen twee cases vanuit twee invalshoeken.</span>
     </div>
-    <div class="cases-grid">
-      <div class="case-card reveal">
-        <span class="case-label">Case 01 · Fuelyourbody</span>
-        <h3>Van verschillende bureau's → naar eigen beheer → naar FRAIM.</h3>
-        <p class="case-pitch">Vijf jaar email-marketing in één pagina. Voor merken die de eerste twee fases hebben doorlopen of nu in fase 2 vastlopen.</p>
-        <table>
-          <tr><th>Akte</th><th>Periode</th><th>Tijdsinvestering</th></tr>
-          <tr><td>Bureau</td><td>2021–2024</td><td>Torenhoge kosten, briefen + reviewen</td></tr>
-          <tr><td>Eigen beheer</td><td>2025–2026</td><td>Onnodige tijd: zo'n 24 uur/week</td></tr>
-          <tr><td>FRAIM</td><td>2026–heden</td><td>Doel: 2 uur/week</td></tr>
-        </table>
-        <a href="case-fuelyourbody.html" class="case-cta">Lees de volledige case →</a>
+    <div class="cases-carousel-head">
+      <div class="cases-carousel-arrows">
+        <button class="cases-arrow-btn" id="cases-prev" aria-label="Vorige" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="cases-arrow-btn" id="cases-next" aria-label="Volgende">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
       </div>
-      <div class="case-card reveal" style="--delay:100ms;">
-        <span class="case-label">Case 02 · MX Meals</span>
+    </div>
+  </div>
+  <div class="cases-scroll" id="casesScroll">
+    <a href="case-fuelyourbody.html" class="case-slide reveal">
+      <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1080&q=80" alt="Fuelyourbody case" loading="lazy" />
+      <div class="case-slide-overlay"></div>
+      <div class="case-slide-content">
+        <span class="case-slide-label">Case 01 · Fuelyourbody</span>
+        <h3>Van bureau naar eigen beheer naar FRAIM.</h3>
+        <p class="case-slide-desc">Vijf jaar email-marketing in één pagina. Bureau, eigen beheer, FRAIM systeem.</p>
+        <span class="case-slide-cta">Lees de volledige case →</span>
+      </div>
+    </a>
+    <a href="case-mxmeals.html" class="case-slide reveal" style="--delay:80ms;">
+      <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1080&q=80" alt="MX Meals case" loading="lazy" />
+      <div class="case-slide-overlay"></div>
+      <div class="case-slide-content">
+        <span class="case-slide-label">Case 02 · MX Meals</span>
         <h3>Greenfield: vanaf nul gebouwd.</h3>
-        <p class="case-pitch">Voor merken die net beginnen of nog geen serieus email-programma hebben. Geen "erfenis" of migratie, maar een systeem dat direct vanaf 0 met AI wordt gebouwd.</p>
-        <table>
-          <tr><th>Onderdeel</th><th>Status</th></tr>
-          <tr><td>Flows live</td><td>✓</td></tr>
-          <tr><td>Operationeel systeem</td><td>✓</td></tr>
-          <tr><td>60-dagen meetbare data</td><td>Volgt</td></tr>
-        </table>
-        <a href="case-mxmeals.html" class="case-cta">Lees de volledige case →</a>
+        <p class="case-slide-desc">Voor merken die net beginnen of nog geen serieus email-programma hebben. Direct vanaf 0 met AI opgebouwd.</p>
+        <span class="case-slide-cta">Lees de volledige case →</span>
       </div>
+    </a>
+  </div>
+  <div class="container">
+    <div class="cases-dots" id="casesDots">
+      <button class="cases-dot active" aria-label="Ga naar slide 1"></button>
+      <button class="cases-dot" aria-label="Ga naar slide 2"></button>
     </div>
   </div>
 </section>
@@ -1144,6 +1200,33 @@ footer .wordmark .macron::after{background:var(--green);}
       if (d.open) document.querySelectorAll('details.q').forEach((o) => { if (o !== d) o.open = false; });
     });
   });
+
+  // Cases Carousel
+  (function(){
+    const scroll = document.getElementById('casesScroll');
+    const prevBtn = document.getElementById('cases-prev');
+    const nextBtn = document.getElementById('cases-next');
+    const dots = document.querySelectorAll('#casesDots .cases-dot');
+    if(!scroll) return;
+    function slideWidth(){
+      const s = scroll.querySelector('.case-slide');
+      return s ? s.offsetWidth + 20 : 500;
+    }
+    function updateState(){
+      const atStart = scroll.scrollLeft <= 4;
+      const atEnd = scroll.scrollLeft >= scroll.scrollWidth - scroll.clientWidth - 4;
+      if(prevBtn) prevBtn.disabled = atStart;
+      if(nextBtn) nextBtn.disabled = atEnd;
+      const idx = Math.round(scroll.scrollLeft / slideWidth());
+      dots.forEach((d,i) => d.classList.toggle('active', i === idx));
+    }
+    if(prevBtn) prevBtn.addEventListener('click', ()=>{ scroll.scrollBy({left:-slideWidth(),behavior:'smooth'}); });
+    if(nextBtn) nextBtn.addEventListener('click', ()=>{ scroll.scrollBy({left:slideWidth(),behavior:'smooth'}); });
+    dots.forEach((dot,i) => dot.addEventListener('click', ()=>{ scroll.scrollTo({left:i*slideWidth(),behavior:'smooth'}); }));
+    scroll.addEventListener('scroll', updateState, {passive:true});
+    window.addEventListener('resize', updateState, {passive:true});
+    updateState();
+  })();
 
   // Full-bleed FRAIM footer wordmark
   (function() {
