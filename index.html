@@ -107,9 +107,10 @@ header.hero{
 .hb1{width:580px;height:580px;top:-100px;left:-140px;filter:blur(72px);}
 .hb2{width:500px;height:500px;top:10%;right:-100px;filter:blur(80px);}
 .hb3{width:420px;height:420px;bottom:-80px;left:38%;filter:blur(90px);}
-#heroMeshBg{position:absolute;inset:0;z-index:0;pointer-events:none;}
+#heroMeshBg{position:absolute;inset:0;z-index:1;pointer-events:none;}
 #heroMeshBg canvas{width:100%!important;height:100%!important;display:block;}
-.hero-content{position:relative;z-index:1;max-width:800px;}
+.hero-content{position:relative;z-index:2;max-width:800px;}
+header.hero .hero-blobs{opacity:0.25;}
 .hero-eyebrow{
   display:inline-flex;align-items:center;gap:0.6rem;
   background:rgba(192,245,61,0.18);border:1px solid rgba(192,245,61,0.4);
@@ -141,6 +142,18 @@ h1.hero-headline em{font-style:italic;color:var(--text);}
 .hstat{display:flex;flex-direction:column;gap:0.2rem;}
 .hstat .hval{font-size:1.35rem;font-weight:900;letter-spacing:-0.03em;color:var(--text);}
 .hstat .hlbl{font-size:0.72rem;color:var(--muted);letter-spacing:0.05em;}
+/* ── Hero dark overrides ── */
+header.hero h1.hero-headline,header.hero h1.hero-headline em{color:#FAFFF3;}
+header.hero .hero-sub{color:rgba(250,255,243,0.72);}
+header.hero .hero-sub em{color:#FAFFF3;}
+header.hero .hero-eyebrow span{color:#C0F53D;}
+header.hero .hero-eyebrow .dot{background:#C0F53D;}
+header.hero .hero-stats{border-top-color:rgba(250,255,243,0.12);}
+header.hero .hstat .hval{color:#FAFFF3;}
+header.hero .hstat .hlbl{color:rgba(250,255,243,0.40);}
+header.hero .btn-primary{background:var(--green);color:#0A0D04;}
+header.hero .btn-ghost{color:rgba(250,255,243,0.72);border-color:rgba(250,255,243,0.25);}
+header.hero .btn-ghost:hover{color:#FAFFF3;border-color:rgba(250,255,243,0.50);}
 
 /* ── Section head ── */
 .section-head{margin-bottom:3rem;}
@@ -1256,16 +1269,17 @@ import { ShaderMount, meshGradientFragmentShader, getShaderColorFromString }
   from 'https://esm.sh/@paper-design/shaders@0.0.76';
 const el = document.getElementById('heroMeshBg');
 if (!el) return;
-const colors = ['#F8F8F5', '#EFEFE9', '#E8F7D4', '#F5FCF0'];
+const colors = ['#0A0D04', '#141A06', '#C0F53D', '#1A2209'];
 try {
   new ShaderMount(el, meshGradientFragmentShader, {
     u_colors: colors.map(getShaderColorFromString),
     u_colorsCount: colors.length,
-    u_distortion: 0.8,
-    u_swirl: 0.5,
+    u_distortion: 1.5,
+    u_swirl: 1.0,
     u_grainMixer: 0.0,
     u_grainOverlay: 0.0,
-  }, undefined, undefined, 0.2);
+  }, undefined, undefined, 0.6);
+
 } catch(e) {}
 </script>
 </body>
