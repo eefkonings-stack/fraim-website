@@ -102,6 +102,7 @@ header.hero{
   min-height:100vh;display:flex;align-items:center;
   padding:clamp(120px,14vw,160px) 0 clamp(60px,8vw,96px);
   position:relative;overflow:hidden;
+  background:#0A0D04;
 }
 .hero-blobs{position:absolute;inset:0;z-index:0;}
 .hb1{width:580px;height:580px;top:-100px;left:-140px;filter:blur(72px);}
@@ -1264,23 +1265,68 @@ footer .wordmark .macron::after{background:var(--green);}
     window.addEventListener('resize', fit, { passive: true });
   })();
 </script>
-<script type="module">
-import { ShaderMount, meshGradientFragmentShader, getShaderColorFromString }
-  from 'https://esm.sh/@paper-design/shaders@0.0.76';
-const el = document.getElementById('heroMeshBg');
-if (!el) return;
-const colors = ['#0A0D04', '#141A06', '#C0F53D', '#1A2209'];
-try {
-  new ShaderMount(el, meshGradientFragmentShader, {
-    u_colors: colors.map(getShaderColorFromString),
-    u_colorsCount: colors.length,
-    u_distortion: 1.5,
-    u_swirl: 1.0,
-    u_grainMixer: 0.0,
-    u_grainOverlay: 0.0,
-  }, undefined, undefined, 0.6);
-
-} catch(e) {}
+<script>
+(function(){
+  const el=document.getElementById('heroMeshBg');
+  if(!el)return;
+  const canvas=document.createElement('canvas');
+  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;';
+  el.appendChild(canvas);
+  const gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');
+  if(!gl)return;
+  const VS=`attribute vec2 a_pos;void main(){gl_Position=vec4(a_pos,0,1);}`;
+  const FS=`
+    precision mediump float;
+    uniform float u_t;
+    uniform vec2 u_res;
+    float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+    float n(vec2 p){
+      vec2 i=floor(p),f=fract(p),u=f*f*(3.0-2.0*f);
+      return mix(mix(h(i),h(i+vec2(1,0)),u.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),u.x),u.y);
+    }
+    void main(){
+      vec2 uv=gl_FragCoord.xy/u_res;
+      float t=u_t*0.13;
+      float v=n(uv*2.8+vec2(t,t*0.65));
+      v+=0.5*n(uv*5.5+vec2(-t*1.3,t*0.45));
+      v+=0.25*n(uv*11.0+vec2(t*0.9,-t*1.2));
+      v/=1.75;
+      vec3 c1=vec3(0.039,0.051,0.016);
+      vec3 c2=vec3(0.102,0.137,0.035);
+      vec3 c3=vec3(0.753,0.961,0.239);
+      vec3 col=mix(c1,c2,smoothstep(0.2,0.58,v));
+      col=mix(col,c3,smoothstep(0.48,0.78,v)*0.78);
+      gl_FragColor=vec4(col,1.0);
+    }
+  `;
+  function sh(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+  const prog=gl.createProgram();
+  gl.attachShader(prog,sh(gl.VERTEX_SHADER,VS));
+  gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FS));
+  gl.linkProgram(prog);gl.useProgram(prog);
+  const buf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  const aPos=gl.getAttribLocation(prog,'a_pos');
+  gl.enableVertexAttribArray(aPos);gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
+  const uT=gl.getUniformLocation(prog,'u_t');
+  const uR=gl.getUniformLocation(prog,'u_res');
+  function resize(){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=el.clientWidth*dpr;canvas.height=el.clientHeight*dpr;
+    gl.viewport(0,0,canvas.width,canvas.height);
+    gl.uniform2f(uR,canvas.width,canvas.height);
+  }
+  resize();window.addEventListener('resize',resize,{passive:true});
+  let t0=null;
+  function frame(ts){
+    if(!t0)t0=ts;
+    gl.uniform1f(uT,(ts-t0)/1000);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
