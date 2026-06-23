@@ -3,707 +3,1510 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>FRAIM — Retentie die je écht zelf bezit. (licht)</title>
+<title>FRAIM — Retentie die je écht zelf bezit.</title>
+<meta name="description" content="AI-gedreven retentie-infrastructuur voor DTC-merken. Gebouwd in 14 dagen, gerund door je eigen team — voor altijd in jouw bezit." />
 <style>
+
+
+/* ── Variables ─────────────────────────────────────────────── */
+:root {
+  --bg:     #ffffff;
+  --olive:  #f5f5f5;
+  --olive2: #f0f0f0;
+  --ivory:  #0A0D04;
+  --green:  #C0F53D;
+  --muted:  rgba(10,13,4,0.42);
+  --dim:    rgba(10,13,4,0.62);
+  --border: rgba(10,13,4,0.10);
+  --max-w:  1120px;
+  --r:      8px;
+}
+[data-accent="acid"]  { --green: #C6FF1F; }
+[data-accent="mint"]  { --green: #6EF5B0; }
+[data-accent="lime"]  { --green: #C0F53D; }
+
+/* ── Reset ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ivory);
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+ul { list-style: none; }
+summary { list-style: none; }
+summary::-webkit-details-marker { display: none; }
+
+/* ── Base type ─────────────────────────────────────────────── */
+em {
+  color: var(--green);
+}
+h1, h2, h3, h4 { font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; color: var(--ivory); }
+p { color: var(--dim); line-height: 1.7; }
+
+/* ── Layout ────────────────────────────────────────────────── */
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 60px);
+}
+section { padding: clamp(72px, 10vw, 128px) 0; }
+
+/* ── Buttons ───────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.8rem 1.55rem;
+  border-radius: var(--r);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: opacity 0.18s, transform 0.18s;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.btn:hover { opacity: 0.86; transform: translateY(-1px); }
+.btn-primary { background: var(--green); color: var(--bg); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ivory);
+  border: 1px solid rgba(10,13,4,0.22);
+}
+.btn-ghost:hover { color: var(--ivory); border-color: rgba(10,13,4,0.5); }
+.arr { font-style: normal; }
+.ctas { display: flex; gap: 0.875rem; flex-wrap: wrap; }
+
+/* ── Wordmark ──────────────────────────────────────────────── */
+.wordmark-box { display: inline-block; }
+.wordmark {
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+}
+.wordmark .macron {
+  position: relative;
+  display: inline-block;
+}
+.wordmark .macron::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--green);
+  border-radius: 1px;
+}
+
+/* ── Nav ───────────────────────────────────────────────────── */
+nav.top {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.1rem 0;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s;
+}
+nav.top.scrolled {
+  background: #ffffff;
+  box-shadow: 0 1px 16px rgba(0,0,0,0.07);
+}
+nav.top .wordmark { color: #0A0D04; letter-spacing: -0.02em; font-weight: 900; }
+
+nav.top .wordmark .macron::after { display: none; }
+nav.top .container { display: flex; align-items: center; justify-content: space-between; }
+.links { display: flex; align-items: center; gap: 2rem; }
+.links a:not(.btn) {
+  font-size: 0.82rem;
+  color: #0A0D04;
+  transition: color 0.18s;
+}
+.links a:not(.btn):hover { color: #555; }
+nav.top .btn-primary {
+  background: #0A0D04;
+  color: #ffffff;
+  border-radius: 2rem;
+}
+
+/* ── Hero ──────────────────────────────────────────────────── */
+header.hero {
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  padding: clamp(140px, 16vw, 180px) 0 clamp(48px, 5vw, 72px);
+  background: #ffffff;
+  text-align: center;
+}
+.hero-grid {
+  display: block;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.hero-eyebrow { display: none; }
+h1.hero-headline {
+  font-size: clamp(3rem, 6.5vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #0A0D04;
+  margin-bottom: 1.5rem;
+}
+h1.hero-headline em {
+  font-weight: 700;
+  font-size: 0.95em;
+  color: #0A0D04;
+}
+.star {
+  font-size: 0.5em;
+  color: var(--green);
+  vertical-align: super;
+  margin-left: 0.15em;
+  font-style: normal;
+  display: inline-block;
+}
+.hero-sub {
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  color: #555555;
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 0 auto 2.5rem;
+}
+.hero-sub b { color: #0A0D04; font-weight: 600; }
+.hero-sub em { color: #0A0D04; }
+.hero-cta { display: flex; gap: 0.875rem; flex-wrap: wrap; justify-content: center; }
+header.hero .btn-primary {
+  background: #0A0D04;
+  color: #ffffff;
+  border-radius: 2rem;
+  padding: 0.85rem 1.75rem;
+}
+header.hero .btn-ghost {
+  border: 1.5px solid rgba(0,0,0,0.25);
+  color: #0A0D04;
+  border-radius: 2rem;
+  padding: 0.85rem 1.75rem;
+}
+header.hero .btn-ghost:hover {
+  color: #0A0D04;
+  border-color: rgba(0,0,0,0.55);
+}
+.hero-horizon { display: none; }
+.hero-meta { display: none; }
+
+/* ── Ticker strip ─────────────────────────────────────────── */
+.ticker-strip {
+  overflow: hidden;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 1rem 0;
+  background: #ffffff;
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker 28s linear infinite;
+}
+.ticker-track span {
+  font-family: 'CSAliceMono', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #0A0D04;
+  white-space: nowrap;
+  padding-right: 3rem;
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Email Showcase ───────────────────────────────────────── */
+.email-showcase {
+  background: #0A0D04;
+  position: relative;
+  overflow: hidden;
+}
+.showcase-sticky {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem clamp(20px, 5vw, 60px) 6rem;
+}
+.showcase-label {
+  font-family: 'CSAliceMono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  text-align: center;
+  position: absolute;
+  top: 2rem;
+  left: 0; right: 0;
+  z-index: 10;
+}
+.showcase-cards {
+  display: flex;
+  gap: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.email-card {
+  width: 230px;
+  flex-shrink: 0;
+  will-change: transform;
+  position: relative;
+  transition: transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.email-card img {
+  width: 100%;
+  display: block;
+  filter: drop-shadow(0 24px 60px rgba(0,0,0,0.6));
+  transition: filter 0.4s;
+}
+.email-card:hover img { filter: drop-shadow(0 32px 80px rgba(0,0,0,0.8)); }
+@media (max-width: 820px) {
+  .email-showcase { height: auto; background: #0A0D04; }
+  .showcase-sticky { position: relative; height: auto; padding: 3rem 0 4rem; overflow: visible; }
+  .showcase-cards { overflow-x: auto; padding: 0 24px 1rem; gap: 1.25rem;
+    -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; justify-content: flex-start; }
+  .email-card { width: 70vw; max-width: 260px; scroll-snap-align: center; }
+}
+
+/* Intake card */
+.intake {
+  background: var(--olive2);
+  border: 1px solid rgba(192,245,61,0.18);
+  border-radius: 10px;
+  padding: 1.75rem 2rem 2rem;
+  position: relative;
+}
+.intake .plus {
+  display: block;
+  font-size: 1.6rem;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 1.1rem;
+  font-weight: 300;
+}
+.intake h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+.intake h3 em { font-weight: 700; }
+.intake p.sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+.intake .field {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.intake .field .k {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  min-width: 90px;
+  flex-shrink: 0;
+}
+.intake .field .line {
+  flex: 1;
+  height: 1px;
+  background: rgba(250,255,243,0.1);
+}
+.intake .submit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding: 0.85rem 1.25rem;
+  background: var(--green);
+  color: var(--bg);
+  border-radius: var(--r);
+  font-weight: 700;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: opacity 0.18s;
+}
+.intake .submit:hover { opacity: 0.88; }
+
+/* Hero bottom bar */
+.hero-horizon {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--green) 0%, transparent 65%);
+  margin: clamp(2.5rem, 5vw, 4rem) 0 1rem;
+  opacity: 0.4;
+}
+.hero-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.55;
+}
+
+/* ── About dark section (vervangt manifesto) ───────────────── */
+.about-dark {
+  background: #0A0D04;
+  padding: clamp(72px, 10vw, 128px) 0;
+}
+.about-head {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 3rem;
+}
+.about-head em {
+  font-style: italic;
+  color: #ffffff;
+}
+.about-body1 {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: rgba(255,255,255,0.88);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  max-width: 820px;
+}
+.about-body2 {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.38);
+  line-height: 1.65;
+  max-width: 680px;
+  margin-bottom: 4rem;
+}
+.about-body2 strong { color: rgba(255,255,255,0.72); font-weight: 600; }
+.about-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.about-stat .figure {
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  line-height: 1;
+  margin-bottom: 0.6rem;
+}
+.about-stat .lbl {
+  font-family: 'CSAliceMono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+.about-problems {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 4rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.ap-item {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  align-items: flex-start;
+}
+.ap-mk {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.3);
+  min-width: 2rem;
+  flex-shrink: 0;
+  padding-top: 0.2em;
+}
+.ap-text {
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  color: rgba(255,255,255,0.85);
+  line-height: 1.55;
+  margin-bottom: 0.35rem;
+}
+.ap-annot {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.28);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* ── Manifesto + Orbit ─────────────────────────────────────── */
+.manifesto {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 3.5rem;
+  align-items: center;
+  padding: 3rem 3.5rem;
+  background: var(--olive2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.manifesto p.big {
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  font-weight: 700;
+  color: var(--ivory);
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  margin-bottom: 1rem;
+}
+.manifesto p.big em { font-weight: 700; font-size: 0.95em; }
+.manifesto p.body {
+  font-size: 0.9rem;
+  color: var(--dim);
+  line-height: 1.72;
+  max-width: 600px;
+}
+
+/* Orbit badge */
+.orbit {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  flex-shrink: 0;
+}
+.orbit .ring {
+  width: 100%;
+  height: 100%;
+  animation: orbit-spin 24s linear infinite;
+  transform-origin: 50% 50%;
+}
+.orbit .ring text {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--green);
+  font-family: system-ui, sans-serif;
+}
+@keyframes orbit-spin { to { transform: rotate(360deg); } }
+.orbit .core {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(192,245,61,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.orbit .globe {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(192,245,61,0.2);
+  position: relative;
+  overflow: hidden;
+}
+.orbit .globe .merid {
+  position: absolute;
+  top: 0; left: 50%;
+  width: 1px; height: 100%;
+  background: rgba(192,245,61,0.4);
+  transform: translateX(-50%);
+}
+
+/* ── Section head pattern [NN] ─────────────────────────────── */
+.section-head {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+.section-head .num {
+  font-size: clamp(0.75rem, 1.2vw, 1rem);
+  color: var(--muted);
+  flex-shrink: 0;
+  line-height: 1;
+  padding-top: 0.25em;
+}
+.section-head .right { flex: 1; }
+.section-head h2.title {
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  margin-bottom: 0.6rem;
+}
+.section-head h2.title em { font-size: 0.95em; font-weight: 300; font-style: italic; }
+.section-head .sub {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.65;
+  display: block;
+  max-width: 520px;
+}
+
+/* ── Stats ─────────────────────────────────────────────────── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.stat-card {
+  background: var(--olive2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 2rem 1.75rem 2.25rem;
+}
+.stat-card .stamp {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+.stat-card .figure {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 300;
+  color: var(--ivory);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.75rem;
+}
+.stat-card .figure em { font-weight: 700; }
+.stat-card .note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* ── Problem ───────────────────────────────────────────────── */
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+.problem-card {
+  padding: 2rem 2rem 2rem 0;
+  border-top: 2px solid var(--border);
+  transition: border-top-color 0.25s;
+}
+.problem-card:not(:last-child) { padding-right: 2.5rem; }
+.problem-card:not(:first-child) { padding-left: 2.5rem; border-left: 1px solid var(--border); }
+.problem-card:hover { border-top-color: var(--green); }
+.problem-card .mk {
+  display: block;
+  font-size: 1.15rem;
+  color: var(--green);
+  margin-bottom: 1rem;
+}
+.problem-card h3 {
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--ivory);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.75rem;
+}
+.problem-card h3 em { font-weight: 700; font-size: 0.95em; }
+.problem-card .annot {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* ── Ivory panel (Systeem) ─────────────────────────────────── */
+.ivory-panel {
+  background: #0A0D04;
+  border-radius: 10px;
+  padding: clamp(2rem, 4vw, 3rem);
+  color: #ffffff;
+}
+.ip-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.pill-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+  background: rgba(255,255,255,0.12);
+  border-radius: 20px;
+  color: rgba(255,255,255,0.55);
+  align-self: flex-start;
+}
+.ip-head h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  font-weight: 300;
+}
+.ip-head h2 em {
+  color: #ffffff;
+  font-weight: 300;
+  font-style: italic;
+}
+.ip-list { display: flex; flex-direction: column; }
+.ip-row {
+  display: grid;
+  grid-template-columns: 36px 1fr 2fr;
+  gap: 1.25rem 2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  align-items: start;
+}
+.ip-row:last-child { border-bottom: none; }
+.ip-row.is-accent {
+  background: var(--bg);
+  padding: 1.5rem 1.5rem;
+  border-radius: var(--r);
+  border-bottom: none;
+  margin: 0.5rem -1.5rem;
+}
+.ip-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.3);
+  padding-top: 0.15em;
+}
+.ip-row.is-accent .ip-num { color: var(--muted); }
+.ip-title {
+  font-size: 0.97rem;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+.ip-title em {
+  color: rgba(255,255,255,0.6);
+  font-weight: 300;
+  font-size: 0.95em;
+  font-style: italic;
+}
+.ip-row.is-accent .ip-title { color: var(--ivory); }
+.ip-row.is-accent .ip-title em { color: var(--green); }
+.ip-title .tag {
+  display: inline-block;
+  font-family: system-ui, sans-serif;
+  font-style: normal;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+  background: var(--green);
+  color: var(--bg);
+  border-radius: 3px;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+}
+.ip-desc {
+  font-size: 0.84rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.68;
+}
+.ip-row.is-accent .ip-desc { color: var(--dim); }
+
+/* ── Process ───────────────────────────────────────────────── */
+.process {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--border);
+}
+.step {
+  padding: 2rem 2rem 2rem 0;
+  border-top: 2px solid transparent;
+  transition: border-top-color 0.25s;
+  margin-top: -1px;
+}
+.step:not(:last-child) { border-right: 1px solid var(--border); padding-right: 1.75rem; }
+.step:not(:first-child) { padding-left: 1.75rem; }
+.step:hover { border-top-color: var(--green); }
+.step .day {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--green);
+  margin-bottom: 1.1rem;
+}
+.step .day em {
+  font-family: system-ui, sans-serif;
+  font-style: normal;
+  color: var(--muted);
+  text-transform: lowercase;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.step h4 {
+  font-size: 0.97rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--ivory);
+  margin-bottom: 0.65rem;
+  line-height: 1.35;
+}
+.step h4 em { font-weight: 300; font-size: 0.95em; font-style: italic; }
+.step p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 0.75rem;
+}
+.step .foot {
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  opacity: 0.5;
+}
+
+/* ── Deliverables ──────────────────────────────────────────── */
+.deliv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.pack {
+  background: var(--olive2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+.pack header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.75rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.pack header h3 {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.pack header h3 em { font-weight: 700; }
+.pack header .price {
+  text-align: right;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--green);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+.pack header .price small {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 0.3rem;
+  letter-spacing: 0.04em;
+}
+.pack ul { padding: 1.25rem 2rem 2rem; display: flex; flex-direction: column; }
+.pack ul li {
+  display: flex;
+  gap: 0.875rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(250,255,243,0.04);
+  font-size: 0.84rem;
+  color: var(--dim);
+  line-height: 1.5;
+  align-items: flex-start;
+}
+.pack ul li:last-child { border-bottom: none; }
+.pack ul li .ix {
+  color: var(--green);
+  font-size: 0.88rem;
+  flex-shrink: 0;
+  min-width: 18px;
+  padding-top: 0.05rem;
+}
+.pack ul li .what { flex: 1; }
+.pack ul li .qty {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-left: 0.35rem;
+}
+
+/* ── Who ───────────────────────────────────────────────────── */
+.who {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.who .col { border-radius: var(--r); padding: 2rem; }
+.who .col.fit {
+  background: rgba(192,245,61,0.04);
+  border: 1px solid rgba(192,245,61,0.18);
+}
+.who .col.notfit {
+  background: var(--olive2);
+  border: 1px solid var(--border);
+}
+.who .col header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.who .col header h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.who .col.fit header h3 em { font-weight: 700; }
+.who .col.notfit header h3 em { color: var(--muted); }
+.who .col header .ix {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.who .col ul { display: flex; flex-direction: column; gap: 0.7rem; }
+.who .col ul li {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.88rem;
+  color: var(--dim);
+  line-height: 1.45;
+  align-items: flex-start;
+}
+.who .col .sym {
+  flex-shrink: 0;
+  padding-top: 0.05rem;
+  font-size: 0.85rem;
+}
+.who .col.fit .sym { color: var(--green); }
+.who .col.notfit .sym { color: rgba(250,255,243,0.2); }
+
+/* ── Pricing ───────────────────────────────────────────────── */
+.price-block {
+  background: var(--olive2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2.75rem 3rem;
+  position: relative;
+}
+.price-block .corner {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(250,255,243,0.15);
+}
+.price-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.price-grid > div:first-child > h3 {
+  font-size: clamp(1.3rem, 2.5vw, 1.95rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.75rem;
+}
+.price-grid > div:first-child > h3 em { font-weight: 700; }
+.price-grid .psub {
+  font-size: 0.87rem;
+  color: var(--muted);
+  line-height: 1.68;
+  margin-bottom: 2rem;
+}
+.price-grid .figure .row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+.price-grid .figure .big {
+  font-size: clamp(3rem, 5.5vw, 4.5rem);
+  font-weight: 900;
+  color: var(--green);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.price-grid .figure .unit {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.price-grid .figure .sub-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+.price-grid .figure .med {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: rgba(192,245,61,0.55);
+  letter-spacing: -0.02em;
+}
+.price-grid ul.details {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+.price-grid ul.details li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(250,255,243,0.04);
+  font-size: 0.8rem;
+}
+.price-grid ul.details li .k { color: var(--muted); white-space: nowrap; }
+.price-grid ul.details li .v { color: var(--dim); text-align: right; }
+.price-grid ul.details li .v em { font-style: italic; color: var(--green); }
+
+/* ── FAQ ───────────────────────────────────────────────────── */
+.faq { display: flex; flex-direction: column; }
+details.q { border-bottom: 1px solid var(--border); }
+details.q summary {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.3rem 0;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ivory);
+  transition: color 0.18s;
+}
+details.q summary:hover { color: var(--green); }
+details.q summary .qix {
+  font-size: 1rem;
+  color: var(--green);
+  flex-shrink: 0;
+  min-width: 36px;
+}
+details.q summary > span:nth-child(2) { flex: 1; }
+.toggle {
+  width: 22px; height: 22px;
+  border: 1px solid rgba(250,255,243,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color 0.2s;
+}
+details.q[open] summary .toggle { border-color: var(--green); }
+.toggle::before, .toggle::after {
+  content: '';
+  position: absolute;
+  background: rgba(250,255,243,0.45);
+  border-radius: 1px;
+  transition: transform 0.25s, background 0.2s;
+}
+.toggle::before { width: 8px; height: 1.5px; }
+.toggle::after  { width: 1.5px; height: 8px; }
+details.q[open] summary .toggle::before { background: var(--green); }
+details.q[open] summary .toggle::after  { transform: rotate(90deg); background: var(--green); }
+.answer {
+  padding: 0 0 1.4rem calc(36px + 1.25rem);
+  font-size: 0.87rem;
+  color: var(--dim);
+  line-height: 1.72;
+  max-width: 600px;
+}
+.answer em { font-style: italic; }
+
+/* ── Final CTA ─────────────────────────────────────────────── */
+.final-wrap { padding: clamp(48px, 7vw, 80px) 0 clamp(72px, 10vw, 128px); }
+.final.on-green {
+  background: var(--green);
+  color: var(--bg);
+  border-radius: 12px;
+  padding: clamp(2.5rem, 5vw, 4.5rem);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 3rem;
+  align-items: center;
+}
+.final.on-green .orbit { order: 2; }
+.final.on-green > div { /* text content */ }
+.final.on-green .orbit .ring text { fill: rgba(10,13,4,0.25); }
+.final.on-green .orbit .core { border-color: rgba(10,13,4,0.2); }
+.final.on-green .orbit .globe { border-color: rgba(10,13,4,0.12); }
+.final.on-green .orbit .globe .merid { background: rgba(10,13,4,0.2); }
+.final.on-green .eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(10,13,4,0.5);
+  margin-bottom: 1rem;
+}
+.final.on-green h2 {
+  font-size: clamp(1.7rem, 3.5vw, 2.8rem);
+  color: var(--bg);
+  letter-spacing: -0.025em;
+  margin-bottom: 0.75rem;
+}
+.final.on-green h2 em { color: var(--bg); font-weight: 700; }
+.final.on-green p.sub {
+  font-size: 0.92rem;
+  color: rgba(10,13,4,0.65);
+  line-height: 1.65;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+.final.on-green .btn-primary {
+  background: var(--bg);
+  color: var(--green);
+}
+.final.on-green .btn-ghost {
+  color: rgba(10,13,4,0.7);
+  border-color: rgba(10,13,4,0.25);
+}
+.final.on-green .btn-ghost:hover { color: var(--bg); border-color: rgba(10,13,4,0.55); }
+
+/* ── Footer ────────────────────────────────────────────────── */
+footer {
+  background: #ffffff;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding: clamp(3rem, 6vw, 5rem) 0 2.5rem;
+}
+.foot-top {
+  display: grid;
+  grid-template-columns: 1fr 140px 160px;
+  gap: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.foot-signup h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0A0D04;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin-bottom: 1.25rem;
+  max-width: 260px;
+}
+.foot-signup h3 em { font-weight: 700; color: var(--green); }
+.capture {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+  padding-bottom: 0.5rem;
+  max-width: 300px;
+}
+.capture .ph {
+  flex: 1;
+  font-size: 0.8rem;
+  color: rgba(0,0,0,0.4);
+}
+.capture .go {
+  color: var(--green);
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity 0.18s;
+}
+.capture .go:hover { opacity: 0.7; }
+.foot-col .colhead {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(0,0,0,0.4);
+  margin-bottom: 1.1rem;
+}
+.foot-col ul { display: flex; flex-direction: column; gap: 0.55rem; }
+.foot-col ul li a {
+  font-size: 0.82rem;
+  color: rgba(0,0,0,0.5);
+  transition: color 0.18s;
+}
+.foot-col ul li a:hover { color: #0A0D04; }
+.foot-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  font-size: 0.72rem;
+  color: rgba(0,0,0,0.35);
+  flex-wrap: wrap;
+}
+.foot-bottom em { font-style: italic; color: rgba(0,0,0,0.45); }
+footer .wordmark { color: #0A0D04; }
+footer .wordmark .macron::after { background: var(--green); }
+
+/* ── Pricing section: CSAliceMono, uppercase, non-italic ── */
 @font-face {
   font-family: 'CSAliceMono';
   src: url('CSAliceMono-Regular_demo-BF673d3a6435a92.otf') format('opentype');
-  font-weight: normal; font-style: normal;
+  font-weight: normal;
+  font-style: normal;
 }
-:root {
-  --bg:     #F8F8F5;
-  --bg-alt: #EFEFE9;
-  --dark:   #0E1020;
-  --text:   #111110;
-  --dim:    rgba(17,17,16,0.60);
-  --muted:  rgba(17,17,16,0.40);
-  --green:  #C0F53D;
-  --glabel: #4C6900;
-  --border: rgba(17,17,16,0.09);
-  --shadow: 0 2px 24px rgba(17,17,16,0.07);
-  --max-w:  1120px;
-  --r:      14px;
+/* ── CSAliceMono: alle label/tag/stamp/eyebrow teksten ── */
+.section-head .num,
+.hero-eyebrow .label,
+.hero-meta,
+.intake .field .k,
+.orbit .ring text,
+.stat-card .stamp,
+.pill-badge,
+.ip-title .tag,
+.step .day,
+.price-block .corner,
+.final.on-green .eyebrow,
+.foot-col .colhead,
+#pricing .section-head h2.title em {
+  font-family: 'CSAliceMono', monospace;
+  text-transform: uppercase;
+  font-style: normal;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{
-  background:var(--bg);color:var(--text);
-  font-family:system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
-  font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased;
-}
-a{color:inherit;text-decoration:none;}
-button{cursor:pointer;border:none;background:none;font:inherit;color:inherit;}
-ul{list-style:none;}
-summary{list-style:none;}
-summary::-webkit-details-marker{display:none;}
-
-em{color:var(--text);font-style:italic;}
-h1,h2,h3,h4{font-weight:900;line-height:1.05;letter-spacing:-0.03em;color:var(--text);}
-p{color:var(--dim);line-height:1.72;}
-
-.container{max-width:var(--max-w);margin:0 auto;padding:0 clamp(20px,5vw,60px);}
-section{padding:clamp(72px,10vw,128px) 0;position:relative;}
-
-/* ── Blobs ── */
-.blob{
-  position:absolute;border-radius:50%;pointer-events:none;z-index:0;
-}
-.blob-lime  {background:radial-gradient(circle,rgba(192,245,61,0.42),transparent 68%);}
-.blob-purple{background:radial-gradient(circle,rgba(196,181,253,0.50),transparent 68%);}
-.blob-teal  {background:radial-gradient(circle,rgba(94,234,212,0.40),transparent 68%);}
-
-/* ── Buttons ── */
-.btn{
-  display:inline-flex;align-items:center;gap:0.4rem;
-  padding:0.8rem 1.55rem;border-radius:100px;
-  font-size:0.875rem;font-weight:700;letter-spacing:0.01em;
-  transition:opacity 0.18s,transform 0.18s;white-space:nowrap;cursor:pointer;
-}
-.btn:hover{opacity:0.86;transform:translateY(-1px);}
-.btn-primary{background:var(--text);color:var(--bg);}
-.btn-ghost{
-  background:transparent;color:var(--dim);
-  border:1.5px solid rgba(17,17,16,0.2);
-}
-.btn-ghost:hover{color:var(--text);border-color:rgba(17,17,16,0.45);}
-.arr{font-style:normal;}
-.ctas{display:flex;gap:0.875rem;flex-wrap:wrap;}
-
-/* ── Wordmark ── */
-.wordmark{
-  font-size:1.2rem;font-weight:900;letter-spacing:0.1em;
-  text-transform:uppercase;color:var(--text);
-  font-family:system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
-}
-.wordmark .macron{position:relative;display:inline-block;}
-.wordmark .macron::after{
-  content:'';position:absolute;top:-3px;left:0;right:0;
-  height:2px;background:var(--green);border-radius:1px;
+#pricing .section-head h2.title {
+  text-transform: uppercase;
 }
 
-/* ── Nav ── */
-nav.top{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:1.1rem 0;
-  transition:background 0.3s,box-shadow 0.3s;
+/* ── Waarom Fraim (story block) ────────────────────────────── */
+.story-block {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 4rem 0;
 }
-nav.top.scrolled{
-  background:rgba(248,248,245,0.93);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  box-shadow:0 1px 0 var(--border);
+.story-block h2 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 2rem;
 }
-nav.top .container{display:flex;align-items:center;justify-content:space-between;}
-.links{display:flex;align-items:center;gap:2rem;}
-.links a:not(.btn){font-size:0.82rem;color:var(--muted);transition:color 0.18s;}
-.links a:not(.btn):hover{color:var(--text);}
-
-/* ── Hero ── */
-header.hero{
-  min-height:100vh;display:flex;align-items:center;
-  padding:clamp(120px,14vw,160px) 0 clamp(60px,8vw,96px);
-  position:relative;overflow:hidden;
-  background:#0A0D04;
+.story-block p {
+  font-size: 1rem;
+  color: var(--dim);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
 }
-.hero-blobs{position:absolute;inset:0;z-index:0;}
-.hb1{width:580px;height:580px;top:-100px;left:-140px;filter:blur(72px);}
-.hb2{width:500px;height:500px;top:10%;right:-100px;filter:blur(80px);}
-.hb3{width:420px;height:420px;bottom:-80px;left:38%;filter:blur(90px);}
-#heroMeshBg{position:absolute;inset:0;z-index:1;pointer-events:none;}
-#heroMeshBg canvas{width:100%!important;height:100%!important;display:block;}
-.hero-content{position:relative;z-index:2;max-width:800px;}
-header.hero .hero-blobs{opacity:0.25;}
-.hero-eyebrow{
-  display:inline-flex;align-items:center;gap:0.6rem;
-  background:rgba(192,245,61,0.18);border:1px solid rgba(192,245,61,0.4);
-  border-radius:100px;padding:0.3rem 0.9rem 0.3rem 0.65rem;
-  margin-bottom:2rem;
-}
-.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--glabel);flex-shrink:0;}
-.hero-eyebrow span{
-  font-family:'CSAliceMono',monospace;
-  font-size:0.65rem;font-weight:700;letter-spacing:0.14em;
-  text-transform:uppercase;color:var(--glabel);font-style:normal;
-}
-h1.hero-headline{
-  font-size:clamp(3rem,6.5vw,5.8rem);
-  font-weight:900;line-height:1.0;letter-spacing:-0.04em;
-  color:var(--text);margin-bottom:1.75rem;
-}
-h1.hero-headline em{font-style:italic;color:var(--text);}
-.hero-sub{
-  font-size:clamp(1rem,1.4vw,1.12rem);color:var(--dim);
-  line-height:1.7;max-width:560px;margin-bottom:2.25rem;
-}
-.hero-sub em{font-style:italic;color:var(--text);}
-.hero-cta{display:flex;gap:0.875rem;flex-wrap:wrap;margin-bottom:3rem;}
-.hero-stats{
-  display:flex;gap:2.5rem;flex-wrap:wrap;align-items:center;
-  border-top:1px solid var(--border);padding-top:1.75rem;
-}
-.hstat{display:flex;flex-direction:column;gap:0.2rem;}
-.hstat .hval{font-size:1.35rem;font-weight:900;letter-spacing:-0.03em;color:var(--text);}
-.hstat .hlbl{font-size:0.72rem;color:var(--muted);letter-spacing:0.05em;}
-/* ── Hero dark overrides ── */
-header.hero h1.hero-headline,header.hero h1.hero-headline em{color:#FAFFF3;}
-header.hero .hero-sub{color:rgba(250,255,243,0.72);}
-header.hero .hero-sub em{color:#FAFFF3;}
-header.hero .hero-eyebrow span{color:#C0F53D;}
-header.hero .hero-eyebrow .dot{background:#C0F53D;}
-header.hero .hero-stats{border-top-color:rgba(250,255,243,0.12);}
-header.hero .hstat .hval{color:#FAFFF3;}
-header.hero .hstat .hlbl{color:rgba(250,255,243,0.40);}
-header.hero .btn-primary{background:var(--green);color:#0A0D04;}
-header.hero .btn-ghost{color:rgba(250,255,243,0.72);border-color:rgba(250,255,243,0.25);}
-header.hero .btn-ghost:hover{color:#FAFFF3;border-color:rgba(250,255,243,0.50);}
-
-/* ── Section head ── */
-.section-head{margin-bottom:3rem;}
-.section-head .num{
-  font-family:'CSAliceMono',monospace;
-  font-size:0.65rem;color:var(--muted);text-transform:uppercase;
-  letter-spacing:0.14em;margin-bottom:0.8rem;display:block;font-style:normal;
-}
-.section-head h2{
-  font-size:clamp(1.8rem,3.2vw,2.8rem);font-weight:900;
-  letter-spacing:-0.03em;margin-bottom:0.65rem;line-height:1.06;
-}
-.section-head h2 em{font-style:italic;color:var(--text);}
-.section-head .sub{
-  font-size:0.9rem;color:var(--dim);line-height:1.65;
-  max-width:540px;display:block;
+.story-block .closing {
+  font-weight: 700;
+  color: var(--ivory);
+  font-size: 1.05rem;
+  margin-top: 2rem;
+  line-height: 1.5;
 }
 
-/* ── Stats ── */
-.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
-.stat-card{
-  background:#fff;border:1px solid var(--border);
-  border-radius:var(--r);padding:2.25rem 2rem;
-  box-shadow:var(--shadow);
+/* ── Cases ─────────────────────────────────────────────────── */
+.cases-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
 }
-.stat-card .stamp{
-  font-family:'CSAliceMono',monospace;
-  font-size:0.6rem;text-transform:uppercase;letter-spacing:0.12em;
-  color:var(--muted);margin-bottom:1.25rem;display:block;font-style:normal;
+.case-card {
+  background: var(--olive2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 2rem 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
-.stat-card .figure{
-  font-size:clamp(2.4rem,4vw,3.4rem);font-weight:900;
-  letter-spacing:-0.04em;line-height:1;margin-bottom:0.75rem;
-  color:var(--text);
+.case-card .case-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-family: 'CSAliceMono', monospace;
+  font-style: normal;
 }
-.stat-card .figure em{color:var(--text);font-style:normal;}
-.stat-card .note{font-size:0.85rem;color:var(--dim);line-height:1.65;}
-
-/* ── Problem ── */
-.problem-section{background:var(--bg-alt);}
-.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
-.problem-card{
-  background:#fff;border-radius:var(--r);padding:2rem;
-  box-shadow:var(--shadow);border:1px solid var(--border);
+.case-card h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
 }
-.problem-card .mk{
-  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;
-  color:var(--muted);margin-bottom:1rem;display:block;
+.case-card .case-pitch {
+  font-size: 0.88rem;
+  color: var(--dim);
+  line-height: 1.65;
 }
-.problem-card h3{
-  font-size:1rem;font-weight:800;line-height:1.4;
-  letter-spacing:-0.01em;margin-bottom:0.75rem;
+.case-card table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
 }
-.problem-card h3 em{font-style:italic;color:var(--text);}
-.problem-card .annot{font-size:0.78rem;color:var(--muted);font-style:italic;}
-
-/* ── System panel (dark inset) ── */
-.system-panel{
-  background:var(--dark);border-radius:20px;
-  padding:3rem 3.5rem;margin-top:2.5rem;
+.case-card table th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
 }
-.system-panel .pill-badge{
-  display:inline-block;
-  font-family:'CSAliceMono',monospace;
-  font-size:0.6rem;text-transform:uppercase;letter-spacing:0.14em;
-  background:rgba(192,245,61,0.14);color:#C0F53D;
-  border:1px solid rgba(192,245,61,0.28);
-  border-radius:100px;padding:0.25rem 0.75rem;
-  margin-bottom:1rem;font-style:normal;display:block;width:fit-content;
+.case-card table td {
+  padding: 0.4rem 0;
+  color: var(--dim);
+  border-bottom: 1px solid rgba(250,255,243,0.04);
+  vertical-align: top;
 }
-.system-panel h2{
-  font-size:clamp(1.6rem,3vw,2.4rem);color:#FAFFF3;
-  letter-spacing:-0.03em;font-weight:900;margin-bottom:2rem;
+.case-card table td:first-child { color: var(--ivory); font-weight: 600; padding-right: 1rem; white-space: nowrap; }
+.case-card .case-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-top: auto;
+  text-decoration: none;
 }
-.system-panel h2 em{color:#C0F53D;font-style:italic;}
-.ip-grid{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:1px;margin-top:2.5rem;
-  border:1px solid rgba(250,255,243,0.08);
-  border-radius:14px;overflow:hidden;
-}
-.ip-card{
-  padding:2rem 2.25rem;position:relative;
-  background:rgba(250,255,243,0.025);
-  overflow:hidden;cursor:default;
-  transition:background 0.25s;
-}
-.ip-card:nth-child(1),.ip-card:nth-child(2){border-bottom:1px solid rgba(250,255,243,0.08);}
-.ip-card:nth-child(1),.ip-card:nth-child(3){border-right:1px solid rgba(250,255,243,0.08);}
-.ip-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:var(--green);transform:scaleX(0);transform-origin:left;
-  transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);
-}
-.ip-card:hover::before{transform:scaleX(1);}
-.ip-card:hover{background:rgba(192,245,61,0.06);}
-.ip-card:hover .ip-title{color:#fff;}
-.ip-card:hover .ip-desc{color:rgba(250,255,243,0.75);}
-.ip-card.reveal{transform:translateX(-28px) scale(0.97);}
-.ip-card.reveal.in{transform:translateX(0) scale(1);}
-.ip-num{
-  font-size:4.5rem;font-weight:900;letter-spacing:-0.04em;
-  color:rgba(192,245,61,0.09);line-height:1;
-  margin-bottom:0.75rem;display:block;
-  transition:color 0.25s;
-}
-.ip-card:hover .ip-num{color:rgba(192,245,61,0.2);}
-.ip-title{font-size:0.95rem;font-weight:700;color:#FAFFF3;line-height:1.4;margin-bottom:0.6rem;display:block;}
-.ip-title em{color:#C0F53D;font-style:italic;}
-.ip-title .tag{
-  display:inline-block;margin-left:0.5rem;
-  font-family:'CSAliceMono',monospace;
-  font-size:0.54rem;text-transform:uppercase;letter-spacing:0.1em;
-  background:rgba(192,245,61,0.14);color:#C0F53D;
-  border-radius:100px;padding:0.15rem 0.5rem;
-  vertical-align:middle;font-style:normal;
-}
-.ip-desc{font-size:0.86rem;color:rgba(250,255,243,0.50);line-height:1.72;transition:color 0.25s;}
-.ip-card.is-accent{background:rgba(192,245,61,0.05);}
-@keyframes card-pulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(192,245,61,0);}
-  50%{box-shadow:0 0 32px 6px rgba(192,245,61,0.08);}
-}
-.ip-card.is-accent.in{animation:card-pulse 4s ease-in-out 0.8s infinite;}
-
-/* ── Story block ── */
-.story-section{background:var(--bg-alt);}
-.story-block{max-width:640px;}
-.story-block p{
-  font-size:1rem;color:var(--dim);line-height:1.82;margin-bottom:1.5rem;
-}
-.story-block .closing{
-  font-size:1.05rem;font-weight:700;color:var(--text);
-  margin-top:2rem;line-height:1.5;font-style:normal;
+.case-card .case-cta:hover { text-decoration: underline; }
+.cases-note {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 640px;
 }
 
-/* ── Deliverables ── */
-.deliv{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem;}
-.pack{
-  background:#fff;border:1px solid var(--border);
-  border-radius:var(--r);padding:2.25rem 2rem;
-  box-shadow:var(--shadow);
+/* ── Lezen ─────────────────────────────────────────────────── */
+.lezen-section {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  border-top: 1px solid var(--border);
 }
-.pack header{
-  display:flex;align-items:flex-start;justify-content:space-between;
-  gap:1.5rem;margin-bottom:1.75rem;
-  padding-bottom:1.5rem;border-bottom:1px solid var(--border);
+.lezen-header {
+  margin-bottom: 2.5rem;
 }
-.pack header h3{font-size:1.1rem;font-weight:800;line-height:1.3;letter-spacing:-0.015em;}
-.pack header h3 em{font-style:italic;color:var(--dim);}
-.pack header .price{text-align:right;}
-.pack header .price .big{font-size:1.4rem;font-weight:900;letter-spacing:-0.03em;}
-.pack header .price small{display:block;font-size:0.72rem;color:var(--muted);margin-top:0.2rem;}
-.pack ul{display:flex;flex-direction:column;gap:0.75rem;}
-.pack ul li{display:flex;gap:1rem;font-size:0.87rem;color:var(--dim);line-height:1.55;}
-.pack ul li .ix{color:var(--muted);flex-shrink:0;font-size:0.75rem;padding-top:0.1em;}
-.pack ul li .qty{color:var(--muted);font-size:0.8rem;margin-left:0.35rem;}
-
-/* ── Cases Carousel ── */
-.cases-section{background:var(--bg-alt);overflow:hidden;}
-.cases-carousel-head{display:flex;align-items:center;justify-content:flex-end;margin-top:2rem;margin-bottom:1.5rem;}
-.cases-carousel-arrows{display:flex;gap:0.5rem;}
-.cases-arrow-btn{
-  display:flex;align-items:center;justify-content:center;
-  width:40px;height:40px;border-radius:50%;
-  border:1px solid var(--border);background:transparent;
-  color:var(--text);cursor:pointer;
-  transition:background 0.15s,border-color 0.15s;
+.lezen-header h2 {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.6rem;
 }
-.cases-arrow-btn svg{display:block;}
-.cases-arrow-btn:hover:not(:disabled){background:rgba(17,17,16,0.07);}
-.cases-arrow-btn:disabled{opacity:0.25;cursor:default;pointer-events:none;}
-.cases-scroll{
-  display:flex;gap:20px;
-  overflow-x:auto;scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  padding-left:max(clamp(20px,5vw,60px),calc((100vw - 1120px) / 2 + 60px));
-  padding-right:max(clamp(20px,5vw,60px),calc((100vw - 1120px) / 2 + 60px));
-  padding-bottom:4px;
+.lezen-header p {
+  font-size: 0.88rem;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.65;
 }
-.cases-scroll::-webkit-scrollbar{display:none;}
-.case-slide{
-  flex:0 0 480px;scroll-snap-align:start;
-  border-radius:12px;overflow:hidden;
-  position:relative;aspect-ratio:5/4;min-height:320px;
-  text-decoration:none;display:block;flex-shrink:0;
+.lezen-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
 }
-.case-slide img{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:center;
-  transition:transform 0.35s ease;
+.lezen-card {
+  background: var(--olive);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 180px;
 }
-.case-slide:hover img{transform:scale(1.05);}
-.case-slide-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(14,16,32,0) 0%,rgba(14,16,32,0.3) 40%,rgba(14,16,32,0.84) 100%);
+.lezen-card.is-live { border-color: rgba(192,245,61,0.2); }
+.lezen-card h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
 }
-.case-slide-content{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding:2rem 2.25rem;color:#fff;
+.lezen-card p {
+  font-size: 0.8rem;
+  color: var(--dim);
+  line-height: 1.6;
+  flex: 1;
 }
-.case-slide-label{
-  font-family:'CSAliceMono',monospace;
-  font-size:0.58rem;font-weight:700;letter-spacing:0.15em;
-  text-transform:uppercase;color:var(--green);
-  margin-bottom:0.65rem;display:block;
+.lezen-card .lezen-cta {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--green);
+  text-decoration: none;
 }
-.case-slide-content h3{
-  font-size:1.2rem;font-weight:800;line-height:1.25;
-  letter-spacing:-0.02em;margin-bottom:0.55rem;
-}
-.case-slide-desc{
-  font-size:0.86rem;line-height:1.6;
-  color:rgba(255,255,255,0.75);
-  display:-webkit-box;-webkit-line-clamp:2;
-  -webkit-box-orient:vertical;overflow:hidden;
-  margin-bottom:1.5rem;
-}
-.case-slide-cta{
-  display:inline-flex;align-items:center;gap:0.4rem;
-  font-size:0.83rem;font-weight:700;color:#fff;
-  transition:gap 0.2s;
-}
-.case-slide:hover .case-slide-cta{gap:0.7rem;}
-.cases-dots{display:flex;justify-content:center;gap:8px;margin-top:1.75rem;}
-.cases-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:rgba(17,17,16,0.18);
-  border:none;cursor:pointer;padding:0;
-  transition:background 0.2s;
-}
-.cases-dot.active{background:var(--text);}
-@media(max-width:768px){
-  .cases-carousel-arrows{display:none;}
-  .case-slide{flex:0 0 min(300px,82vw);}
+.lezen-card .lezen-cta:hover { text-decoration: underline; }
+.lezen-card .soon {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
 }
 
-/* ── Process ── */
-.process{
-  display:grid;grid-template-columns:repeat(5,1fr);
-  gap:0;margin-top:3rem;
-  position:relative;
+/* ── Tweaks panel ──────────────────────────────────────────── */
+.tweaks-panel {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 200;
+  background: var(--olive2);
+  border: 1px solid rgba(192,245,61,0.25);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  width: 220px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.25s, transform 0.25s;
 }
-.process::before{
-  content:'';position:absolute;
-  top:7px;left:0;right:0;height:1px;
-  background:var(--border);z-index:0;
+.tweaks-panel.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
-.step{
-  padding:2.5rem 1.75rem 0 0;
-  position:relative;z-index:1;
+.tweaks-panel header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
-.step::before{
-  content:'';position:absolute;
-  top:0;left:0;
-  width:15px;height:15px;border-radius:50%;
-  background:var(--green);
-  border:3px solid var(--bg);
-  box-shadow:0 0 0 1px rgba(17,17,16,0.12);
+.tweaks-panel .ttl {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ivory);
 }
-.step .day{
-  font-family:'CSAliceMono',monospace;
-  font-size:0.59rem;text-transform:uppercase;letter-spacing:0.12em;
-  color:var(--muted);display:block;margin-bottom:1rem;font-style:normal;
+.tweaks-panel .ttl em { color: var(--green); font-size: 0.9em; }
+.tp-close {
+  font-size: 1rem;
+  color: var(--muted);
+  transition: color 0.18s;
 }
-.step .day em{font-style:italic;color:var(--glabel);}
-.step h4{font-size:0.95rem;font-weight:800;line-height:1.35;margin-bottom:0.65rem;}
-.step h4 em{font-style:italic;color:var(--dim);}
-.step p{font-size:0.82rem;color:var(--dim);line-height:1.65;margin-bottom:0.75rem;}
-.step .foot{font-size:0.74rem;color:var(--muted);font-style:italic;}
+.tp-close:hover { color: var(--ivory); }
+.tp-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+.tp-row { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.tp-swatch {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  transition: border-color 0.18s;
+  cursor: pointer;
+}
+.tp-swatch.active { border-color: var(--green); }
+.tp-swatch .sw {
+  width: 18px; height: 18px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.tp-swatch em {
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+.tp-hint {
+  font-size: 0.65rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
 
-/* ── Pricing ── */
-.pricing-section{background:var(--bg);}
-.price-block{
-  background:#fff;border:1px solid var(--border);
-  border-radius:20px;padding:3rem;
-  box-shadow:var(--shadow);position:relative;overflow:hidden;
-  margin-top:2.5rem;
+/* ── Reveal animations ─────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  transition-delay: var(--delay, 0ms);
 }
-.price-block .corner{
-  font-family:'CSAliceMono',monospace;
-  position:absolute;top:1.75rem;right:2rem;
-  font-size:0.58rem;text-transform:uppercase;letter-spacing:0.12em;
-  color:var(--muted);font-style:normal;
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
 }
-.price-grid{display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:start;}
-.price-grid h3{font-size:1.3rem;font-weight:900;letter-spacing:-0.025em;margin-bottom:0.75rem;line-height:1.2;}
-.price-grid h3 em{font-style:italic;color:var(--dim);}
-.price-grid .psub{font-size:0.9rem;color:var(--dim);line-height:1.7;max-width:460px;margin-bottom:1.75rem;}
-.price-grid .figure{text-align:right;min-width:200px;}
-.price-grid .figure .row{display:flex;align-items:baseline;gap:0.6rem;justify-content:flex-end;}
-.price-grid .figure .big{font-size:clamp(2.4rem,4vw,3.6rem);font-weight:900;letter-spacing:-0.04em;}
-.price-grid .figure .unit{font-size:0.82rem;color:var(--muted);}
-.price-grid .figure .sub-row{display:flex;align-items:baseline;gap:0.6rem;justify-content:flex-end;margin-top:0.35rem;}
-.price-grid .figure .med{font-size:1.4rem;font-weight:700;letter-spacing:-0.02em;color:var(--dim);}
-.price-grid ul.details{margin-top:1.5rem;}
-.price-grid ul.details li{
-  display:flex;justify-content:space-between;gap:1.5rem;
-  padding:0.55rem 0;border-bottom:1px solid rgba(17,17,16,0.05);font-size:0.8rem;
+.stat-card.reveal {
+  transform: translateY(28px) scale(0.97);
 }
-.price-grid ul.details li .k{color:var(--muted);white-space:nowrap;}
-.price-grid ul.details li .v{color:var(--dim);text-align:right;}
-.price-grid ul.details li .v em{font-style:italic;color:var(--glabel);}
+.stat-card.reveal.in {
+  transform: translateY(0) scale(1);
+}
+.force-reveal .reveal {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
 
-/* ── Who ── */
-.who-section{background:var(--bg-alt);}
-.who{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem;}
-.col{border-radius:var(--r);padding:2.25rem 2rem;}
-.col.fit{background:#fff;border:1px solid var(--border);box-shadow:var(--shadow);}
-.col.notfit{background:rgba(17,17,16,0.03);border:1px solid var(--border);}
-.col header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;}
-.col header h3{font-size:1.05rem;font-weight:800;}
-.col header h3 em{font-style:italic;color:var(--dim);}
-.col header .ix{font-size:0.75rem;color:var(--muted);}
-.col ul{display:flex;flex-direction:column;gap:0.75rem;}
-.col ul li{display:flex;gap:0.75rem;font-size:0.87rem;color:var(--dim);line-height:1.55;}
-.col ul li .sym{flex-shrink:0;font-size:0.9rem;}
-.col.fit ul li .sym{color:var(--glabel);}
-.col.notfit ul li .sym{color:var(--muted);}
-.col ul li .text{flex:1;}
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 920px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .intake { max-width: 480px; }
+  .manifesto { grid-template-columns: 1fr; gap: 2rem; }
+  .final.on-green { grid-template-columns: 1fr; }
+  .final.on-green .orbit { display: none; }
+}
 
-/* ── FAQ ── */
-.faq-section{background:var(--bg);}
-.faq{display:flex;flex-direction:column;}
-details.q{border-bottom:1px solid var(--border);}
-details.q summary{
-  display:flex;align-items:center;gap:1.25rem;
-  padding:1.3rem 0;cursor:pointer;
-  font-size:0.95rem;font-weight:500;color:var(--text);
-  transition:color 0.18s;
+@media (max-width: 900px) {
+  .stat-grid { grid-template-columns: 1fr; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .problem-card { padding: 2rem 0 !important; border-left: none !important; }
+  .solution-grid { grid-template-columns: 1fr; }
+  .process { grid-template-columns: 1fr; border-top: none; }
+  .step { padding: 1.5rem 0 !important; border-right: none !important; border-left: none !important; border-top: 1px solid var(--border) !important; }
+  .deliv { grid-template-columns: 1fr; }
+  .who { grid-template-columns: 1fr; }
+  .price-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .foot-top { grid-template-columns: 1fr; gap: 2rem; }
+  .ip-row { grid-template-columns: 30px 1fr; }
+  .ip-row .ip-desc { grid-column: 2; }
+  .ip-row.is-accent { margin: 0.5rem 0; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .lezen-grid { grid-template-columns: 1fr 1fr; }
 }
-details.q summary:hover{color:var(--muted);}
-details.q summary .qix{font-size:0.85rem;color:var(--muted);flex-shrink:0;min-width:36px;}
-details.q summary>span:nth-child(2){flex:1;}
-.toggle{
-  width:22px;height:22px;
-  border:1.5px solid var(--border);border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;position:relative;transition:border-color 0.2s;
-}
-details.q[open] summary .toggle{border-color:var(--text);}
-.toggle::before,.toggle::after{
-  content:'';position:absolute;
-  background:var(--muted);border-radius:1px;
-  transition:transform 0.25s,background 0.2s;
-}
-.toggle::before{width:8px;height:1.5px;}
-.toggle::after{width:1.5px;height:8px;}
-details.q[open] summary .toggle::before{background:var(--text);}
-details.q[open] summary .toggle::after{transform:rotate(90deg);background:var(--text);}
-.answer{
-  padding:0 0 1.4rem calc(36px + 1.25rem);
-  font-size:0.87rem;color:var(--dim);line-height:1.72;max-width:600px;
-}
-.answer em{font-style:italic;color:var(--glabel);}
 
-/* ── Lezen ── */
-.lezen-section{
-  background:var(--bg);border-top:1px solid var(--border);
-  padding:clamp(4rem,8vw,7rem) 0;
+@media (max-width: 600px) {
+  .lezen-grid { grid-template-columns: 1fr; }
 }
-.lezen-header{margin-bottom:2.5rem;}
-.lezen-header h2{font-size:clamp(1.4rem,2.5vw,2rem);font-weight:900;letter-spacing:-0.025em;margin-bottom:0.6rem;}
-.lezen-header p{font-size:0.88rem;color:var(--muted);max-width:520px;line-height:1.65;}
-.lezen-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;}
-.lezen-card{
-  background:#fff;border:1px solid var(--border);
-  border-radius:var(--r);padding:1.5rem;
-  display:flex;flex-direction:column;gap:0.75rem;min-height:180px;
-  box-shadow:var(--shadow);
-}
-.lezen-card.is-live{border-color:rgba(192,245,61,0.45);}
-.lezen-card h4{font-size:0.9rem;font-weight:700;line-height:1.4;letter-spacing:-0.01em;}
-.lezen-card p{font-size:0.8rem;color:var(--dim);line-height:1.6;flex:1;}
-.lezen-card .lezen-cta{font-size:0.8rem;font-weight:700;color:var(--glabel);}
-.lezen-card .lezen-cta:hover{text-decoration:underline;}
-.lezen-card .soon{font-size:0.8rem;color:var(--muted);font-style:italic;}
 
-/* ── Final CTA (dark) ── */
-.final-wrap{padding:clamp(48px,7vw,80px) 0 clamp(72px,10vw,128px);background:var(--bg);}
-.final.on-dark{
-  background:var(--dark);color:#FAFFF3;
-  border-radius:20px;padding:clamp(2.5rem,5vw,4.5rem);
-  position:relative;overflow:hidden;
-  display:grid;grid-template-columns:1fr 200px;gap:3rem;align-items:center;
+@media (max-width: 820px) {
+  .links a:not(.btn) { display: none; }
 }
-.final-bg-blobs{position:absolute;inset:0;z-index:0;pointer-events:none;}
-.fbg1{
-  position:absolute;width:420px;height:420px;top:-100px;left:-80px;
-  background:radial-gradient(circle,rgba(192,245,61,0.16),transparent 70%);
-  border-radius:50%;
-}
-.fbg2{
-  position:absolute;width:320px;height:320px;bottom:-80px;right:60px;
-  background:radial-gradient(circle,rgba(196,181,253,0.18),transparent 70%);
-  border-radius:50%;
-}
-.final.on-dark>*{position:relative;z-index:1;}
-.final.on-dark .eyebrow{
-  font-family:'CSAliceMono',monospace;
-  font-size:0.65rem;font-weight:700;letter-spacing:0.18em;
-  text-transform:uppercase;color:rgba(250,255,243,0.4);
-  margin-bottom:1rem;display:block;font-style:normal;
-}
-.final.on-dark h2{
-  font-size:clamp(1.8rem,3.5vw,2.9rem);color:#FAFFF3;
-  letter-spacing:-0.03em;margin-bottom:0.75rem;font-weight:900;
-}
-.final.on-dark h2 em{color:var(--green);font-style:italic;}
-.final.on-dark p.sub{
-  font-size:0.92rem;color:rgba(250,255,243,0.52);
-  line-height:1.65;max-width:480px;margin-bottom:2rem;
-}
-.final.on-dark .btn-primary{background:var(--green);color:#0E1020;}
-.final.on-dark .btn-ghost{
-  color:rgba(250,255,243,0.6);border-color:rgba(250,255,243,0.18);
-}
-.final.on-dark .btn-ghost:hover{color:#FAFFF3;border-color:rgba(250,255,243,0.45);}
-.final-stats{display:flex;flex-direction:column;gap:0.75rem;}
-.final-stat{
-  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
-  border-radius:12px;padding:1.1rem 1.25rem;text-align:right;
-}
-.final-stat .fs-num{
-  font-size:1.6rem;font-weight:900;letter-spacing:-0.04em;
-  color:var(--green);line-height:1;margin-bottom:0.2rem;
-}
-.final-stat .fs-label{font-size:0.7rem;color:rgba(250,255,243,0.42);letter-spacing:0.04em;}
 
-/* ── Footer ── */
-footer{
-  background:#fff;border-top:1px solid var(--border);
-  padding:clamp(3rem,6vw,5rem) 0 2.5rem;
-}
-.foot-top{
-  display:flex;gap:3rem;flex-wrap:wrap;
-  padding-bottom:3rem;margin-bottom:2.5rem;
-  border-bottom:1px solid var(--border);
-}
-.foot-brand{
-  overflow:hidden;
-  padding:0.75rem 0 1.75rem;
-  border-bottom:1px solid var(--border);
-  margin-bottom:1.5rem;
-}
-.foot-big-wordmark{
-  font-size:22vw;font-weight:900;
-  letter-spacing:-0.04em;line-height:0.92;
-  color:var(--text);text-decoration:none;
-  display:block;white-space:nowrap;
-}
-.foot-signup h3{
-  font-size:1rem;font-weight:700;color:var(--text);
-  line-height:1.4;letter-spacing:-0.01em;margin-bottom:1.25rem;max-width:260px;
-}
-.foot-signup h3 em{font-style:italic;color:var(--glabel);}
-.capture{
-  display:flex;align-items:center;gap:1rem;
-  border-bottom:1.5px solid var(--border);padding-bottom:0.5rem;max-width:300px;
-}
-.capture .ph{flex:1;font-size:0.8rem;color:var(--muted);}
-.capture .go{color:var(--text);font-size:1.1rem;cursor:pointer;transition:opacity 0.18s;}
-.capture .go:hover{opacity:0.5;}
-.foot-col .colhead{
-  font-family:'CSAliceMono',monospace;
-  font-size:0.58rem;text-transform:uppercase;letter-spacing:0.18em;
-  color:var(--muted);margin-bottom:1.1rem;display:block;font-style:normal;
-}
-.foot-col ul{display:flex;flex-direction:column;gap:0.55rem;}
-.foot-col ul li a{font-size:0.82rem;color:var(--muted);transition:color 0.18s;}
-.foot-col ul li a:hover{color:var(--text);}
-.foot-bottom{
-  display:flex;justify-content:space-between;align-items:center;
-  gap:2rem;font-size:0.72rem;color:var(--muted);flex-wrap:wrap;
-}
-.foot-bottom em{font-style:italic;}
-footer .wordmark{color:var(--text);}
-footer .wordmark .macron::after{background:var(--green);}
-
-/* ── Blob drift animations ── */
-@keyframes drift1{
-  0%,100%{transform:translate(0,0) scale(1);}
-  33%{transform:translate(55px,-45px) scale(1.08);}
-  66%{transform:translate(-35px,50px) scale(0.95);}
-}
-@keyframes drift2{
-  0%,100%{transform:translate(0,0) scale(1);}
-  40%{transform:translate(-55px,35px) scale(1.06);}
-  70%{transform:translate(45px,-35px) scale(0.97);}
-}
-@keyframes drift3{
-  0%,100%{transform:translate(0,0) scale(1);}
-  25%{transform:translate(35px,45px) scale(1.05);}
-  60%{transform:translate(-45px,-25px) scale(1.1);}
-}
-.hb1{animation:drift1 20s ease-in-out infinite;}
-.hb2{animation:drift2 25s ease-in-out infinite;}
-.hb3{animation:drift3 18s ease-in-out infinite;}
-.fbg1{animation:drift1 22s ease-in-out infinite;}
-.fbg2{animation:drift2 28s ease-in-out infinite;}
-/* Why-section blobs */
-.why-blobs{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-.wb1{width:500px;height:500px;top:-100px;right:-80px;filter:blur(80px);animation:drift2 22s ease-in-out infinite;}
-.wb2{width:380px;height:380px;bottom:-60px;left:8%;filter:blur(90px);animation:drift3 26s ease-in-out infinite;}
-
-/* ── Reveal ── */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1);transition-delay:var(--delay,0ms);}
-.reveal.in{opacity:1;transform:translateY(0);}
-.stat-card.reveal{transform:translateY(28px) scale(0.97);}
-.stat-card.reveal.in{transform:translateY(0) scale(1);}
-.force-reveal .reveal{opacity:1 !important;transform:translateY(0) !important;}
-
-/* ── Responsive ── */
-@media(max-width:920px){
-  .final.on-dark{grid-template-columns:1fr;}
-  .final-stats{display:none;}
-}
-@media(max-width:900px){
-  .stat-grid{grid-template-columns:1fr;}
-  .problem-grid{grid-template-columns:1fr;}
-  .process{grid-template-columns:1fr;}
-  .process::before{top:0;left:7px;right:auto;width:1px;height:100%;}
-  .step{padding:0 0 2.5rem 3rem;}
-  .step::before{top:0;left:0;}
-  .deliv{grid-template-columns:1fr;}
-  .who{grid-template-columns:1fr;}
-  .price-grid{grid-template-columns:1fr;}
-  .lezen-grid{grid-template-columns:1fr 1fr;}
-  .foot-top{grid-template-columns:1fr;gap:2rem;}
-  .ip-grid{grid-template-columns:1fr;}
-  .ip-card:nth-child(1),.ip-card:nth-child(2),.ip-card:nth-child(3){border-bottom:1px solid rgba(250,255,243,0.08);}
-  .ip-card:nth-child(1),.ip-card:nth-child(3){border-right:none;}
-  .ip-num{font-size:3rem;}
-}
-@media(max-width:820px){.links a:not(.btn){display:none;}}
-@media(max-width:600px){
-  .lezen-grid{grid-template-columns:1fr;}
-  .hero-cta{flex-direction:column;}
-  .foot-bottom{flex-direction:column;align-items:flex-start;gap:1rem;}
+@media (max-width: 600px) {
+  h1.hero-headline { font-size: 2.6rem; }
+  .section-head { flex-direction: column; gap: 1rem; }
+  .hero-cta { flex-direction: column; }
+  .price-block { padding: 1.75rem 1.5rem; }
+  .pack header { flex-direction: column; gap: 0.75rem; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .hide-sm { display: none; }
 }
 </style>
 </head>
-<body>
+<body data-accent="lime">
 
-<nav class="top" id="topnav">
+<nav class="top" id="topnav" aria-label="Hoofdnavigatie">
   <div class="container">
-    <a href="#top"><span class="wordmark">FRAIM</span></a>
+    <a href="#top" class="wordmark-box" aria-label="FRAIM home">
+      <span class="wordmark">FR<span class="macron">AI</span>M</span>
+    </a>
     <div class="links">
       <a href="#problem">Probleem</a>
       <a href="#system">Systeem</a>
@@ -716,26 +1519,16 @@ footer .wordmark .macron::after{background:var(--green);}
 
 <a id="top"></a>
 
-<header class="hero">
-  <div id="heroMeshBg" aria-hidden="true"></div>
-  <div class="hero-blobs" aria-hidden="true">
-    <div class="blob blob-lime hb1"></div>
-    <div class="blob blob-purple hb2"></div>
-    <div class="blob blob-teal hb3"></div>
-  </div>
+<header class="hero" data-screen-label="Hero">
   <div class="container">
-    <div class="hero-content">
-      <div class="hero-eyebrow reveal">
-        <span class="dot"></span>
-        <span>Retentie-infrastructuur · DTC</span>
-      </div>
-      <h1 class="hero-headline reveal" style="--delay:60ms;">
+    <div class="hero-grid">
+      <h1 class="hero-headline display reveal">
         Stop met huren.<br>Begin met bezitten.
       </h1>
-      <p class="hero-sub reveal" style="--delay:140ms;">
-        FRAIM bouwt een compleet systeem (het "AI frame") dat jouw email marketing overneemt. In jouw eigen account. Binnen 14 dagen.
+      <p class="hero-sub reveal" style="--delay: 100ms;">
+        FRAIM bouwt een compleet retentie-systeem dat 80% van het werk automatisch doet. In jouw account. In 14 dagen. Daarna run jij het.
       </p>
-      <div class="hero-cta reveal" style="--delay:220ms;">
+      <div class="hero-cta reveal" style="--delay: 200ms;">
         <a href="#cta" class="btn btn-primary">Neem contact op <span class="arr">↗</span></a>
         <a href="#system" class="btn btn-ghost">Bekijk hoe het werkt</a>
       </div>
@@ -743,280 +1536,330 @@ footer .wordmark .macron::after{background:var(--green);}
   </div>
 </header>
 
+<section class="ticker-strip" aria-hidden="true">
+  <div class="ticker-track">
+    <span>BOUW · BEZIT · BESPAAR · EMAIL · EIGEN · SYSTEEM · RETENTIE · GROEI · AUTOMATIE · BOUW · BEZIT · BESPAAR · EMAIL · EIGEN · SYSTEEM · RETENTIE · GROEI · AUTOMATIE · </span>
+    <span>BOUW · BEZIT · BESPAAR · EMAIL · EIGEN · SYSTEEM · RETENTIE · GROEI · AUTOMATIE · BOUW · BEZIT · BESPAAR · EMAIL · EIGEN · SYSTEEM · RETENTIE · GROEI · AUTOMATIE · </span>
+  </div>
+</section>
+
+<section class="email-showcase">
+  <div class="showcase-sticky">
+    <div class="showcase-label">Gegenereerd door FRAIM &nbsp;·&nbsp; FuelYourBody &amp; MX&nbsp;Meals</div>
+    <div class="showcase-cards">
+
+      <!-- Card 1: FYB High Protein Soup -->
+      <div class="email-card">
+        <img src="email-mockups/1.png" alt="FuelYourBody email — High Protein Soup" style="width:100%;display:block;">
+      </div>
+
+      <!-- Card 2: FYB High Protein Soup (herhaling) -->
+      <div class="email-card">
+        <img src="email-mockups/1.png" alt="FuelYourBody email — High Protein Soup" style="width:100%;display:block;">
+      </div>
+
+      <!-- Card 3: FYB Ovengerechten -->
+      <div class="email-card">
+        <img src="email-mockups/2.png" alt="FuelYourBody email — Ovengerechten" style="width:100%;display:block;">
+      </div>
+
+      <!-- Card 4: FYB Ovengerechten (herhaling) -->
+      <div class="email-card">
+        <img src="email-mockups/2.png" alt="FuelYourBody email — Ovengerechten" style="width:100%;display:block;">
+      </div>
+
+      <!-- Card 5: MX Meals -->
+      <div class="email-card">
+        <img src="email-mockups/3.png" alt="MX Meals email — Echte Fuel voor Riders" style="width:100%;display:block;">
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <main>
 
-<section>
+<section class="about-dark" data-screen-label="Agency-trap">
+  <div class="container">
+    <h2 class="about-head reveal">De <em>"agency-trap".</em></h2>
+    <p class="about-body1 reveal" style="--delay: 60ms;">Drie frustraties die elk DTC-merk tegenkomt. Geen ervan wordt opgelost door nóg een bureau in te huren.</p>
+    <div class="about-problems reveal" style="--delay: 140ms;">
+      <div class="ap-item">
+        <span class="ap-mk">(i)</span>
+        <div>
+          <p class="ap-text">Je betaalt €3.000+/mnd aan een bureau voor werk dat 80% repetitief is.</p>
+          <span class="ap-annot">(herhaling. terugkerend. onzichtbaar.)</span>
+        </div>
+      </div>
+      <div class="ap-item">
+        <span class="ap-mk">(ii)</span>
+        <div>
+          <p class="ap-text">Je interne marketeer of jij kan niet alles: strategie, copy, design &amp; data.</p>
+          <span class="ap-annot">(één persoon. vier rollen.)</span>
+        </div>
+      </div>
+      <div class="ap-item">
+        <span class="ap-mk">(iii)</span>
+        <div>
+          <p class="ap-text">Generieke AI-output klinkt als generieke AI-output. Niet als jouw merk.</p>
+          <span class="ap-annot">(prompts ≠ een systeem.)</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-stats reveal" style="--delay: 280ms;">
+      <div class="about-stat">
+        <div class="figure">14 dagen</div>
+        <div class="lbl">Vaste oplevering</div>
+      </div>
+      <div class="about-stat">
+        <div class="figure">€32k+</div>
+        <div class="lbl">Bespaard per jaar vs. bureau</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-screen-label="Cijfers">
   <div class="container">
     <div class="section-head reveal">
-      <span class="num">01 — Drie verschillen</span>
-      <h2>Drie verschillen die <em>alles veranderen.</em></h2>
+      <span class="num">01</span>
+      <div class="right">
+        <h2 class="title">Drie verschillen die <em>alles veranderen.</em></h2>
+      </div>
     </div>
     <div class="stat-grid">
       <div class="stat-card reveal">
-        <span class="stamp">1 · BESPAAR TIJD</span>
+        <span class="stamp">№ 01 · BESPAAR TIJD</span>
         <div class="figure"><span class="cnt" data-count="14">14</span> dagen</div>
-        <span class="note">Binnen 14 dagen staat jouw frame. Op dag 15 run jij of je team het.</span>
+        <span class="note">vaste oplevering, vaste scope. op dag 15 runt je team het.</span>
       </div>
-      <div class="stat-card reveal" style="--delay:100ms;">
-        <span class="stamp">2 · BESPAAR GELD</span>
+      <div class="stat-card reveal" style="--delay: 100ms;">
+        <span class="stamp">№ 02 · BESPAAR GELD</span>
         <div class="figure"><em>€<span class="cnt" data-count="32">32</span>k</em> bespaard/jr</div>
-        <span class="note">door één middelgroot retentiebureau of 1FTE te vervangen in je eerste jaar.</span>
+        <span class="note">door één middelgroot retentiebureau te vervangen in je eerste jaar.</span>
       </div>
-      <div class="stat-card reveal" style="--delay:200ms;">
-        <span class="stamp">3 · 100% CONTROLE</span>
-        <div class="figure"><span class="cnt" data-count="100">100</span><em>% controle</em></div>
-        <span class="note">Het complete systeem, de prompts, email flows en docs staan in jouw accounts. Stop wanneer je wil en houd alles.</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="problem" class="problem-section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="num">02 — Probleem</span>
-      <h2>De <em>"agency-trap".</em></h2>
-      <span class="sub">Drie frustraties die elk DTC-merk tegenkomt. Geen ervan wordt opgelost door nóg een bureau in te huren.</span>
-    </div>
-    <div class="problem-grid">
-      <div class="problem-card reveal">
-        <span class="mk">(i)</span>
-        <h3>Je betaalt <em>€3.000+/mnd</em> aan een bureau voor werk dat 80% repetitief is.</h3>
-        <span class="annot">(herhaling. terugkerend. onzichtbaar.)</span>
-      </div>
-      <div class="problem-card reveal" style="--delay:80ms;">
-        <span class="mk">(ii)</span>
-        <h3>Je interne marketeer of jij kan niet alles: strategie, copy, design &amp; data.</h3>
-        <span class="annot">(één persoon. vier rollen.)</span>
-      </div>
-      <div class="problem-card reveal" style="--delay:160ms;">
-        <span class="mk">(iii)</span>
-        <h3>Generieke AI-output klinkt als <em>generieke AI-output</em>. Niet als jouw merk.</h3>
-        <span class="annot">(prompts ≠ een systeem.)</span>
+      <div class="stat-card reveal" style="--delay: 200ms;">
+        <span class="stamp">№ 03 · 100% CONTROLE</span>
+        <div class="figure"><span class="cnt" data-count="100">100</span><em>%</em></div>
+        <span class="note">het systeem, de prompts, flows en docs staan in jouw accounts — stop wanneer je wil en houd alles.</span>
       </div>
     </div>
   </div>
 </section>
 
-<section id="system">
+
+<section id="system" data-screen-label="Systeem">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="num">Het systeem</span>
-      <h2>Wat we <em>bouwen.</em></h2>
-    </div>
-    <div class="system-panel">
-      <div class="pill-badge reveal">FRAIM SETUP IN 14 DAGEN</div>
-      <h2 class="reveal" style="--delay:60ms;">Vier componenten. <em>Één eigenaar: jij.</em></h2>
-      <div class="ip-grid">
-        <div class="ip-card reveal" style="--delay:120ms;">
+    <div class="ivory-panel reveal">
+      <div class="ip-head">
+        <span class="pill-badge">Wat we bouwen</span>
+        <h2>Wat we het <em>best</em> bouwen.</h2>
+      </div>
+      <div class="ip-list">
+        <div class="ip-row">
           <span class="ip-num">01</span>
           <span class="ip-title">Het Claude-<em>project</em></span>
-          <p class="ip-desc">Hét brein. Merkstem, producten, klanten, acties, do's en don'ts. Allemaal vastgelegd zodat elke prompt klinkt alsof je 'm zelf schreef. Ingericht in jouw eigen account.</p>
+          <span class="ip-desc">Het brein. Merkstem, producten, klanten, aanbiedingen, do's en don'ts — vastgelegd zodat elke prompt klinkt alsof je 'm zelf schreef. Ingericht in jouw account, niet de onze.</span>
         </div>
-        <div class="ip-card reveal" style="--delay:240ms;">
+        <div class="ip-row">
           <span class="ip-num">02</span>
           <span class="ip-title">De Prompt-<em>bibliotheek</em></span>
-          <p class="ip-desc">De instructies. 25 in de praktijk geteste prompts voor het werk dat je elke week doet: campagnes, flows, briefings, audits. Met geheugen, zodat je nooit meer met een leeg scherm begint.</p>
+          <span class="ip-desc">De instructies. 25 in de praktijk geteste prompts voor het werk dat je elke week doet — campagnes, flows, briefings, audits. Met versiebeheer, zodat je nooit meer met een leeg scherm begint.</span>
         </div>
-        <div class="ip-card is-accent reveal" style="--delay:360ms;">
+        <div class="ip-row is-accent">
           <span class="ip-num">03</span>
           <span class="ip-title">De Klaviyo-<em>implementatie</em><span class="tag">Dag 14</span></span>
-          <p class="ip-desc">De motor. Welkomstreeks, verlaten winkelmand, post-purchase flow, win-back flow en wekelijkse campagnes. Allemaal opgezet in jouw merkstem, live en omzet draaiend terwijl je slaapt.</p>
+          <span class="ip-desc">De motor. Welkomstreeks, verlaten winkelmand, post-purchase en win-back — geschreven in jouw stem, live en omzet draaiend terwijl je slaapt. Aanpasbaar door iedereen in je team.</span>
         </div>
-        <div class="ip-card reveal" style="--delay:480ms;">
+        <div class="ip-row">
           <span class="ip-num">04</span>
           <span class="ip-title">Het Operationele <em>handboek</em></span>
-          <p class="ip-desc">De overdracht. Een SOP plus een training, zodat het systeem geen black box voor je is. Jij of je team bezit en runt het zodra het frame staat.</p>
+          <span class="ip-desc">De overdracht. Een SOP plus twee opgenomen trainingscalls, zodat het systeem geen black box is — je team bezit en runt het zodra wij weg zijn.</span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="why" class="story-section">
-  <div class="why-blobs" aria-hidden="true">
-    <div class="blob blob-lime wb1"></div>
-    <div class="blob blob-teal wb2"></div>
-  </div>
+<section id="why" data-screen-label="Waarom Fraim">
   <div class="container">
     <div class="section-head reveal">
-      <span class="num">03 — Waarom Fraim</span>
-      <h2>Waarom Fraim <em>bestaat.</em></h2>
+      <span class="num">03</span>
+      <div class="right">
+        <h2 class="title">Waarom Fraim <em>bestaat.</em></h2>
+      </div>
     </div>
-    <div class="story-block reveal" style="--delay:80ms;">
-      <p>We zaten veel te lang aan de andere kant van de tafel...</p>
-      <p>We hebben bureaus aangesloten, bureaus betaald en ook weer bureaus ontslagen. We zagen het patroon: een bureau verdient aan herhaling. Hoe meer mails ze schrijven, hoe meer ze factureren. Hoe complexer je flows, hoe meer het kost. Het model is niet kwaadaardig, maar het is gebouwd op jouw afhankelijkheid.</p>
-      <p>Tegelijk zagen we wat allemaal mogelijk is met AI. Niet de prompt-tips van YouTube, maar echte systemen, opgebouwd uit jouw merk, jouw klant-taal en jouw data. Mails die klinken alsof jij ze schreef terwijl je in een meeting zat.</p>
-      <p>Iedereen die de tijd neemt kan dit zelf bouwen. Maar het kost honderden uren proberen, falen, prompts verfijnen, en uitvogelen hoe je je welcome flow volledig automatisch kunt optimaliseren. Of je laat ons het frame bouwen. In jouw account, met jouw merk, in 14 dagen. Daarna run jij het.</p>
-      <p class="closing">Bureau-kwaliteit. AI-snelheid. 100% jouw eigendom.</p>
+    <div class="story-block reveal" style="--delay: 80ms;">
+      <p>We zaten te lang aan de andere kant van de tafel.</p>
+      <p>We hebben bureaus betaald, bureaus binnengehaald, bureaus ontslagen. We zagen het patroon: een bureau verdient aan herhaling. Hoe meer mails ze schrijven, hoe meer ze factureren. Hoe complexer je flow, hoe langer je vastzit. Het model is niet kwaadaardig — het is gewoon onvermijdelijk gebouwd op jouw afhankelijkheid.</p>
+      <p>Tegelijk zagen we wat AI inmiddels kan. Niet de prompt-tips van YouTube. Echte systemen, opgebouwd uit jouw merk, jouw klant-taal, jouw data. Mails die klinken alsof jij ze schreef terwijl je in een meeting zat.</p>
+      <p>Iedereen die de tijd neemt kan dit zelf bouwen. Maar het kost honderden uren proberen, falen, prompts verfijnen, en uitvogelen waarom je welcome flow op week drie lekt. Of je laat ons het bouwen — in jouw account, met jouw merk, in 14 dagen. Daarna run jij het.</p>
+      <p class="closing">Bureau-kwaliteit. AI-snelheid. Jouw eigendom.</p>
     </div>
   </div>
 </section>
 
-<section id="deliverables">
+<section id="deliverables" data-screen-label="Wat je krijgt">
   <div class="container">
     <div class="section-head reveal">
-      <span class="num">04 — Wat je krijgt</span>
-      <h2>Wat er <em>in jouw account</em> belandt.</h2>
-      <span class="sub">Twee onderdelen: een eenmalige build die voor altijd van jou is, en een dunne terugkerende optionele laag die het systeem actueel houdt.</span>
+      <span class="num">04</span>
+      <div class="right">
+        <h2 class="title">Wat er <em>in jouw account</em> belandt.</h2>
+        <span class="sub">Twee onderdelen: een eenmalige build die voor altijd van jou is, en een dunne terugkerende laag die het systeem actueel houdt.</span>
+      </div>
     </div>
-    <div class="deliv">
-      <div class="pack reveal">
+    <div class="deliv reveal">
+      <div class="pack">
         <header>
           <h3>Eenmalige<br><em>build</em></h3>
-          <div class="price">
-            <span class="big">€3.500</span>
-            <small>geleverd in 14 dagen</small>
-          </div>
+          <div class="price">€3.500<small>geleverd in 14 dagen</small></div>
         </header>
         <ul>
-          <li><span class="ix">i.</span><span>Merkstem-document<span class="qty">(volledig ingericht)</span></span></li>
-          <li><span class="ix">ii.</span><span>Custom Claude-project<span class="qty">(volledig ingericht)</span></span></li>
-          <li><span class="ix">iii.</span><span>Promptbibliotheek<span class="qty">(25 prompts)</span></span></li>
-          <li><span class="ix">iv.</span><span>Klaviyo-flows: welkom, winkelmand, post-purchase, win-back<span class="qty">(nieuw of AI-geoptimaliseerd)</span></span></li>
-          <li><span class="ix">v.</span><span>SOP — hoe je het systeem bedient<span class="qty">(1 doc)</span></span></li>
-          <li><span class="ix">vi.</span><span>Trainingscalls<span class="qty">(contact tijdens bouw + eindtraining)</span></span></li>
-          <li><span class="ix">vii.</span><span>Support na lancering<span class="qty">(14 dagen)</span></span></li>
+          <li><span class="ix">i.</span><span class="what">Merkstem-document<span class="qty">(10–15 pagina's)</span></span></li>
+          <li><span class="ix">ii.</span><span class="what">Custom Claude-project<span class="qty">(volledig ingericht)</span></span></li>
+          <li><span class="ix">iii.</span><span class="what">Promptbibliotheek<span class="qty">(25 prompts)</span></span></li>
+          <li><span class="ix">iv.</span><span class="what">Klaviyo-flows: welkom, winkelmand, post-purchase, win-back<span class="qty">(4 flows)</span></span></li>
+          <li><span class="ix">v.</span><span class="what">SOP — hoe je het systeem bedient<span class="qty">(1 doc)</span></span></li>
+          <li><span class="ix">vi.</span><span class="what">Trainingscalls<span class="qty">(2 × 1u, opgenomen)</span></span></li>
+          <li><span class="ix">vii.</span><span class="what">Support na lancering<span class="qty">(14 dagen)</span></span></li>
         </ul>
       </div>
-      <div class="pack reveal" style="--delay:100ms;">
+      <div class="pack">
         <header>
-          <h3>Maandelijkse<br><em>laag (optioneel)</em></h3>
-          <div class="price">
-            <span class="big">€275/mnd</span>
-            <small>niet verplicht en stop wanneer je wil</small>
-          </div>
+          <h3>Maandelijkse<br><em>laag</em></h3>
+          <div class="price">€197/mnd<small>stop wanneer je wil</small></div>
         </header>
         <ul>
-          <li><span class="ix">i.</span><span>Claude-project-updates terwijl je business evolueert</span></li>
-          <li><span class="ix">ii.</span><span>Maandelijkse strategiecall<span class="qty">(30 min)</span></span></li>
-          <li><span class="ix">iii.</span><span>Async support<span class="qty">(4 vragen/mnd · &lt;48u)</span></span></li>
-          <li><span class="ix">iv.</span><span>Nieuwe prompt-templates zodra we ze ontwikkelen</span></li>
-          <li><span class="ix">v.</span><span>Model-upgrades<span class="qty">(bijv. Claude 5 bij release)</span></span></li>
-          <li><span class="ix">vi.</span><span>Stop wanneer je wil — je houdt het systeem</span></li>
+          <li><span class="ix">i.</span><span class="what">Claude-project-updates terwijl je business evolueert</span></li>
+          <li><span class="ix">ii.</span><span class="what">Maandelijkse strategiecall<span class="qty">(30 min)</span></span></li>
+          <li><span class="ix">iii.</span><span class="what">Async support<span class="qty">(4 vragen/mnd · &lt;48u)</span></span></li>
+          <li><span class="ix">iv.</span><span class="what">Nieuwe prompt-templates zodra we ze ontwikkelen</span></li>
+          <li><span class="ix">v.</span><span class="what">Model-upgrades<span class="qty">(bijv. Claude 5 bij release)</span></span></li>
+          <li><span class="ix">vi.</span><span class="what">Stop wanneer je wil — je houdt het systeem</span></li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section id="cases" class="cases-section">
+<section id="cases" data-screen-label="Cases">
   <div class="container">
     <div class="section-head reveal">
-      <span class="num">06 — Cases</span>
-      <h2>Cases — <em>twee perspectieven.</em></h2>
-      <span class="sub">Elk merk zit op een ander punt. We delen twee cases vanuit twee invalshoeken.</span>
-    </div>
-    <div class="cases-carousel-head">
-      <div class="cases-carousel-arrows">
-        <button class="cases-arrow-btn" id="cases-prev" aria-label="Vorige" disabled>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-        <button class="cases-arrow-btn" id="cases-next" aria-label="Volgende">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
+      <span class="num">06</span>
+      <div class="right">
+        <h2 class="title">Cases — <em>twee perspectieven.</em></h2>
+        <span class="sub">Elk merk zit op een ander punt. We delen twee cases vanuit twee invalshoeken — herken jezelf in welke past.</span>
       </div>
     </div>
-  </div>
-  <div class="cases-scroll" id="casesScroll">
-    <a href="case-fuelyourbody.html" class="case-slide reveal">
-      <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1080&q=80" alt="Fuelyourbody case" loading="lazy" />
-      <div class="case-slide-overlay"></div>
-      <div class="case-slide-content">
-        <span class="case-slide-label">Case 01 · Fuelyourbody</span>
-        <h3>Van bureau naar eigen beheer naar FRAIM.</h3>
-        <p class="case-slide-desc">Vijf jaar email-marketing in één pagina. Bureau, eigen beheer, FRAIM systeem.</p>
-        <span class="case-slide-cta">Lees de volledige case →</span>
+    <div class="cases-grid reveal" style="--delay: 80ms;">
+      <div class="case-card">
+        <span class="case-label">Case 01 · FuelYourBody</span>
+        <h3>Drie aktes: bureau → eigen beheer → Fraim.</h3>
+        <p class="case-pitch">Vier jaar email-marketing in één pagina. Voor merken die de eerste twee fases hebben doorlopen of nu in fase 2 vastlopen.</p>
+        <table>
+          <tr><th>Akte</th><th>Periode</th><th>Tijdsinvestering</th></tr>
+          <tr><td>Bureau</td><td>2022–2024</td><td>Briefen + reviewen</td></tr>
+          <tr><td>Eigen beheer</td><td>2025–2026</td><td>16–24 uur/week</td></tr>
+          <tr><td>Fraim</td><td>2026–heden</td><td>Doel: 2–3 uur/week</td></tr>
+        </table>
+        <a href="case-fuelyourbody.html" class="case-cta">Lees de volledige case →</a>
       </div>
-    </a>
-    <a href="case-mxmeals.html" class="case-slide reveal" style="--delay:80ms;">
-      <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1080&q=80" alt="MX Meals case" loading="lazy" />
-      <div class="case-slide-overlay"></div>
-      <div class="case-slide-content">
-        <span class="case-slide-label">Case 02 · MX Meals</span>
+      <div class="case-card">
+        <span class="case-label">Case 02 · MX Meals</span>
         <h3>Greenfield: vanaf nul gebouwd.</h3>
-        <p class="case-slide-desc">Voor merken die net beginnen of nog geen serieus email-programma hebben. Direct vanaf 0 met AI opgebouwd.</p>
-        <span class="case-slide-cta">Lees de volledige case →</span>
+        <p class="case-pitch">Voor merken die net beginnen of nog geen serieus email-programma hebben. Geen erfenis, geen migratie — direct het systeem opbouwen.</p>
+        <table>
+          <tr><th>Onderdeel</th><th>Status</th></tr>
+          <tr><td>Flows live</td><td>✓</td></tr>
+          <tr><td>Operationeel systeem</td><td>✓</td></tr>
+          <tr><td>60-dagen meetbare data</td><td>Volgt</td></tr>
+        </table>
+        <a href="case-mxmeals.html" class="case-cta">Lees de volledige case →</a>
       </div>
-    </a>
-  </div>
-  <div class="container">
-    <div class="cases-dots" id="casesDots">
-      <button class="cases-dot active" aria-label="Ga naar slide 1"></button>
-      <button class="cases-dot" aria-label="Ga naar slide 2"></button>
     </div>
+    <p class="cases-note reveal" style="--delay: 120ms;"><em>Eerlijke noot:</em> FYB en MX Meals zijn merken uit dezelfde portfolio als Fraim. Wij waren bij beide tegelijk de bouwer en betrokken bij de operatie. Wat dit waardevol maakt als cases: het zijn echte builds op echte merken, niet hypothetische voorbeelden.</p>
   </div>
 </section>
 
-<section id="process">
+<section id="process" data-screen-label="Proces">
   <div class="container">
     <div class="section-head reveal">
-      <span class="num">07 — Van dag nul naar eigenaarschap</span>
-      <h2>Vast schema. <em>Geen eindeloze discovery.</em></h2>
-      <span class="sub">Op dag 15 run je het zelf. Geen verrassingen.</span>
+      <span class="num">07</span>
+      <div class="right">
+        <h2 class="title">Van dag nul <em>naar eigenaarschap.</em></h2>
+        <span class="sub">Een vast schema. Geen eindeloze discovery-rondes. Op dag 15 run je het zelf.</span>
+      </div>
     </div>
     <div class="process">
       <div class="step reveal">
         <span class="day">Dag 00 <em>(focus)</em></span>
         <h4>Kickoff &amp; <em>commitment.</em></h4>
-        <p>Gesprek van 60 minuten om scope, succesmetrics en toegang af te stemmen.</p>
-        <span class="foot">(60 min.)</span>
+        <p>Gesprek van 90 minuten om scope, succesmetrics en toegang af te stemmen. 50% aanbetaling reserveert het build-venster.</p>
+        <span class="foot">(90 min · 50% vooraf.)</span>
       </div>
-      <div class="step reveal" style="--delay:180ms;">
+      <div class="step reveal" style="--delay: 60ms;">
         <span class="day">Dag 01–03 <em>(extractie)</em></span>
         <h4>Merkstem-<em>extractie.</em></h4>
-        <p>We nemen je bestaande content door: e-mails, productpagina's, social, founder-stories — en stellen een volledig merkstem-document samen.</p>
+        <p>We nemen je bestaande content door — e-mails, productpagina's, social, founder-interviews — en stellen een Merkstem-document van 10–15 pagina's samen.</p>
         <span class="foot">(document · 10–15 pagina's.)</span>
       </div>
-      <div class="step reveal" style="--delay:360ms;">
+      <div class="step reveal" style="--delay: 120ms;">
         <span class="day">Dag 04–07 <em>(bouw)</em></span>
         <h4>Systeem-<em>build.</em></h4>
-        <p>Claude-project ingericht. Promptbibliotheek geschreven en getest. Klaviyo-flows opgezet in jouw eigen account.</p>
+        <p>Claude-project ingericht. Promptbibliotheek geschreven en getest tegen je echte klantdata. Klaviyo-flows opgezet in jouw account.</p>
         <span class="foot">(claude · 25 prompts · 4 flows.)</span>
       </div>
-      <div class="step reveal" style="--delay:540ms;">
+      <div class="step reveal" style="--delay: 180ms;">
         <span class="day">Dag 08–14 <em>(lancering)</em></span>
         <h4>Training &amp; <em>soft launch.</em></h4>
-        <p>Een trainingscall. Je eerste campagne gaat eruit. Flows gaan live. 14 dagen support.</p>
+        <p>Twee opgenomen trainingscalls van 1 uur. Eerste testcampagne gaat eruit. Flows gaan live. We blijven 14 dagen bereikbaar voor support na lancering.</p>
         <span class="foot">(2× 1u · live flows.)</span>
       </div>
-      <div class="step reveal" style="--delay:720ms;">
+      <div class="step reveal" style="--delay: 240ms;">
         <span class="day">Dag 15+ <em>(voor altijd)</em></span>
         <h4>Jij <em>runt het.</em></h4>
-        <p>Model-upgrades, nieuwe prompts, maandelijkse strategiecall. Stop wanneer je wil. Je behoudt het FRAIM systeem.</p>
+        <p>De dunne terugkerende laag start: model-upgrades, nieuwe prompts, maandelijkse strategiecall van 30 min. Stop wanneer je wil — je houdt het systeem.</p>
         <span class="foot">(doorlopend · stop wanneer je wil.)</span>
       </div>
     </div>
   </div>
 </section>
 
-<section id="pricing" class="pricing-section">
+<section id="pricing" data-screen-label="Prijs">
   <div class="container">
     <div class="section-head reveal">
-      <span class="num">08 — Prijs</span>
-      <h2>Eén prijs. <em>Geen retainer-val.</em></h2>
-      <span class="sub">Betaal één keer voor de build. Een dunne maandlaag houdt het scherp. Stop wanneer je wil zonder gedoe.</span>
+      <span class="num">08</span>
+      <div class="right">
+        <h2 class="title">Eén prijs. <em>(Geen retainer-val.)</em></h2>
+        <span class="sub">Betaal één keer voor de build. Een dunne maandlaag houdt het scherp. Stop wanneer je wil — je loopt weg met alles.</span>
+      </div>
     </div>
-    <div class="price-block reveal" style="--delay:80ms;">
+    <div class="price-block reveal">
       <span class="corner">FRAIM Setup · 2026</span>
       <div class="price-grid">
         <div>
           <h3>Eenmalig gebouwd.<br><em>Voor altijd van jou.</em></h3>
-          <p class="psub">Een vast bedrag voor het systeem. Een klein maandbedrag voor upgrades, kennis en strategie.</p>
+          <p class="psub">Een vast bedrag voor het systeem. Een klein maandbedrag voor upgrades. Geen verrassingen, geen scope creep, geen afscheidskosten.</p>
           <div class="ctas">
             <a href="#cta" class="btn btn-primary">Neem contact op <span class="arr">↗</span></a>
             <a href="#deliverables" class="btn btn-ghost">Wat is inbegrepen</a>
           </div>
         </div>
         <div class="figure">
-          <div class="row"><span class="big">€3.500</span><span class="unit">eenmalig</span></div>
-          <div class="sub-row"><span class="med">+ €275</span><span class="unit">/ maand</span></div>
+          <div class="row">
+            <span class="big">€3.500</span>
+            <span class="unit">eenmalig</span>
+          </div>
+          <div class="sub-row">
+            <span class="med">+ €197</span>
+            <span class="unit">/ maand</span>
+          </div>
           <ul class="details">
             <li><span class="k">Levering</span><span class="v"><em>14 dagen, vast schema</em></span></li>
             <li><span class="k">Betaling</span><span class="v">50% bij kickoff, 50% bij go-live</span></li>
             <li><span class="k">Inbegrepen</span><span class="v">Build + 14 dagen support</span></li>
             <li><span class="k">Maandelijks</span><span class="v">Claude-updates, prompts, strategiecall</span></li>
-            <li><span class="k">Stoppen</span><span class="v"><em>wanneer je wil — met een systeem dat van jou blijft</em></span></li>
+            <li><span class="k">Stoppen</span><span class="v"><em>wanneer je wil — systeem blijft van jou</em></span></li>
           </ul>
         </div>
       </div>
@@ -1024,79 +1867,91 @@ footer .wordmark .macron::after{background:var(--green);}
   </div>
 </section>
 
-<section id="who" class="who-section">
+<section id="who" data-screen-label="Voor wie">
   <div class="container">
     <div class="section-head reveal">
-      <span class="num">09 — Voor wie</span>
-      <h2>Voor wie dit is <em>(en voor wie niet.)</em></h2>
-      <span class="sub">FRAIM werkt alleen bij merken die het systeem zelf willen bedienen en interesse hebben in AI. Is dat niet zo, dan loopt dit niet goed af.</span>
+      <span class="num">09</span>
+      <div class="right">
+        <h2 class="title">Voor wie dit is <em>(en voor wie niet.)</em></h2>
+        <span class="sub">FRAIM werkt alleen bij merken die het systeem zelf willen bedienen. Is dat niet zo, dan loopt dit niet goed af.</span>
+      </div>
     </div>
     <div class="who">
       <div class="col fit reveal">
         <header>
-          <h3>Een ideale <em>match.</em></h3>
+          <h3>Een goede <em>match.</em></h3>
           <span class="ix">(i)</span>
         </header>
         <ul>
-          <li><span class="sym">→</span><span class="text">Merken met €500K+ jaaromzet</span></li>
-          <li><span class="sym">→</span><span class="text">Klaviyo al aanwezig en gekoppeld <em>(zo niet; mogelijkheden bespreekbaar)</em></span></li>
-          <li><span class="sym">→</span><span class="text">Minstens één interne marketeer of jijzelf die dit gaat bedienen</span></li>
-          <li><span class="sym">→</span><span class="text">Een AI-positieve mindset — bereid te leren en op termijn flink te besparen</span></li>
-          <li><span class="sym">→</span><span class="text">Beauty, wellness, fashion, supplementen, food &amp; beverage <em>(andere opties mogelijk)</em></span></li>
+          <li><span class="sym">→</span><span class="text">DTC-merken met €1M+ jaaromzet</span></li>
+          <li><span class="sym">→</span><span class="text">Klaviyo al aanwezig en gekoppeld</span></li>
+          <li><span class="sym">→</span><span class="text">Minstens één interne marketeer die dit gaat bedienen</span></li>
+          <li><span class="sym">→</span><span class="text">Een AI-positief team — bereid te leren, niet bedreigd</span></li>
+          <li><span class="sym">→</span><span class="text">Beauty, wellness, fashion, supplementen, premium food</span></li>
         </ul>
       </div>
-      <div class="col notfit reveal" style="--delay:100ms;">
+      <div class="col notfit reveal" style="--delay: 100ms;">
         <header>
           <h3>Geen <em>match.</em></h3>
           <span class="ix">(ii)</span>
         </header>
         <ul>
           <li><span class="sym">×</span><span class="text">Merken onder €500K jaaromzet</span></li>
-          <li><span class="sym">×</span><span class="text">Geen interne marketeer of jij die het zelf oppakt — niemand om het aan over te dragen</span></li>
-          <li><span class="sym">×</span><span class="text">Op zoek naar een "done-for-you"-dienst</span></li>
-          <li><span class="sym">×</span><span class="text">Niet geïnteresseerd in hoe AI echt werkt en hoe je er duizenden € mee kunt besparen</span></li>
-          <li><span class="sym">×</span><span class="text">B2B, marktplaatsen of niet-Klaviyo-stacks <em>(maar zeker niet onmogelijk)</em></span></li>
+          <li><span class="sym">×</span><span class="text">Geen interne marketeer — niemand om het aan over te dragen</span></li>
+          <li><span class="sym">×</span><span class="text">Op zoek naar een "done-for-you"-dienst voor altijd</span></li>
+          <li><span class="sym">×</span><span class="text">Niet geïnteresseerd in hoe AI echt werkt</span></li>
+          <li><span class="sym">×</span><span class="text">B2B, marktplaatsen of niet-Klaviyo-stacks</span></li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section id="faq" class="faq-section">
+<section id="faq" data-screen-label="FAQ">
   <div class="container">
     <div class="section-head reveal">
-      <span class="num">10 — FAQ</span>
-      <h2>Vragen <em>die klanten ons stellen.</em></h2>
-      <span class="sub">Staat je vraag er niet bij, stuur gerust een mail of stel 'm in onze call.</span>
+      <span class="num">10</span>
+      <div class="right">
+        <h2 class="title">Vragen <em>die klanten ons het meest stellen.</em></h2>
+        <span class="sub">Staat je vraag er niet bij, dan stel je 'm op de call. Niets ingestudeerd.</span>
+      </div>
     </div>
-    <div class="faq reveal" style="--delay:60ms;">
+    <div class="faq reveal">
       <details class="q">
         <summary><span class="qix">(i)</span><span>Vervangt dit mijn e-mailmarketeer?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Nee — het maakt ze ongeveer <em>4× productiever.</em> Ze schrijven geen eerste versies meer maar redigeren sterke. Ze briefen geen copy meer maar lanceren complete campagnes.</div>
+        <div class="answer">Nee — het maakt ze ongeveer <em>3× productiever.</em> Ze schrijven geen eerste versies meer maar redigeren sterke. Ze briefen geen copy meer maar lanceren campagnes. Het systeem geeft ze hefboom; het neemt hun baan niet af.</div>
       </details>
       <details class="q">
         <summary><span class="qix">(ii)</span><span>Wat gebeurt er als Claude geüpdatet wordt?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Gedekt door de maandlaag. Als er een nieuw model uitkomt <em>(bijv. Claude 5)</em>, migreren we je project, hertesten we de prompts en scherpen we aan wat nodig is.</div>
+        <div class="answer">Gedekt door de maandlaag. Als er een nieuw model uitkomt <em>(bijv. Claude 5)</em>, migreren we je project, hertesten we de prompts en scherpen we aan wat nodig is. Jij hoeft niks te doen.</div>
       </details>
       <details class="q">
         <summary><span class="qix">(iii)</span><span>Wat als ik geen Klaviyo gebruik?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Voorlopige focus is Klaviyo. Daar gebeurt 90% van de DTC-retentie, en door diep op één tool te gaan kunnen we levering op dag 14 garanderen. Andere ESP's zijn zeker mogelijk en bespreken we graag.</div>
+        <div class="answer">Voorlopig: alleen Klaviyo. Daar gebeurt 90% van de DTC-retentie, en door diep op één tool te gaan kunnen we levering op dag 14 garanderen. Andere ESP's komen misschien later — <em>nog niet.</em></div>
       </details>
       <details class="q">
         <summary><span class="qix">(iv)</span><span>Hoe verschilt dit van een bureau inhuren?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Jij bezit het complete AI systeem, wij niet. Een bureau verhuurt je hun team en hun tools tegen torenhoge kosten. Bij FRAIM staan het Claude-project, de prompts, de flows en de docs in <em>jouw eigen accounts.</em></div>
+        <div class="answer">Jij bezit het systeem, wij niet. Een bureau verhuurt je hun team en hun tools — stop en je raakt allebei kwijt. Bij FRAIM staan het Claude-project, de prompts, de flows en de docs in <em>jouw accounts.</em> Stop de maandlaag en je houdt alles.</div>
       </details>
       <details class="q">
         <summary><span class="qix">(v)</span><span>Kan ik het maandabonnement opzeggen?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Altijd, zonder enige vragen. Je houdt alles — het Claude-project, de promptbibliotheek, de flows, de docs en alle kennis die je hebt meegekregen tijdens onze calls.</div>
+        <div class="answer">Altijd, zonder vragen. Je houdt alles — het Claude-project, de promptbibliotheek, de flows, de docs. Je krijgt alleen geen model-updates en maandelijkse strategiecall meer.</div>
       </details>
       <details class="q">
         <summary><span class="qix">(vi)</span><span>Kan ik dit zelf bouwen?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Ja — en overweeg het zeker! Reken op uren aan merkstem, prompt-engineering, flows bouwen en constant doortesten en optimaliseren. Iedereen kan een prompt aan Claude of ChatGPT geven, maar een prompt is geen systeem. Een systeem leert elke dag van wat werkt, sluit aan op jouw merkstem en flows, en groeit mee met je business.</div>
+        <div class="answer">Ja — en overweeg het zeker. Reken op <em>80+ uur</em> aan merkstem, prompt-engineering, flows bouwen en testen. Wij doen het in 14 dagen omdat we het al vaker deden. Is je tijd minder dan ~€45/uur waard, doe het dan zelf.</div>
       </details>
       <details class="q">
-        <summary><span class="qix">(vii)</span><span>Welke garanties bieden jullie?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer"><em>Eerlijk antwoord:</em> geen niet-goed-geld-terug-garantie. Wat we wél garanderen: levering op dag 14 en een werkend systeem op dag 15. Als iets niet werkt zoals afgesproken, lossen we het op binnen de 14 dagen support na lancering.</div>
+        <summary><span class="qix">(vii)</span><span>Werkt dit voor B2B?</span><span class="toggle" aria-hidden="true"></span></summary>
+        <div class="answer">Nee. <em>Alleen DTC e-commerce.</em> Het systeem is afgestemd op consumenten-aankoopcycli, transactionele triggers en Klaviyo's commerce-native datamodel. B2B-retentie is een ander probleem.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qix">(viii)</span><span>Welke garanties bieden jullie?</span><span class="toggle" aria-hidden="true"></span></summary>
+        <div class="answer"><em>Eerlijk antwoord:</em> geen niet-goed-geld-terug-garantie. Wat we garanderen is levering op dag 14 en een systeem dat werkt op dag 15. Breekt iets dat wij bouwden, dan repareren we het. Bedien je het systeem niet, dan ligt dat aan jou — en dat hadden we op de discovery-call moeten zien.</div>
+      </details>
+      <details class="q">
+        <summary><span class="qix">(ix)</span><span>Hoeveel klanten nemen jullie per maand aan?</span><span class="toggle" aria-hidden="true"></span></summary>
+        <div class="answer">Maximaal twee builds parallel. Het 14-daagse venster is niet onderhandelbaar en de kwaliteit daalt erna. <em>Zit de agenda vol, dan zeggen we dat op de strategiecall.</em></div>
       </details>
     </div>
   </div>
@@ -1106,23 +1961,23 @@ footer .wordmark .macron::after{background:var(--green);}
   <div class="container">
     <div class="lezen-header reveal">
       <h2>Lezen</h2>
-      <p>Lange stukken voor wie verder wil graven. Geen wekelijkse nieuwsbrief, geen tips &amp; tricks.</p>
+      <p>Lange stukken voor wie verder wil graven. Geen wekelijkse nieuwsbrief, geen tips &amp; tricks. Alleen wat het waard is om te schrijven.</p>
     </div>
     <div class="lezen-grid">
       <div class="lezen-card is-live reveal">
         <h4>De vier flows die elk DTC-merk eerst moet hebben (en in welke volgorde)</h4>
-        <p>Negen op de tien DTC-merken hebben tussen de 8 en 15 flows aan. Vier flows zorgen voor 80–90% van de email-omzet.</p>
+        <p>Negen op de tien DTC-merken hebben tussen de 8 en 15 flows aan. De meeste leveren niets op. Vier flows zorgen voor 80–90% van de email-omzet — als ze in de juiste volgorde staan.</p>
         <a href="blog-vier-flows.html" class="lezen-cta">Lees →</a>
       </div>
-      <div class="lezen-card reveal" style="--delay:60ms;">
+      <div class="lezen-card reveal" style="--delay: 60ms;">
         <h4>Wat een bureau je nooit vertelt over hun retainer-model</h4>
         <p class="soon">Binnenkort.</p>
       </div>
-      <div class="lezen-card reveal" style="--delay:120ms;">
+      <div class="lezen-card reveal" style="--delay: 120ms;">
         <h4>Het verschil tussen ChatGPT gebruiken en een retentie-systeem hebben</h4>
         <p class="soon">Binnenkort.</p>
       </div>
-      <div class="lezen-card reveal" style="--delay:180ms;">
+      <div class="lezen-card reveal" style="--delay: 180ms;">
         <h4>Onboarding Baseline: hoe je weet wat je email-programma echt doet</h4>
         <p class="soon">Binnenkort.</p>
       </div>
@@ -1134,24 +1989,22 @@ footer .wordmark .macron::after{background:var(--green);}
 
 <div class="final-wrap">
   <div class="container">
-    <div class="final on-dark reveal" id="cta">
-      <div class="final-bg-blobs" aria-hidden="true">
-        <div class="fbg1"></div>
-        <div class="fbg2"></div>
-      </div>
+    <div class="final on-green reveal" id="cta" data-screen-label="Slot-CTA">
       <div>
-        <span class="eyebrow">Aan de slag</span>
-        <h2>Bezit je email marketing <em>in 14 dagen.</em></h2>
-        <p class="sub">Eén korte call is absoluut mogelijk. Na de call nog steeds interessant? Dan plannen we je kickoff en gaan we graag aan de slag!</p>
+        <div class="eyebrow">Aan de slag</div>
+        <h2>Bezit je retentie <em>in 14 dagen.</em></h2>
+        <p class="sub">Eén gesprek van 30 minuten. Past het, dan plannen we je kickoff. Zo niet, dan zeg ik je met wie je beter kunt praten.</p>
         <div class="ctas">
           <a href="mailto:info@yourfraim.nl?subject=Strategie-gesprek" class="btn btn-primary">Neem contact op <span class="arr">↗</span></a>
           <a href="mailto:info@yourfraim.nl" class="btn btn-ghost">info@yourfraim.nl</a>
         </div>
       </div>
-      <div class="final-stats">
-        <div class="final-stat"><div class="fs-num">14</div><div class="fs-label">dagen oplevering</div></div>
-        <div class="final-stat"><div class="fs-num">100%</div><div class="fs-label">van jou</div></div>
-        <div class="final-stat"><div class="fs-num">€32k</div><div class="fs-label">besparing / jaar</div></div>
+      <div class="orbit" aria-hidden="true">
+        <svg class="ring" viewBox="0 0 200 200">
+          <defs><path id="orbitPath2" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" /></defs>
+          <text><textPath href="#orbitPath2" startOffset="0%">BOUW · BEZIT · BEHOUD · LEVER · BOUW · BEZIT · BEHOUD · LEVER · </textPath></text>
+        </svg>
+        <div class="core"><div class="globe"><span class="merid"></span></div></div>
       </div>
     </div>
   </div>
@@ -1160,8 +2013,15 @@ footer .wordmark .macron::after{background:var(--green);}
 <footer>
   <div class="container">
     <div class="foot-top">
+      <div class="foot-signup">
+        <h3><em>Schrijf je in</em> en benut de kracht van FRAIM.</h3>
+        <div class="capture">
+          <span class="ph">E-mailadres</span>
+          <a href="mailto:info@yourfraim.nl" class="go" aria-label="Inschrijven">→</a>
+        </div>
+      </div>
       <div class="foot-col">
-        <span class="colhead">Het systeem</span>
+        <div class="colhead">Het systeem</div>
         <ul>
           <li><a href="#system">Componenten</a></li>
           <li><a href="#cases">Cases</a></li>
@@ -1171,7 +2031,7 @@ footer .wordmark .macron::after{background:var(--green);}
         </ul>
       </div>
       <div class="foot-col">
-        <span class="colhead">Bedrijf</span>
+        <div class="colhead">Bedrijf</div>
         <ul>
           <li><a href="mailto:info@yourfraim.nl">info@yourfraim.nl</a></li>
           <li><a href="blog.html">Lezen</a></li>
@@ -1180,24 +2040,42 @@ footer .wordmark .macron::after{background:var(--green);}
         </ul>
       </div>
     </div>
-  </div>
-  <div class="foot-brand">
-    <a href="#top" class="foot-big-wordmark">FRAIM</a>
-  </div>
-  <div class="container">
     <div class="foot-bottom">
+      <a href="#top" class="wordmark-box"><span class="wordmark">FR<span class="macron">AI</span>M</span></a>
       <span>Eenmalig gebouwd. <em>Voor altijd van jou.</em></span>
       <span>© 2026 FRAIM — KvK 42058158 · NL / BE</span>
     </div>
   </div>
 </footer>
 
+<aside id="tweaks-panel" class="tweaks-panel" aria-hidden="true">
+  <header>
+    <span class="ttl">Tweaks <em>(accent.)</em></span>
+    <button class="tp-close" aria-label="Tweaks sluiten">×</button>
+  </header>
+  <div class="tp-label">kies de neon.</div>
+  <div class="tp-row">
+    <button data-tweak-accent="lime" class="tp-swatch active">
+      <span class="sw" style="background:#C0F53D"></span><em>creamy dawn</em>
+    </button>
+    <button data-tweak-accent="acid" class="tp-swatch">
+      <span class="sw" style="background:#C6FF1F"></span><em>acid lime</em>
+    </button>
+    <button data-tweak-accent="mint" class="tp-swatch">
+      <span class="sw" style="background:#6EF5B0"></span><em>cool mint</em>
+    </button>
+  </div>
+  <div class="tp-hint">accent bepaalt de gloed, cijfers, pills, orbit &amp; de macron-streep.</div>
+</aside>
+
 <script>
+  // Sticky nav
   const topnav = document.getElementById('topnav');
   const onScroll = () => topnav.classList.toggle('scrolled', window.scrollY > 16);
   document.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  // Reveal on scroll
   const reveals = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
@@ -1229,6 +2107,7 @@ footer .wordmark .macron::after{background:var(--green);}
   }, { threshold: 0.5 });
   counters.forEach((el) => cntIo.observe(el));
 
+  // Smooth scroll with nav offset
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href').slice(1);
@@ -1240,121 +2119,69 @@ footer .wordmark .macron::after{background:var(--green);}
     });
   });
 
+  // Email showcase — scroll-driven fan-out
+  const showcase   = document.querySelector('.email-showcase');
+  const emailCards = document.querySelectorAll('.email-card');
+  if (showcase && emailCards.length && window.innerWidth > 820) {
+    const startX = [280, 130, 0, -130, -280];
+    const startR = [-7,  -3,  0,   3,    7];
+    const startS = [0.85, 0.91, 1, 0.91, 0.85];
+    const startY = [30,  12,   0,  12,   30];
+    emailCards.forEach((c, i) => {
+      c.style.zIndex = String(5 - Math.abs(i - 2));
+    });
+    const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+    const onShowcaseScroll = () => {
+      const rect = showcase.getBoundingClientRect();
+      // Animatie start 1.5× viewport vóór de sectie, eindigt als sectie-top op 30% van viewport staat
+      const from = window.innerHeight * 1.5;
+      const to   = window.innerHeight * 0.3;
+      const p    = easeOut(Math.max(0, Math.min(1, (from - rect.top) / (from - to))));
+      emailCards.forEach((c, i) => {
+        c.style.transform = `translateX(${startX[i]*(1-p)}px) translateY(${startY[i]*(1-p)}px) rotate(${startR[i]*(1-p)}deg) scale(${startS[i]+(1-startS[i])*p})`;
+      });
+    };
+    document.addEventListener('scroll', onShowcaseScroll, { passive: true });
+    onShowcaseScroll();
+  }
+
+  // FAQ: close others on open
   document.querySelectorAll('details.q').forEach((d) => {
     d.addEventListener('toggle', () => {
       if (d.open) document.querySelectorAll('details.q').forEach((o) => { if (o !== d) o.open = false; });
     });
   });
 
-  // Cases Carousel
-  (function(){
-    const scroll = document.getElementById('casesScroll');
-    const prevBtn = document.getElementById('cases-prev');
-    const nextBtn = document.getElementById('cases-next');
-    const dots = document.querySelectorAll('#casesDots .cases-dot');
-    if(!scroll) return;
-    function slideWidth(){
-      const s = scroll.querySelector('.case-slide');
-      return s ? s.offsetWidth + 20 : 500;
-    }
-    function updateState(){
-      const atStart = scroll.scrollLeft <= 4;
-      const atEnd = scroll.scrollLeft >= scroll.scrollWidth - scroll.clientWidth - 4;
-      if(prevBtn) prevBtn.disabled = atStart;
-      if(nextBtn) nextBtn.disabled = atEnd;
-      const idx = Math.round(scroll.scrollLeft / slideWidth());
-      dots.forEach((d,i) => d.classList.toggle('active', i === idx));
-    }
-    if(prevBtn) prevBtn.addEventListener('click', ()=>{ scroll.scrollBy({left:-slideWidth(),behavior:'smooth'}); });
-    if(nextBtn) nextBtn.addEventListener('click', ()=>{ scroll.scrollBy({left:slideWidth(),behavior:'smooth'}); });
-    dots.forEach((dot,i) => dot.addEventListener('click', ()=>{ scroll.scrollTo({left:i*slideWidth(),behavior:'smooth'}); }));
-    scroll.addEventListener('scroll', updateState, {passive:true});
-    window.addEventListener('resize', updateState, {passive:true});
-    updateState();
-  })();
+  // Tweaks panel
+  const panel = document.getElementById('tweaks-panel');
+  const tweaks = { accent: 'lime' };
 
-  // Full-bleed FRAIM footer wordmark
-  (function() {
-    const el = document.querySelector('.foot-big-wordmark');
-    if (!el) return;
-    function fit() {
-      const parent = el.parentElement;
-      let lo = 1, hi = 3000;
-      el.style.fontSize = hi + 'px';
-      while (lo < hi) {
-        const mid = Math.floor((lo + hi + 1) / 2);
-        el.style.fontSize = mid + 'px';
-        if (el.scrollWidth <= parent.clientWidth) lo = mid;
-        else hi = mid - 1;
-      }
-      el.style.fontSize = lo + 'px';
-    }
-    fit();
-    window.addEventListener('resize', fit, { passive: true });
-  })();
-</script>
-<script>
-(function(){
-  const el=document.getElementById('heroMeshBg');
-  if(!el)return;
-  const canvas=document.createElement('canvas');
-  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;';
-  el.appendChild(canvas);
-  const gl=canvas.getContext('webgl')||canvas.getContext('experimental-webgl');
-  if(!gl)return;
-  const VS=`attribute vec2 a_pos;void main(){gl_Position=vec4(a_pos,0,1);}`;
-  const FS=`
-    precision mediump float;
-    uniform float u_t;
-    uniform vec2 u_res;
-    float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
-    float n(vec2 p){
-      vec2 i=floor(p),f=fract(p),u=f*f*(3.0-2.0*f);
-      return mix(mix(h(i),h(i+vec2(1,0)),u.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),u.x),u.y);
-    }
-    void main(){
-      vec2 uv=gl_FragCoord.xy/u_res;
-      float t=u_t*0.13;
-      float v=n(uv*2.8+vec2(t,t*0.65));
-      v+=0.5*n(uv*5.5+vec2(-t*1.3,t*0.45));
-      v+=0.25*n(uv*11.0+vec2(t*0.9,-t*1.2));
-      v/=1.75;
-      vec3 c1=vec3(0.039,0.051,0.016);
-      vec3 c2=vec3(0.102,0.137,0.035);
-      vec3 c3=vec3(0.753,0.961,0.239);
-      vec3 col=mix(c1,c2,smoothstep(0.2,0.58,v));
-      col=mix(col,c3,smoothstep(0.48,0.78,v)*0.78);
-      gl_FragColor=vec4(col,1.0);
-    }
-  `;
-  function sh(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
-  const prog=gl.createProgram();
-  gl.attachShader(prog,sh(gl.VERTEX_SHADER,VS));
-  gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FS));
-  gl.linkProgram(prog);gl.useProgram(prog);
-  const buf=gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
-  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
-  const aPos=gl.getAttribLocation(prog,'a_pos');
-  gl.enableVertexAttribArray(aPos);gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
-  const uT=gl.getUniformLocation(prog,'u_t');
-  const uR=gl.getUniformLocation(prog,'u_res');
-  function resize(){
-    const dpr=Math.min(window.devicePixelRatio||1,2);
-    canvas.width=el.clientWidth*dpr;canvas.height=el.clientHeight*dpr;
-    gl.viewport(0,0,canvas.width,canvas.height);
-    gl.uniform2f(uR,canvas.width,canvas.height);
+  function applyTweaks() {
+    document.body.setAttribute('data-accent', tweaks.accent);
+    panel.querySelectorAll('[data-tweak-accent]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.tweakAccent === tweaks.accent);
+    });
   }
-  resize();window.addEventListener('resize',resize,{passive:true});
-  let t0=null;
-  function frame(ts){
-    if(!t0)t0=ts;
-    gl.uniform1f(uT,(ts-t0)/1000);
-    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-})();
+  applyTweaks();
+
+  window.addEventListener('message', (e) => {
+    if (!e.data || typeof e.data !== 'object') return;
+    if (e.data.type === '__activate_edit_mode') panel.classList.add('open');
+    else if (e.data.type === '__deactivate_edit_mode') panel.classList.remove('open');
+  });
+  try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch (_) {}
+
+  panel.querySelector('.tp-close').addEventListener('click', () => {
+    panel.classList.remove('open');
+    try { window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); } catch (_) {}
+  });
+  panel.querySelectorAll('[data-tweak-accent]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      tweaks.accent = btn.dataset.tweakAccent;
+      applyTweaks();
+    });
+  });
 </script>
 </body>
 </html>
