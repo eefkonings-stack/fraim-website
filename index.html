@@ -232,15 +232,19 @@ header.hero .btn-ghost:hover {
 
 /* ── Email Showcase ───────────────────────────────────────── */
 .email-showcase {
+  height: calc(620px + 50vh);
   background: #0A0D04;
   position: relative;
-  overflow: hidden;
 }
 .showcase-sticky {
+  position: sticky;
+  top: 0;
+  overflow: hidden;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 5rem clamp(20px, 5vw, 60px) 6rem;
+  padding: 3.5rem clamp(20px, 5vw, 60px) 3.5rem;
 }
 .showcase-label {
   font-family: 'CSAliceMono', monospace;
@@ -2119,9 +2123,10 @@ footer .wordmark .macron::after { background: var(--green); }
     });
   });
 
-  // Email showcase — stacked deck, fan-out on scroll
-  const showcase   = document.querySelector('.email-showcase');
-  const emailCards = document.querySelectorAll('.email-card');
+  // Email showcase — sticky scroll-driven fan-out
+  const showcase       = document.querySelector('.email-showcase');
+  const showcaseSticky = document.querySelector('.showcase-sticky');
+  const emailCards     = document.querySelectorAll('.email-card');
   if (showcase && emailCards.length && window.innerWidth > 820) {
     const startX = [280, 130, 0, -130, -280];
     const startR = [-7,  -3,  0,   3,    7];
@@ -2131,11 +2136,9 @@ footer .wordmark .macron::after { background: var(--green); }
     const easeOut = t => 1 - Math.pow(1 - t, 3);
 
     const onShowcaseScroll = () => {
-      const rect = showcase.getBoundingClientRect();
-      // p=0 terwijl sectie onder viewport zit, loopt naar 1 terwijl sectie door viewport scrollt
-      const p = easeOut(Math.max(0, Math.min(1,
-        (window.innerHeight - rect.top) / (window.innerHeight + showcase.offsetHeight * 0.5)
-      )));
+      const rect  = showcase.getBoundingClientRect();
+      const total = showcase.offsetHeight - showcaseSticky.offsetHeight;
+      const p     = easeOut(Math.max(0, Math.min(1, -rect.top / total)));
       emailCards.forEach((c, i) => {
         c.style.transform = `translateX(${startX[i]*(1-p)}px) translateY(${startY[i]*(1-p)}px) rotate(${startR[i]*(1-p)}deg) scale(${startS[i]+(1-startS[i])*p})`;
       });
