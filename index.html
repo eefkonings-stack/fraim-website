@@ -2119,7 +2119,7 @@ footer .wordmark .macron::after { background: var(--green); }
     });
   });
 
-  // Email showcase — scroll-driven fan-out
+  // Email showcase — stacked deck, fan-out on scroll
   const showcase   = document.querySelector('.email-showcase');
   const emailCards = document.querySelectorAll('.email-card');
   if (showcase && emailCards.length && window.innerWidth > 820) {
@@ -2127,17 +2127,15 @@ footer .wordmark .macron::after { background: var(--green); }
     const startR = [-7,  -3,  0,   3,    7];
     const startS = [0.85, 0.91, 1, 0.91, 0.85];
     const startY = [30,  12,   0,  12,   30];
-    emailCards.forEach((c, i) => {
-      c.style.zIndex = String(5 - Math.abs(i - 2));
-    });
+    emailCards.forEach((c, i) => { c.style.zIndex = String(5 - Math.abs(i - 2)); });
     const easeOut = t => 1 - Math.pow(1 - t, 3);
 
     const onShowcaseScroll = () => {
       const rect = showcase.getBoundingClientRect();
-      // Animatie start 1.5× viewport vóór de sectie, eindigt als sectie-top op 30% van viewport staat
-      const from = window.innerHeight * 1.5;
-      const to   = window.innerHeight * 0.3;
-      const p    = easeOut(Math.max(0, Math.min(1, (from - rect.top) / (from - to))));
+      // p=0 terwijl sectie onder viewport zit, loopt naar 1 terwijl sectie door viewport scrollt
+      const p = easeOut(Math.max(0, Math.min(1,
+        (window.innerHeight - rect.top) / (window.innerHeight + showcase.offsetHeight * 0.5)
+      )));
       emailCards.forEach((c, i) => {
         c.style.transform = `translateX(${startX[i]*(1-p)}px) translateY(${startY[i]*(1-p)}px) rotate(${startR[i]*(1-p)}deg) scale(${startS[i]+(1-startS[i])*p})`;
       });
