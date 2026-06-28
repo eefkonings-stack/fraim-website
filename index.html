@@ -112,32 +112,49 @@ section { padding: clamp(72px, 10vw, 128px) 0; }
 /* ── Nav ───────────────────────────────────────────────────── */
 nav.top {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2.5rem);
+  max-width: 1060px;
   z-index: 100;
-  padding: 1.1rem 0;
   background: #ffffff;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  border-radius: 100px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.09), 0 0 0 1px rgba(0,0,0,0.06);
   transition: box-shadow 0.3s;
 }
 nav.top.scrolled {
-  background: #ffffff;
-  box-shadow: 0 1px 16px rgba(0,0,0,0.07);
+  box-shadow: 0 4px 28px rgba(0,0,0,0.13), 0 0 0 1px rgba(0,0,0,0.07);
 }
+.nav-inner {
+  display: flex;
+  align-items: center;
+  padding: 0.65rem 0.9rem 0.65rem 1.5rem;
+}
+nav.top .wordmark-box { flex-shrink: 0; }
 nav.top .wordmark { color: #0A0D04; letter-spacing: -0.02em; font-weight: 900; }
-
 nav.top .wordmark .macron::after { display: none; }
-nav.top .container { display: flex; align-items: center; justify-content: space-between; }
-.links { display: flex; align-items: center; gap: 2rem; }
-.links a:not(.btn) {
+.nav-links {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.nav-links a {
   font-size: 0.82rem;
   color: #0A0D04;
   transition: color 0.18s;
+  white-space: nowrap;
 }
-.links a:not(.btn):hover { color: #555; }
+.nav-links a:hover { color: #555; }
+.nav-cta { flex-shrink: 0; }
 nav.top .btn-primary {
   background: #0A0D04;
   color: #ffffff;
   border-radius: 2rem;
+  font-size: 0.82rem;
+  padding: 0.6rem 1.2rem;
 }
 
 /* ── Hero ──────────────────────────────────────────────────── */
@@ -1503,7 +1520,8 @@ footer .wordmark .macron::after { background: var(--green); }
 }
 
 @media (max-width: 820px) {
-  .links a:not(.btn) { display: none; }
+  nav.top { top: 1rem; width: calc(100% - 2rem); }
+  .nav-links { display: none; }
 }
 
 @media (max-width: 600px) {
@@ -1535,15 +1553,17 @@ footer .wordmark .macron::after { background: var(--green); }
 <body data-accent="lime">
 
 <nav class="top" id="topnav" aria-label="Hoofdnavigatie">
-  <div class="container">
+  <div class="nav-inner">
     <a href="#top" class="wordmark-box" aria-label="FRAIM home">
       <span class="wordmark">FR<span class="macron">AI</span>M</span>
     </a>
-    <div class="links">
+    <div class="nav-links">
       <a href="#problem">Probleem</a>
       <a href="#system">Systeem</a>
       <a href="#cases">Cases</a>
       <a href="#pricing">Prijs</a>
+    </div>
+    <div class="nav-cta">
       <a href="#cta" class="btn btn-primary">Neem contact op <span class="arr">↗</span></a>
     </div>
   </div>
