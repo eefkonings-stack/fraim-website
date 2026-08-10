@@ -3,2347 +3,443 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>FRAIM — Retentie die je écht zelf bezit.</title>
-<meta name="description" content="AI-gedreven retentie-infrastructuur voor DTC-merken. Gebouwd in 14 dagen, gerund door je eigen team — voor altijd in jouw bezit." />
+<title>FRAIM — Websiteredesign &amp; e-mailmarketing. Voor altijd van jou.</title>
+<meta name="description" content="FRAIM bouwt twee systemen: je websiteredesign inclusief SEO en je e-mailmarketing met automations. In jouw accounts, op een vast schema, daarna run je het zelf." />
+<link rel="icon" type="image/svg+xml" href="assets/fraim-mark.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <style>
+:root{
+  --ink:#111820; --ink-2:#18212B; --ink-3:#252932;
+  --bone:#F2F1EC; --bone-2:#C4C6CE; --bone-3:#858A97;
+  --blue:#C8C2B8; --blue-2:#D6D1C7;
+  --sans:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --serif:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --pad:clamp(20px,5vw,72px);
+  --rule:rgba(242,241,236,.13);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--bone);font-family:var(--sans);letter-spacing:-.005em;-webkit-font-smoothing:antialiased;text-wrap:pretty;position:relative}
 
+/* ── logo-patroon: mark 45° gedraaid, herhaald, uitgefade ── */
+.pattern{position:fixed;inset:0;z-index:0;pointer-events:none;
+  --tile:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg transform='rotate(22.5 50 50)'%3E%3Cpath d='M50 71 H29 V29 H71 V50' stroke='%23F2F1EC' stroke-width='11' fill='none'/%3E%3Crect x='62' y='62' width='15' height='15' fill='%23C8C2B8'/%3E%3C/g%3E%3C/svg%3E");
+  background-image:var(--tile),var(--tile);
+  background-size:58px 58px,58px 58px;
+  background-position:0 0,29px 29px;
+  opacity:.06;
+  -webkit-mask-image:radial-gradient(105% 70% at 74% 4%,#000 0%,rgba(0,0,0,.32) 36%,transparent 66%);
+  mask-image:radial-gradient(105% 70% at 74% 4%,#000 0%,rgba(0,0,0,.32) 36%,transparent 66%);}
+.wrap,nav,section,footer,header{position:relative;z-index:1}
 
-/* ── Variables ─────────────────────────────────────────────── */
-:root {
-  --bg:     #ffffff;
-  --olive:  #f5f5f5;
-  --olive2: #f0f0f0;
-  --ivory:  #0A0D04;
-  --green:  #C0F53D;
-  --muted:  rgba(10,13,4,0.42);
-  --dim:    rgba(10,13,4,0.62);
-  --border: rgba(10,13,4,0.10);
-  --max-w:  1120px;
-  --r:      8px;
-}
-[data-accent="acid"]  { --green: #C6FF1F; }
-[data-accent="mint"]  { --green: #6EF5B0; }
-[data-accent="lime"]  { --green: #C0F53D; }
+a{color:var(--bone);text-decoration:none}
+a:hover{color:var(--blue-2)}
+.em{font-family:var(--serif);font-style:normal;font-weight:300;letter-spacing:-.02em}
+.wrap{max-width:1240px;margin:0 auto;padding:0 var(--pad)}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-3)}
 
-/* ── Reset ─────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--ivory);
-  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 1rem;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
-ul { list-style: none; }
-summary { list-style: none; }
-summary::-webkit-details-marker { display: none; }
+/* nav */
+.nav{position:fixed;top:18px;left:0;right:0;z-index:50;display:flex;justify-content:center;pointer-events:none}
+.pill{pointer-events:auto;display:flex;align-items:center;gap:28px;background:rgba(27,30,38,.92);backdrop-filter:blur(14px);border:1px solid var(--rule);border-radius:999px;padding:11px 12px 11px 20px;box-shadow:0 10px 34px rgba(0,0,0,.45)}
+.brand{display:flex;align-items:center;gap:11px}
+.brand .wm{font-weight:700;font-size:19px;letter-spacing:-.04em;text-transform:uppercase}
+.navlinks{display:flex;gap:22px;font-size:13.5px;color:var(--bone-2);font-weight:500}
+.navcta{background:var(--blue);color:#14161C;border-radius:999px;padding:9px 17px;font-size:13.5px;font-weight:600;white-space:nowrap;display:inline-flex;align-items:center}
+.navcta:hover{background:var(--blue-2);color:#14161C}
+@media(max-width:900px){.navlinks{display:none}}
 
-/* ── Base type ─────────────────────────────────────────────── */
-em { font-style: italic; }
-/* Groene em alleen in donkere secties */
-.about-dark em, .about-problems em { color: var(--green); font-style: normal; }
-.about-problems .ap-annot { font-style: italic; }
-.final-dark em { color: var(--green); }
-h1, h2, h3, h4 { font-weight: 300; line-height: 1.1; letter-spacing: -0.02em; color: var(--ivory); }
-p { color: var(--dim); line-height: 1.7; }
+/* hero */
+.hero{padding:170px 0 0}
+.hero h1{font-size:clamp(42px,7.6vw,102px);line-height:.93;letter-spacing:-.045em;font-weight:700;margin:24px 0 0;text-transform:uppercase;max-width:15ch}
+.hero h1 .em{text-transform:none;font-size:1.02em;color:var(--blue-2)}
+.hero .sub{max-width:600px;margin:30px 0 0;font-size:clamp(16px,1.5vw,19px);line-height:1.55;color:var(--bone-2)}
 
-/* ── Layout ────────────────────────────────────────────────── */
-.container {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 clamp(20px, 5vw, 60px);
-}
-section { padding: clamp(72px, 10vw, 128px) 0; }
+/* twee modules — direct in de hero */
+.mods{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+@media(max-width:900px){.mods{grid-template-columns:1fr}}
+.mod{--acc:var(--blue);--acc-2:var(--blue-2);background:rgba(27,30,38,.86);backdrop-filter:blur(8px);border:1px solid var(--rule);border-radius:22px;padding:clamp(26px,3vw,38px);display:flex;flex-direction:column;transition:border-color .2s}
+.mod.m1{--acc:#C9E06A;--acc-2:#D9EC92}
+.mod.m2{--acc:#D9642E;--acc-2:#F0854E}
+.mod:hover{border-color:color-mix(in oklch,var(--acc-2) 45%,transparent)}
+.mod .tophead{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.mod .badge{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--acc-2);white-space:nowrap}
+.mod .badge i{width:8px;height:8px;background:var(--acc);display:block;flex:none}
+.mod .status{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--bone-3);border:1px solid var(--rule);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.mod h2{font-size:clamp(27px,3.1vw,38px);line-height:1.02;letter-spacing:-.04em;font-weight:700;margin:20px 0 0;text-transform:uppercase}
+.mod h2 .em{text-transform:none;color:var(--acc-2)}
+.mod .lead{margin:14px 0 0;font-size:15.5px;line-height:1.6;color:var(--bone-2)}
+.mod ul{list-style:none;padding:0;margin:26px 0 0}
+.mod li{display:flex;gap:13px;padding:12px 0;border-top:1px solid var(--rule);font-size:14.5px;line-height:1.45;color:var(--bone-2)}
+.mod li b{color:var(--bone);font-weight:600}
+.mod li .ix{color:var(--acc-2);font-weight:700;flex:none;width:20px;font-size:12.5px;padding-top:2px}
+.mod .foot{margin-top:auto;padding-top:26px}
+.mod .price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-top:1px solid var(--rule);padding-top:20px}
+.mod .price .big{font-size:32px;font-weight:700;letter-spacing:-.035em}
+.mod .price .small{font-size:13.5px;color:var(--bone-3)}
+.mod .go{margin-top:20px;display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;color:var(--acc-2)}
+.mod .go:hover{color:var(--acc-2);opacity:.75}
 
-/* ── Buttons ───────────────────────────────────────────────── */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.8rem 1.55rem;
-  border-radius: var(--r);
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  transition: opacity 0.18s, transform 0.18s;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.btn:hover { opacity: 0.86; transform: translateY(-1px); }
-.btn-primary { background: var(--green); color: var(--bg); }
-.btn-ghost {
-  background: transparent;
-  color: var(--ivory);
-  border: 1px solid rgba(10,13,4,0.22);
-}
-.btn-ghost:hover { color: var(--ivory); border-color: rgba(10,13,4,0.5); }
-.arr { font-style: normal; }
-.ctas { display: flex; gap: 0.875rem; flex-wrap: wrap; }
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:38px}
+.btn{border-radius:999px;padding:15px 26px;font-size:15px;font-weight:600;display:inline-flex;align-items:center;gap:9px}
+.btn.pri{background:var(--blue);color:#14161C}.btn.pri:hover{background:var(--blue-2);color:#14161C}
+.btn.sec{border:1px solid var(--rule);color:var(--bone)}.btn.sec:hover{border-color:var(--bone-3);color:var(--bone)}
 
-/* ── Wordmark ──────────────────────────────────────────────── */
-.wordmark-box { display: inline-block; }
-.wordmark {
-  font-size: 1.2rem;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  color: var(--ivory);
-  font-family: system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
-}
-.wordmark .macron {
-  position: relative;
-  display: inline-block;
-}
-.wordmark .macron::after {
-  content: '';
-  position: absolute;
-  top: -3px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--green);
-  border-radius: 1px;
-}
+/* marquee */
+.marq{margin-top:96px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow:hidden;padding:15px 0;background:rgba(27,30,38,.7)}
+.marq .track{display:flex;gap:34px;white-space:nowrap;animation:slide 34s linear infinite;font-size:12px;font-weight:600;letter-spacing:.19em;text-transform:uppercase;color:var(--bone-3)}
+.marq .track span{display:flex;align-items:center;gap:34px}
+.marq i{width:6px;height:6px;background:var(--blue);display:inline-block;flex:none}
+@keyframes slide{to{transform:translateX(-50%)}}
 
-/* ── Nav ───────────────────────────────────────────────────── */
-nav.top {
-  position: fixed;
-  top: 1.25rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 2.5rem);
-  max-width: 1060px;
-  z-index: 100;
-  background: #ffffff;
-  border-radius: 100px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.09), 0 0 0 1px rgba(0,0,0,0.06);
-  transition: box-shadow 0.3s;
-}
-nav.top.scrolled {
-  box-shadow: 0 4px 28px rgba(0,0,0,0.13), 0 0 0 1px rgba(0,0,0,0.07);
-}
-.nav-inner {
-  display: flex;
-  align-items: center;
-  padding: 0.65rem 0.9rem 0.65rem 1.5rem;
-}
-nav.top .wordmark-box { flex-shrink: 0; }
-nav.top .wordmark { color: #0A0D04; letter-spacing: -0.02em; font-weight: 900; }
-nav.top .wordmark .macron::after { display: none; }
-.nav-links {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-}
-.nav-links a {
-  font-size: 0.82rem;
-  color: #0A0D04;
-  transition: color 0.18s;
-  white-space: nowrap;
-}
-.nav-links a:hover { color: #555; }
-.nav-cta { flex-shrink: 0; }
-nav.top .btn-primary {
-  background: #0A0D04;
-  color: #ffffff;
-  border-radius: 2rem;
-  font-size: 0.82rem;
-  padding: 0.6rem 1.2rem;
-}
+section{padding:clamp(74px,9vw,124px) 0}
+.shead{display:flex;gap:28px;align-items:baseline;border-top:1px solid var(--rule);padding-top:26px;margin-bottom:52px;flex-wrap:wrap}
+.shead .num{font-size:12px;font-weight:700;color:var(--blue-2);letter-spacing:.1em;flex:none;width:52px}
+.shead h2{font-size:clamp(30px,4.4vw,56px);line-height:1.02;letter-spacing:-.04em;font-weight:700;margin:0;max-width:16ch;text-transform:uppercase}
+.shead h2 .em{text-transform:none;color:var(--bone-2)}
+.shead p{margin:0;max-width:38ch;font-size:15.5px;line-height:1.6;color:var(--bone-3);flex:1;min-width:260px}
 
-/* ── Hero ──────────────────────────────────────────────────── */
-header.hero {
-  min-height: auto;
-  display: flex;
-  align-items: center;
-  padding: clamp(140px, 16vw, 180px) 0 clamp(48px, 5vw, 72px);
-  background: #ffffff;
-  text-align: center;
-}
-.hero-grid {
-  display: block;
-  max-width: 760px;
-  margin: 0 auto;
-}
-.hero-eyebrow { display: none; }
-h1.hero-headline {
-  font-size: clamp(3rem, 6.5vw, 5.5rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  color: #0A0D04;
-  margin-bottom: 1.5rem;
-}
-h1.hero-headline em {
-  font-weight: 700;
-  font-size: 0.95em;
-  color: #0A0D04;
-}
-.star {
-  font-size: 0.5em;
-  color: var(--green);
-  vertical-align: super;
-  margin-left: 0.15em;
-  font-style: normal;
-  display: inline-block;
-}
-.hero-sub {
-  font-size: clamp(1rem, 1.4vw, 1.1rem);
-  color: #555555;
-  line-height: 1.7;
-  max-width: 540px;
-  margin: 0 auto 2.5rem;
-}
-.hero-sub b { color: #0A0D04; font-weight: 600; }
-.hero-sub em { color: #0A0D04; }
-.hero-cta { display: flex; gap: 0.875rem; flex-wrap: wrap; justify-content: center; }
-header.hero .btn-primary {
-  background: #0A0D04;
-  color: #ffffff;
-  border-radius: 2rem;
-  padding: 0.85rem 1.75rem;
-}
-header.hero .btn-ghost {
-  border: 1.5px solid rgba(0,0,0,0.25);
-  color: #0A0D04;
-  border-radius: 2rem;
-  padding: 0.85rem 1.75rem;
-}
-header.hero .btn-ghost:hover {
-  color: #0A0D04;
-  border-color: rgba(0,0,0,0.55);
-}
-.hero-horizon { display: none; }
-.hero-meta { display: none; }
+.combine{background:var(--bone);color:var(--ink);border-radius:26px;padding:clamp(30px,4vw,58px);display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:center}
+@media(max-width:900px){.combine{grid-template-columns:1fr}}
+.combine h3{font-size:clamp(26px,3.4vw,42px);line-height:1.04;letter-spacing:-.04em;margin:14px 0 0;font-weight:700;text-transform:uppercase}
+.combine h3 .em{text-transform:none;color:#8A8478}
+.combine p{margin:16px 0 0;font-size:16px;line-height:1.6;color:#565A66;max-width:44ch}
+.combine .eyebrow{color:#868B99}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.stat{display:flex;flex-direction:column;gap:6px;border-top:1px solid rgba(20,22,28,.14);padding-top:16px}
+.stat .n{font-size:clamp(28px,3.8vw,44px);font-weight:700;letter-spacing:-.04em;line-height:1}
+.stat .l{font-size:13px;color:#6B7080;line-height:1.4}
 
-/* ── Ticker strip ─────────────────────────────────────────── */
-.ticker-strip {
-  overflow: hidden;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-  padding: 1rem 0;
-  background: #ffffff;
-}
-.ticker-track {
-  display: flex;
-  width: max-content;
-  animation: ticker 28s linear infinite;
-}
-.ticker-track span {
-  font-family: 'CSAliceMono', monospace;
-  font-size: 0.78rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: #0A0D04;
-  white-space: nowrap;
-  padding-right: 3rem;
-}
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
+.princ{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:900px){.princ{grid-template-columns:1fr}}
+.card{border:1px solid var(--rule);border-radius:18px;padding:30px;background:rgba(27,30,38,.86)}
+.card .k{font-size:12px;font-weight:700;color:var(--blue-2);letter-spacing:.14em}
+.card h4{font-size:20px;letter-spacing:-.02em;margin:16px 0 0;font-weight:700}
+.card p{margin:12px 0 0;font-size:14.5px;line-height:1.6;color:var(--bone-3)}
 
-/* ── Email Showcase ───────────────────────────────────────── */
-.email-showcase {
-  height: calc(620px + 50vh);
-  background: #0A0D04;
-  position: relative;
-}
-.showcase-sticky {
-  position: sticky;
-  top: 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3.5rem clamp(20px, 5vw, 60px) 3.5rem;
-}
-.showcase-label {
-  font-family: 'CSAliceMono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
-  text-align: center;
-  position: absolute;
-  top: 2rem;
-  left: 0; right: 0;
-  z-index: 10;
-}
-.showcase-cards {
-  display: flex;
-  gap: 1.75rem;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.email-card {
-  width: 230px;
-  flex-shrink: 0;
-  will-change: transform;
-  position: relative;
-  transition: transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.email-card img {
-  width: 100%;
-  display: block;
-  filter: drop-shadow(0 24px 60px rgba(0,0,0,0.6));
-  transition: filter 0.4s;
-}
-.email-card:hover img { filter: drop-shadow(0 32px 80px rgba(0,0,0,0.8)); }
-@media (max-width: 820px) {
-  .email-showcase { height: auto; background: #0A0D04; }
-  .showcase-sticky { position: relative; height: auto; padding: 3rem 0 4rem; overflow: visible; }
-  .showcase-cards {
-    position: relative;
-    height: 460px;
-    justify-content: center;
-    align-items: center;
-    gap: 0;
-    overflow: visible;
-    padding: 0;
-  }
-  .email-card {
-    position: absolute;
-    width: 62vw;
-    max-width: 230px;
-    transform: translateX(0px) translateY(0px) rotate(0deg) scale(1);
-    transition: transform 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  .email-card:nth-child(1) { z-index: 1; }
-  .email-card:nth-child(2) { z-index: 2; }
-  .email-card:nth-child(3) { z-index: 5; }
-  .email-card:nth-child(4) { z-index: 2; }
-  .email-card:nth-child(5) { z-index: 1; }
-  .email-showcase.fanned .email-card:nth-child(1) { transform: translateX(-130px) translateY(20px) rotate(-7deg) scale(0.85); }
-  .email-showcase.fanned .email-card:nth-child(2) { transform: translateX(-60px) translateY(8px) rotate(-3deg) scale(0.91); }
-  .email-showcase.fanned .email-card:nth-child(3) { transform: translateX(0px) translateY(0px) rotate(0deg) scale(1); }
-  .email-showcase.fanned .email-card:nth-child(4) { transform: translateX(60px) translateY(8px) rotate(3deg) scale(0.91); }
-  .email-showcase.fanned .email-card:nth-child(5) { transform: translateX(130px) translateY(20px) rotate(7deg) scale(0.85); }
-  .showcase-label { font-size: 0.6rem; padding: 0 20px; }
-}
+.cta{background:rgba(27,30,38,.9);border:1px solid var(--rule);border-radius:26px;padding:clamp(34px,5vw,72px);text-align:center}
+.cta h2{font-size:clamp(30px,5vw,64px);line-height:1;letter-spacing:-.045em;margin:18px 0 0;font-weight:700;text-transform:uppercase}
+.cta h2 .em{text-transform:none;color:var(--blue-2)}
+.cta p{margin:22px auto 0;max-width:46ch;font-size:16.5px;line-height:1.6;color:var(--bone-2)}
+.cta .btns{justify-content:center}
 
-/* Intake card */
-.intake {
-  background: var(--olive2);
-  border: 1px solid rgba(192,245,61,0.18);
-  border-radius: 10px;
-  padding: 1.75rem 2rem 2rem;
-  position: relative;
-}
-.intake .plus {
-  display: block;
-  font-size: 1.6rem;
-  color: var(--green);
-  line-height: 1;
-  margin-bottom: 1.1rem;
-  font-weight: 300;
-}
-.intake h3 {
-  font-size: 1.1rem;
-  font-weight: 800;
-  line-height: 1.3;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.01em;
-}
-.intake h3 em { font-weight: 700; }
-.intake p.sub {
-  font-size: 0.78rem;
-  color: var(--muted);
-  line-height: 1.55;
-  margin-bottom: 1.5rem;
-}
-.intake .field {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.7rem 0;
-  border-bottom: 1px solid var(--border);
-}
-.intake .field .k {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  min-width: 90px;
-  flex-shrink: 0;
-}
-.intake .field .line {
-  flex: 1;
-  height: 1px;
-  background: rgba(250,255,243,0.1);
-}
-.intake .submit {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-  padding: 0.85rem 1.25rem;
-  background: var(--green);
-  color: var(--bg);
-  border-radius: var(--r);
-  font-weight: 700;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: opacity 0.18s;
-}
-.intake .submit:hover { opacity: 0.88; }
+footer{border-top:1px solid var(--rule);padding:64px 0 40px}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px}
+@media(max-width:820px){.fgrid{grid-template-columns:1fr 1fr}}
+.flock{display:inline-flex;align-items:baseline;gap:.3em;text-transform:uppercase;line-height:1}
+.flock .your{font-weight:300;font-size:clamp(30px,4.4vw,50px);letter-spacing:-.02em;color:var(--bone-2)}
+.flock .mk{font-weight:700;font-size:clamp(30px,4.4vw,50px);letter-spacing:-.04em}
+footer h5{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--bone-3);margin:0 0 18px;font-weight:600}
+footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:11px;font-size:14.5px;color:var(--bone-2)}
+.fbot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1px solid var(--rule);margin-top:52px;padding-top:22px;font-size:12.5px;color:var(--bone-3)}
 
-/* Hero bottom bar */
-.hero-horizon {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, var(--green) 0%, transparent 65%);
-  margin: clamp(2.5rem, 5vw, 4rem) 0 1rem;
-  opacity: 0.4;
-}
-.hero-meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  opacity: 0.55;
-}
+/* cursor-volgende gloed in de accentkleur */
+.mod,.card,.tier{position:relative;overflow:hidden;isolation:isolate}
+.mod::before,.card::before,.tier::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity .35s ease;background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),color-mix(in oklch,var(--acc,#C8C2B8) 17%,transparent),transparent 66%)}
+.mod:hover::before,.card:hover::before,.tier:hover::before{opacity:1}
+@media(hover:none){.mod::before,.card::before,.tier::before{display:none}}
 
-/* ── About dark section (vervangt manifesto) ───────────────── */
-.about-dark {
-  background: #0A0D04;
-  padding: clamp(72px, 10vw, 128px) 0;
-}
-.about-head {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 300;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-  margin-bottom: 3rem;
-}
-.about-head em {
-  font-style: italic;
-  color: #ffffff;
-}
-.about-body1 {
-  font-size: clamp(1rem, 1.5vw, 1.15rem);
-  color: rgba(255,255,255,0.88);
-  line-height: 1.7;
-  margin-bottom: 1rem;
-  max-width: 820px;
-}
-.about-body2 {
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.38);
-  line-height: 1.65;
-  max-width: 680px;
-  margin-bottom: 4rem;
-}
-.about-body2 strong { color: rgba(255,255,255,0.72); font-weight: 600; }
-.about-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-.about-stat .figure {
-  font-size: clamp(2.8rem, 5vw, 4.5rem);
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  color: #ffffff;
-  line-height: 1;
-  margin-bottom: 0.6rem;
-}
-.about-stat .lbl {
-  font-family: 'CSAliceMono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-}
-.about-problems {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-bottom: 4rem;
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
-.ap-item {
-  display: flex;
-  gap: 1.5rem;
-  padding: 1.75rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  align-items: flex-start;
-}
-.ap-mk {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.3);
-  min-width: 2rem;
-  flex-shrink: 0;
-  padding-top: 0.2em;
-}
-.ap-text {
-  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
-  color: rgba(255,255,255,0.85);
-  line-height: 1.55;
-  margin-bottom: 0.35rem;
-}
-.ap-annot {
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.28);
-  font-style: italic;
-  letter-spacing: 0.02em;
-}
+/* scroll-reveal + intro — zichtbaar als default, verbergen alleen als JS het kan animeren */
+.rv-ready [data-rv]{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+.rv-ready [data-rv].in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv-ready [data-rv]{opacity:1!important;transform:none!important;transition:none}}
 
-/* ── Section background accenten ──────────────────────────── */
-#why, #cases, .lezen-section { background: #f5f5f3; }
-#deliverables { background: #ffffff; }
-#pricing { background: #f5f5f3; }
-
-/* ── Manifesto + Orbit ─────────────────────────────────────── */
-.manifesto {
-  display: grid;
-  grid-template-columns: 1fr 160px;
-  gap: 3.5rem;
-  align-items: center;
-  padding: 3rem 3.5rem;
-  background: var(--olive2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-}
-.manifesto p.big {
-  font-size: clamp(1.2rem, 2vw, 1.7rem);
-  font-weight: 700;
-  color: var(--ivory);
-  line-height: 1.35;
-  letter-spacing: -0.015em;
-  margin-bottom: 1rem;
-}
-.manifesto p.big em { font-weight: 700; font-size: 0.95em; }
-.manifesto p.body {
-  font-size: 0.9rem;
-  color: var(--dim);
-  line-height: 1.72;
-  max-width: 600px;
-}
-
-/* Orbit badge */
-.orbit {
-  position: relative;
-  width: 140px;
-  height: 140px;
-  flex-shrink: 0;
-}
-.orbit .ring {
-  width: 100%;
-  height: 100%;
-  animation: orbit-spin 24s linear infinite;
-  transform-origin: 50% 50%;
-}
-.orbit .ring text {
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  fill: var(--green);
-  font-family: system-ui, sans-serif;
-}
-@keyframes orbit-spin { to { transform: rotate(360deg); } }
-.orbit .core {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  border: 1px solid rgba(192,245,61,0.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.orbit .globe {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  border: 1px solid rgba(192,245,61,0.2);
-  position: relative;
-  overflow: hidden;
-}
-.orbit .globe .merid {
-  position: absolute;
-  top: 0; left: 50%;
-  width: 1px; height: 100%;
-  background: rgba(192,245,61,0.4);
-  transform: translateX(-50%);
-}
-
-/* ── Section head pattern [NN] ─────────────────────────────── */
-.section-head {
-  display: flex;
-  gap: 3rem;
-  align-items: flex-start;
-  margin-bottom: 3rem;
-}
-.section-head .num {
-  font-size: clamp(0.75rem, 1.2vw, 1rem);
-  color: var(--muted);
-  flex-shrink: 0;
-  line-height: 1;
-  padding-top: 0.25em;
-}
-.section-head .right { flex: 1; }
-.section-head h2.title {
-  font-size: clamp(1.7rem, 3vw, 2.5rem);
-  font-weight: 300;
-  letter-spacing: -0.025em;
-  line-height: 1.12;
-  margin-bottom: 0.6rem;
-}
-.section-head h2.title em { font-size: 0.95em; font-weight: 300; font-style: italic; }
-.section-head .sub {
-  font-size: 0.88rem;
-  color: var(--muted);
-  line-height: 1.65;
-  display: block;
-  max-width: 520px;
-}
-
-/* ── Stats ─────────────────────────────────────────────────── */
-.stat-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-}
-.stat-card {
-  background: var(--olive2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 2rem 1.75rem 2.25rem;
-}
-.stat-card .stamp {
-  display: block;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--muted);
-  margin-bottom: 1.25rem;
-}
-.stat-card .figure {
-  font-size: clamp(2rem, 3.5vw, 3rem);
-  font-weight: 300;
-  color: var(--ivory);
-  line-height: 1;
-  letter-spacing: -0.03em;
-  margin-bottom: 0.75rem;
-}
-.stat-card .figure em { font-weight: 700; }
-.stat-card .note {
-  font-size: 0.8rem;
-  color: var(--muted);
-  line-height: 1.55;
-}
-
-/* ── Problem ───────────────────────────────────────────────── */
-.problem-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-}
-.problem-card {
-  padding: 2rem 2rem 2rem 0;
-  border-top: 2px solid var(--border);
-  transition: border-top-color 0.25s;
-}
-.problem-card:not(:last-child) { padding-right: 2.5rem; }
-.problem-card:not(:first-child) { padding-left: 2.5rem; border-left: 1px solid var(--border); }
-.problem-card:hover { border-top-color: var(--green); }
-.problem-card .mk {
-  display: block;
-  font-size: 1.15rem;
-  color: var(--green);
-  margin-bottom: 1rem;
-}
-.problem-card h3 {
-  font-size: 1rem;
-  font-weight: 300;
-  color: var(--ivory);
-  line-height: 1.5;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.75rem;
-}
-.problem-card h3 em { font-weight: 700; font-size: 0.95em; }
-.problem-card .annot {
-  font-size: 0.72rem;
-  color: var(--muted);
-  font-style: italic;
-  letter-spacing: 0.02em;
-}
-
-/* ── Ivory panel (Systeem) ─────────────────────────────────── */
-.ivory-panel {
-  background: #0A0D04;
-  border-radius: 10px;
-  padding: clamp(2rem, 4vw, 3rem);
-  color: #ffffff;
-}
-.ip-head {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 2.5rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(255,255,255,0.12);
-}
-.pill-badge {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.25rem 0.7rem;
-  background: rgba(255,255,255,0.12);
-  border-radius: 20px;
-  color: rgba(255,255,255,0.55);
-  align-self: flex-start;
-}
-.ip-head h2 {
-  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
-  color: #ffffff;
-  letter-spacing: -0.025em;
-  font-weight: 300;
-}
-.ip-head h2 em {
-  color: #ffffff;
-  font-weight: 300;
-  font-style: italic;
-}
-.ip-list { display: flex; flex-direction: column; }
-.ip-row {
-  display: grid;
-  grid-template-columns: 36px 1fr 2fr;
-  gap: 1.25rem 2rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  align-items: start;
-}
-.ip-row:last-child { border-bottom: none; }
-.ip-row.is-accent {
-  background: var(--bg);
-  padding: 1.5rem 1.5rem;
-  border-radius: var(--r);
-  border-bottom: none;
-  margin: 0.5rem -1.5rem;
-}
-.ip-num {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.3);
-  padding-top: 0.15em;
-}
-.ip-row.is-accent .ip-num { color: var(--muted); }
-.ip-title {
-  font-size: 0.97rem;
-  font-weight: 400;
-  color: #ffffff;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-}
-.ip-title em {
-  color: rgba(255,255,255,0.6);
-  font-weight: 300;
-  font-size: 0.95em;
-  font-style: italic;
-}
-.ip-row.is-accent .ip-title { color: var(--ivory); }
-.ip-row.is-accent .ip-title em { color: var(--green); }
-.ip-title .tag {
-  display: inline-block;
-  font-family: system-ui, sans-serif;
-  font-style: normal;
-  font-size: 0.6rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 0.18rem 0.5rem;
-  background: var(--green);
-  color: var(--bg);
-  border-radius: 3px;
-  margin-left: 0.5rem;
-  vertical-align: middle;
-}
-.ip-desc {
-  font-size: 0.84rem;
-  color: rgba(255,255,255,0.45);
-  line-height: 1.68;
-}
-.ip-row.is-accent .ip-desc { color: var(--dim); }
-
-/* ── Process ───────────────────────────────────────────────── */
-.process {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  border-top: 1px solid var(--border);
-}
-.step {
-  padding: 2rem 2rem 2rem 0;
-  border-top: 2px solid transparent;
-  transition: border-top-color 0.25s;
-  margin-top: -1px;
-}
-.step:not(:last-child) { border-right: 1px solid var(--border); padding-right: 1.75rem; }
-.step:not(:first-child) { padding-left: 1.75rem; }
-.step:hover { border-top-color: var(--green); }
-.step .day {
-  display: block;
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--muted);
-  margin-bottom: 1.1rem;
-  font-family: 'CSAliceMono', monospace;
-}
-.step .day em {
-  font-family: system-ui, sans-serif;
-  font-style: normal;
-  color: var(--muted);
-  text-transform: lowercase;
-  font-weight: 400;
-  letter-spacing: 0;
-}
-.step h4 {
-  font-size: 0.97rem;
-  font-weight: 300;
-  letter-spacing: -0.01em;
-  color: var(--ivory);
-  margin-bottom: 0.65rem;
-  line-height: 1.35;
-}
-.step h4 em { font-weight: 300; font-size: 0.95em; font-style: italic; }
-.step p {
-  font-size: 0.8rem;
-  color: var(--muted);
-  line-height: 1.65;
-  margin-bottom: 0.75rem;
-}
-.step .foot {
-  font-size: 0.65rem;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-  opacity: 0.5;
-}
-
-/* ── Deliverables ──────────────────────────────────────────── */
-.deliv {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-.pack {
-  background: #0A0D04;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--r);
-  overflow: hidden;
-}
-.pack header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 1.75rem 2rem;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-.pack header h3 {
-  font-size: 1rem;
-  font-weight: 300;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  color: #ffffff;
-}
-.pack header h3 em { font-weight: 300; font-style: italic; color: rgba(255,255,255,0.6); }
-.pack header .price {
-  text-align: right;
-  font-size: 1.1rem;
-  font-weight: 900;
-  color: var(--green);
-  letter-spacing: -0.02em;
-  line-height: 1;
-  white-space: nowrap;
-}
-.pack header .price small {
-  display: block;
-  font-size: 0.65rem;
-  font-weight: 400;
-  color: rgba(255,255,255,0.35);
-  margin-top: 0.3rem;
-  letter-spacing: 0.04em;
-}
-.pack ul { padding: 1.25rem 2rem 2rem; display: flex; flex-direction: column; }
-.pack ul li {
-  display: flex;
-  gap: 0.875rem;
-  padding: 0.65rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  font-size: 0.84rem;
-  color: rgba(255,255,255,0.6);
-  line-height: 1.5;
-  align-items: flex-start;
-}
-.pack ul li:last-child { border-bottom: none; }
-.pack ul li .ix {
-  color: var(--green);
-  font-size: 0.88rem;
-  flex-shrink: 0;
-  min-width: 18px;
-  padding-top: 0.05rem;
-}
-.pack ul li .what { flex: 1; }
-.pack ul li .qty {
-  font-size: 0.7rem;
-  color: var(--muted);
-  margin-left: 0.35rem;
-}
-
-/* ── Who ───────────────────────────────────────────────────── */
-.who {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
-.who .col { border-radius: var(--r); padding: 2rem; }
-.who .col.fit {
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.12);
-}
-.who .col.notfit {
-  background: #f5f5f3;
-  border: 1px solid rgba(0,0,0,0.08);
-}
-.who .col header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--border);
-}
-.who .col header h3 {
-  font-size: 1.05rem;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-}
-.who .col.fit header h3 em { font-style: italic; }
-.who .col.notfit header h3 em { font-style: italic; }
-.who .col header .ix {
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-.who .col ul { display: flex; flex-direction: column; gap: 0.7rem; }
-.who .col ul li {
-  display: flex;
-  gap: 0.75rem;
-  font-size: 0.88rem;
-  color: var(--dim);
-  line-height: 1.45;
-  align-items: flex-start;
-}
-.who .col .sym {
-  flex-shrink: 0;
-  padding-top: 0.05rem;
-  font-size: 0.85rem;
-}
-.who .col.fit .sym { color: #0A0D04; }
-.who .col.notfit .sym { color: rgba(0,0,0,0.25); }
-
-/* ── Pricing ───────────────────────────────────────────────── */
-.price-block {
-  background: #0A0D04;
-  border: none;
-  border-radius: 10px;
-  padding: 2.75rem 3rem;
-  position: relative;
-}
-.price-block .corner {
-  position: absolute;
-  top: 1.5rem;
-  right: 2rem;
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: rgba(255,255,255,0.15);
-}
-.price-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem;
-  align-items: start;
-}
-.price-grid > div:first-child > h3 {
-  font-size: clamp(1.3rem, 2.5vw, 1.95rem);
-  line-height: 1.2;
-  letter-spacing: -0.025em;
-  margin-bottom: 0.75rem;
-  color: #ffffff;
-}
-.price-grid > div:first-child > h3 em { font-weight: 300; font-style: italic; color: rgba(255,255,255,0.6); }
-.price-grid .psub {
-  font-size: 0.87rem;
-  color: rgba(255,255,255,0.45);
-  line-height: 1.68;
-  margin-bottom: 2rem;
-}
-.price-grid .figure .row {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 0.3rem;
-}
-.price-grid .figure .big {
-  font-size: clamp(3rem, 5.5vw, 4.5rem);
-  font-weight: 900;
-  color: var(--green);
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-.price-grid .figure .unit {
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-.price-grid .figure .sub-row {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 1.75rem;
-}
-.price-grid .figure .med {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: rgba(192,245,61,0.55);
-  letter-spacing: -0.02em;
-}
-.price-grid ul.details {
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
-.price-grid ul.details li {
-  display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  font-size: 0.8rem;
-}
-.price-grid ul.details li .k { color: rgba(255,255,255,0.38); white-space: nowrap; }
-.price-grid ul.details li .v { color: rgba(255,255,255,0.65); text-align: right; }
-.price-grid ul.details li .v em { font-style: italic; color: var(--green); }
-
-/* ── FAQ ───────────────────────────────────────────────────── */
-.faq { display: flex; flex-direction: column; }
-details.q { border-bottom: 1px solid var(--border); }
-details.q summary {
-  display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  padding: 1.3rem 0;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--ivory);
-  transition: color 0.18s;
-}
-details.q summary:hover { color: var(--ivory); opacity: 0.7; }
-details.q summary .qix {
-  font-size: 1rem;
-  color: var(--muted);
-  flex-shrink: 0;
-  min-width: 36px;
-}
-details.q summary > span:nth-child(2) { flex: 1; }
-.toggle {
-  width: 22px; height: 22px;
-  border: 1px solid rgba(10,13,4,0.2);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  position: relative;
-  transition: border-color 0.2s;
-}
-details.q[open] summary .toggle { border-color: var(--ivory); }
-.toggle::before, .toggle::after {
-  content: '';
-  position: absolute;
-  background: rgba(10,13,4,0.5);
-  border-radius: 1px;
-  transition: transform 0.25s, background 0.2s;
-}
-.toggle::before { width: 8px; height: 1.5px; }
-.toggle::after  { width: 1.5px; height: 8px; }
-details.q[open] summary .toggle::before { background: var(--ivory); }
-details.q[open] summary .toggle::after  { transform: rotate(90deg); background: var(--ivory); }
-.answer {
-  padding: 0 0 1.4rem calc(36px + 1.25rem);
-  font-size: 0.87rem;
-  color: var(--dim);
-  line-height: 1.72;
-  max-width: 600px;
-}
-.answer em { font-style: italic; }
-
-/* ── Final CTA ─────────────────────────────────────────────── */
-.final-wrap { padding: clamp(48px, 7vw, 80px) 0 clamp(72px, 10vw, 128px); }
-.final.on-green {
-  background: #0A0D04;
-  color: #ffffff;
-  border-radius: 12px;
-  padding: clamp(2.5rem, 5vw, 4.5rem);
-  position: relative;
-  overflow: hidden;
-  display: block;
-}
-.final.on-green .orbit { display: none; }
-.final.on-green .eyebrow {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-  margin-bottom: 1rem;
-  font-family: 'CSAliceMono', monospace;
-}
-.final.on-green h2 {
-  font-size: clamp(1.7rem, 3.5vw, 2.8rem);
-  color: #ffffff;
-  letter-spacing: -0.025em;
-  margin-bottom: 0.75rem;
-}
-.final.on-green h2 em { color: rgba(255,255,255,0.6); font-style: italic; }
-.final.on-green p.sub {
-  font-size: 0.92rem;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.65;
-  max-width: 480px;
-  margin-bottom: 2rem;
-}
-.final.on-green .btn-primary {
-  background: #ffffff;
-  color: #0A0D04;
-  border-radius: 2rem;
-}
-.final.on-green .btn-ghost {
-  color: rgba(255,255,255,0.65);
-  border-color: rgba(255,255,255,0.2);
-  border-radius: 2rem;
-}
-.final.on-green .btn-ghost:hover { color: #ffffff; border-color: rgba(255,255,255,0.5); }
-
-/* ── Footer ────────────────────────────────────────────────── */
-footer {
-  background: #ffffff;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  padding: clamp(3rem, 6vw, 5rem) 0 2.5rem;
-}
-.foot-top {
-  display: grid;
-  grid-template-columns: 1fr 140px 160px;
-  gap: 3rem;
-  padding-bottom: 3rem;
-  margin-bottom: 2.5rem;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-}
-.foot-signup h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #0A0D04;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-  margin-bottom: 1.25rem;
-  max-width: 260px;
-}
-.foot-signup h3 em { font-weight: 700; color: var(--green); }
-.capture {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  border-bottom: 1px solid rgba(0,0,0,0.15);
-  padding-bottom: 0.5rem;
-  max-width: 300px;
-}
-.capture .ph {
-  flex: 1;
-  font-size: 0.8rem;
-  color: rgba(0,0,0,0.4);
-}
-.capture .go {
-  color: var(--green);
-  font-size: 1.1rem;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: opacity 0.18s;
-}
-.capture .go:hover { opacity: 0.7; }
-.foot-col .colhead {
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: rgba(0,0,0,0.4);
-  margin-bottom: 1.1rem;
-}
-.foot-col ul { display: flex; flex-direction: column; gap: 0.55rem; }
-.foot-col ul li a {
-  font-size: 0.82rem;
-  color: rgba(0,0,0,0.5);
-  transition: color 0.18s;
-}
-.foot-col ul li a:hover { color: #0A0D04; }
-.foot-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  font-size: 0.72rem;
-  color: rgba(0,0,0,0.35);
-  flex-wrap: wrap;
-}
-.foot-bottom em { font-style: italic; color: rgba(0,0,0,0.45); }
-footer .wordmark { color: #0A0D04; }
-footer .wordmark .macron::after { background: var(--green); }
-
-/* ── Pricing section: CSAliceMono, uppercase, non-italic ── */
-@font-face {
-  font-family: 'CSAliceMono';
-  src: url('CSAliceMono-Regular_demo-BF673d3a6435a92.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
-/* ── CSAliceMono: alle label/tag/stamp/eyebrow teksten ── */
-.section-head .num,
-.hero-eyebrow .label,
-.hero-meta,
-.intake .field .k,
-.orbit .ring text,
-.stat-card .stamp,
-.pill-badge,
-.ip-title .tag,
-.step .day,
-.price-block .corner,
-.final.on-green .eyebrow,
-.foot-col .colhead {
-  font-family: 'CSAliceMono', monospace;
-  text-transform: uppercase;
-  font-style: normal;
-}
-
-/* ── Waarom Fraim (story block) ────────────────────────────── */
-.story-block {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 4rem 0;
-}
-.story-block h2 {
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  margin-bottom: 2rem;
-}
-.story-block p {
-  font-size: 1rem;
-  color: var(--dim);
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
-.story-block .closing {
-  font-weight: 700;
-  color: var(--ivory);
-  font-size: 1.05rem;
-  margin-top: 2rem;
-  line-height: 1.5;
-}
-
-/* ── Cases ─────────────────────────────────────────────────── */
-.cases-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-top: 2.5rem;
-}
-.case-card {
-  background: var(--olive2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 2rem 2rem 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-.case-card .case-label {
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--green);
-  font-family: 'CSAliceMono', monospace;
-  font-style: normal;
-}
-.case-card h3 {
-  font-size: 1rem;
-  font-weight: 800;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-}
-.case-card .case-pitch {
-  font-size: 0.88rem;
-  color: var(--dim);
-  line-height: 1.65;
-}
-.case-card table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.8rem;
-}
-.case-card table th {
-  text-align: left;
-  color: var(--muted);
-  font-weight: 600;
-  padding: 0.35rem 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-}
-.case-card table td {
-  padding: 0.4rem 0;
-  color: var(--dim);
-  border-bottom: 1px solid rgba(250,255,243,0.04);
-  vertical-align: top;
-}
-.case-card table td:first-child { color: var(--ivory); font-weight: 600; padding-right: 1rem; white-space: nowrap; }
-.case-card .case-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--green);
-  margin-top: auto;
-  text-decoration: none;
-}
-.case-card .case-cta:hover { text-decoration: underline; }
-.cases-note {
-  margin-top: 2rem;
-  font-size: 0.8rem;
-  color: var(--muted);
-  line-height: 1.65;
-  max-width: 640px;
-}
-
-/* ── Lezen ─────────────────────────────────────────────────── */
-.lezen-section {
-  padding: clamp(4rem, 8vw, 7rem) 0;
-  border-top: 1px solid var(--border);
-}
-.lezen-header {
-  margin-bottom: 2.5rem;
-}
-.lezen-header h2 {
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  font-weight: 900;
-  letter-spacing: -0.025em;
-  margin-bottom: 0.6rem;
-}
-.lezen-header p {
-  font-size: 0.88rem;
-  color: var(--muted);
-  max-width: 520px;
-  line-height: 1.65;
-}
-.lezen-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
-}
-.lezen-card {
-  background: var(--olive);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  min-height: 180px;
-}
-.lezen-card.is-live { border-color: rgba(192,245,61,0.2); }
-.lezen-card h4 {
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-}
-.lezen-card p {
-  font-size: 0.8rem;
-  color: var(--dim);
-  line-height: 1.6;
-  flex: 1;
-}
-.lezen-card .lezen-cta {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--green);
-  text-decoration: none;
-}
-.lezen-card .lezen-cta:hover { text-decoration: underline; }
-.lezen-card .soon {
-  font-size: 0.8rem;
-  color: var(--muted);
-  font-style: italic;
-}
-
-/* ── Tweaks panel ──────────────────────────────────────────── */
-.tweaks-panel {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 200;
-  background: var(--olive2);
-  border: 1px solid rgba(192,245,61,0.25);
-  border-radius: 10px;
-  padding: 1.25rem 1.5rem;
-  width: 220px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(8px);
-  transition: opacity 0.25s, transform 0.25s;
-}
-.tweaks-panel.open {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-.tweaks-panel header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-.tweaks-panel .ttl {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ivory);
-}
-.tweaks-panel .ttl em { color: var(--green); font-size: 0.9em; }
-.tp-close {
-  font-size: 1rem;
-  color: var(--muted);
-  transition: color 0.18s;
-}
-.tp-close:hover { color: var(--ivory); }
-.tp-label {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--muted);
-  margin-bottom: 0.75rem;
-}
-.tp-row { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
-.tp-swatch {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.45rem 0.7rem;
-  border-radius: 5px;
-  border: 1px solid transparent;
-  transition: border-color 0.18s;
-  cursor: pointer;
-}
-.tp-swatch.active { border-color: var(--green); }
-.tp-swatch .sw {
-  width: 18px; height: 18px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-.tp-swatch em {
-  font-size: 0.75rem;
-  color: var(--dim);
-}
-.tp-hint {
-  font-size: 0.65rem;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-/* ── Reveal animations ─────────────────────────────────────── */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
-  transition-delay: var(--delay, 0ms);
-}
-.reveal.in {
-  opacity: 1;
-  transform: translateY(0);
-}
-.stat-card.reveal {
-  transform: translateY(28px) scale(0.97);
-}
-.stat-card.reveal.in {
-  transform: translateY(0) scale(1);
-}
-.force-reveal .reveal {
-  opacity: 1 !important;
-  transform: translateY(0) !important;
-}
-
-/* ── Responsive ────────────────────────────────────────────── */
-@media (max-width: 920px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .intake { max-width: 480px; }
-  .manifesto { grid-template-columns: 1fr; gap: 2rem; }
-  .final.on-green { grid-template-columns: 1fr; }
-  .final.on-green .orbit { display: none; }
-}
-
-@media (max-width: 900px) {
-  .stat-grid { grid-template-columns: 1fr; }
-  .problem-grid { grid-template-columns: 1fr; }
-  .problem-card { padding: 2rem 0 !important; border-left: none !important; }
-  .solution-grid { grid-template-columns: 1fr; }
-  .process { grid-template-columns: 1fr; border-top: none; }
-  .step { padding: 1.5rem 0 !important; border-right: none !important; border-left: none !important; border-top: 1px solid var(--border) !important; }
-  .deliv { grid-template-columns: 1fr; }
-  .who { grid-template-columns: 1fr; }
-  .price-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  .foot-top { grid-template-columns: 1fr; gap: 2rem; }
-  .ip-row { grid-template-columns: 30px 1fr; }
-  .ip-row .ip-desc { grid-column: 2; }
-  .ip-row.is-accent { margin: 0.5rem 0; }
-  .cases-grid { grid-template-columns: 1fr; }
-  .lezen-grid { grid-template-columns: 1fr 1fr; }
-}
-
-@media (max-width: 600px) {
-  .lezen-grid { grid-template-columns: 1fr; }
-}
-
-/* ── Hamburger ─────────────────────────────────────────────── */
-.nav-hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 36px; height: 36px;
-  padding: 6px;
-  cursor: pointer;
-  background: none;
-  border: none;
-  flex-shrink: 0;
-}
-.nav-hamburger span {
-  display: block;
-  width: 20px; height: 2px;
-  background: #0A0D04;
-  border-radius: 2px;
-  transition: transform 0.22s, opacity 0.22s;
-}
-.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-/* ── Mobile menu ───────────────────────────────────────────── */
-.nav-mobile-menu {
-  position: fixed;
-  top: 4.5rem; left: 1rem; right: 1rem;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
-  padding: 0.5rem 1.25rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  z-index: 98;
-  opacity: 0;
-  transform: translateY(-6px);
-  pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
-}
-.nav-mobile-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
-.nav-mobile-menu a:not(.btn) {
-  font-size: 1rem;
-  color: #0A0D04;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  display: block;
-}
-.nav-mobile-menu .btn-primary {
-  margin-top: 1rem;
-  text-align: center;
-  justify-content: center;
-  background: #0A0D04;
-  color: #fff;
-  border-radius: 2rem;
-}
-
-@media (max-width: 820px) {
-  nav.top { top: 1rem; width: calc(100% - 2rem); }
-  .nav-links { display: none; }
-  .nav-cta { display: none; }
-  .nav-hamburger { display: flex; }
-}
-
-@media (max-width: 600px) {
-  h1.hero-headline { font-size: 2.4rem; letter-spacing: -0.02em; }
-  .section-head { flex-direction: column; gap: 0.5rem; }
-  .section-head .num { display: none; }
-  .section-head h2.title { font-size: clamp(1.5rem, 6vw, 2rem); }
-  .hero-cta { flex-direction: column; align-items: stretch; }
-  .price-block { padding: 1.75rem 1.25rem; }
-  .pack header { flex-direction: column; gap: 0.5rem; }
-  .pack ul { padding: 1rem 1.25rem 1.5rem; }
-  .foot-bottom { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  .hide-sm { display: none; }
-  .who { gap: 1rem; }
-  .who .col { padding: 1.5rem; }
-  .faq details.q summary { font-size: 0.88rem; gap: 0.75rem; }
-  .answer { padding: 0 0 1rem 1.5rem; }
-  .price-grid { gap: 2rem; }
-  .about-problems { margin-bottom: 2.5rem; }
-  .ap-item { gap: 1rem; padding: 1.25rem 0; }
-  .ap-text { font-size: 0.88rem; }
-  .about-stat .figure { font-size: clamp(2rem, 8vw, 3rem); }
-  .step { padding: 1.25rem 0 !important; }
-  .final.on-green { padding: 2rem 1.5rem; }
-  .final.on-green h2 { font-size: 1.7rem; }
-}
+/* hero-sfeer: petrol-teal gloed (brug tussen groen en oranje) + warme tegenhanger */
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(1100px 620px at 12% -6%,rgba(31,111,107,.30),transparent 62%),
+    radial-gradient(760px 520px at 88% 4%,rgba(217,100,46,.14),transparent 64%),
+    radial-gradient(900px 700px at 60% 34%,rgba(41,84,96,.16),transparent 70%);}
+.hero{isolation:isolate}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
-<body data-accent="lime">
+<body>
 
-<nav class="top" id="topnav" aria-label="Hoofdnavigatie">
-  <div class="nav-inner">
-    <a href="#top" class="wordmark-box" aria-label="FRAIM home">
-      <span class="wordmark">FR<span class="macron">AI</span>M</span>
+<div class="pattern"></div>
+
+<nav class="nav">
+  <div class="pill">
+    <a class="brand" href="#top">
+      <svg width="26" height="26" viewBox="0 0 100 100" fill="none" aria-label="FRAIM"><path d="M50 71 H29 V29 H71 V50" stroke="#F2F1EC" stroke-width="12"/><rect x="62" y="62" width="15" height="15" fill="#C8C2B8"/></svg>
+      <span class="wm">FRAIM</span>
     </a>
-    <div class="nav-links">
-      <a href="#problem">Probleem</a>
-      <a href="#system">Systeem</a>
-      <a href="#cases">Cases</a>
-      <a href="#pricing">Prijs</a>
+    <div class="navlinks">
+      <a href="#modules">Modules</a>
+      <a href="#samen">Combineren</a>
+      <a href="#principe">Principe</a>
     </div>
-    <div class="nav-cta">
-      <a href="#cta" class="btn btn-primary">Neem contact op <span class="arr">↗</span></a>
-    </div>
-    <button class="nav-hamburger" id="navHamburger" aria-label="Menu openen">
-      <span></span><span></span><span></span>
-    </button>
+    <a class="navcta" href="#contact">Neem contact op ↗</a>
   </div>
 </nav>
 
-<div class="nav-mobile-menu" id="navMobileMenu">
-  <a href="#problem">Probleem</a>
-  <a href="#system">Systeem</a>
-  <a href="#cases">Cases</a>
-  <a href="#pricing">Prijs</a>
-  <a href="#cta" class="btn btn-primary">Neem contact op <span class="arr">↗</span></a>
-</div>
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="eyebrow">Websiteredesign &amp; e-mailmarketing · DTC e-commerce</span>
+    <h1>Je site en je e-mail. <span class="em">Allebei van jou.</span></h1>
+    <p class="sub">FRAIM is gespecialiseerd in twee dingen: het redesignen van je website inclusief SEO, en e-mailmarketingsystemen met automations. Vaste scope, vaste datum, in jouw accounts — daarna run je het zelf.</p>
 
-<a id="top"></a>
+    <div class="mods" id="modules">
+      <article class="mod m1">
+        <div class="tophead">
+          <span class="badge"><i></i>Module 01</span>
+          <span class="status">Max. 10 dagen</span>
+        </div>
+        <h2>Website-<span class="em">redesign</span></h2>
+        <p class="lead">De voorkant van je funnel: een complete, converterende site. Ontwerp, content overzetten, SEO, hosting en livegang — binnen maximaal tien dagen live.</p>
+        <ul>
+          <li><span class="ix">i</span><span><b>Volledig herontwerp</b> — gebouwd op je bestaande merk</span></li>
+          <li><span class="ix">ii</span><span><b>Content overgezet</b> — jij hoeft geen materiaal te verzamelen</span></li>
+          <li><span class="ix">iii</span><span><b>On-page SEO</b> — structuur, metadata en techniek op orde</span></li>
+          <li><span class="ix">iv</span><span><b>Mobiel-first &amp; snel</b> — gebouwd voor conversie</span></li>
+          <li><span class="ix">v</span><span><b>Hosting &amp; livegang</b> — wij zetten hem live, jij bezit hem</span></li>
+        </ul>
+        <div class="foot">
+          <div class="price"><span class="big">vanaf €995</span><span class="small">eenmalig · drie pakketten, vaste prijs</span></div>
+          <a class="go" href="FRAIM Module 01 - Website Redesign.html">Bekijk module 01 →</a>
+        </div>
+      </article>
 
-<header class="hero" data-screen-label="Hero">
-  <div class="container">
-    <div class="hero-grid">
-      <h1 class="hero-headline display reveal">
-        Stop met huren.<br>Begin met bezitten.
-      </h1>
-      <p class="hero-sub reveal" style="--delay: 100ms;">
-        FRAIM bouwt een compleet retentie-systeem dat 80% van het werk automatisch doet. In jouw account. In 14 dagen. Daarna run jij het.
-      </p>
-      <div class="hero-cta reveal" style="--delay: 200ms;">
-        <a href="#cta" class="btn btn-primary">Neem contact op <span class="arr">↗</span></a>
-        <a href="#system" class="btn btn-ghost">Bekijk hoe het werkt</a>
-      </div>
+      <article class="mod m2">
+        <div class="tophead">
+          <span class="badge"><i></i>Module 02</span>
+          <span class="status">14 dagen</span>
+        </div>
+        <h2>E-mailmarketing-<span class="em">systeem</span></h2>
+        <p class="lead">Je complete e-mailmarketing als machine: merkstem vastgelegd, automations live, prompts die klinken alsof jij ze schreef. 80% van het werk gaat automatisch.</p>
+        <ul>
+          <li><span class="ix">i</span><span><b>Merkstem-document</b> — 10–15 pagina's, jouw taal vastgelegd</span></li>
+          <li><span class="ix">ii</span><span><b>Custom Claude-project</b> — het brein, in jouw account</span></li>
+          <li><span class="ix">iii</span><span><b>Promptbibliotheek</b> — 25 geteste prompts met versiebeheer</span></li>
+          <li><span class="ix">iv</span><span><b>Klaviyo-automations</b> — welkom, winkelmand, post-purchase, win-back</span></li>
+          <li><span class="ix">v</span><span><b>Campagnekalender &amp; SOP</b> — 2 opgenomen calls, geen black box</span></li>
+        </ul>
+        <div class="foot">
+          <div class="price"><span class="big">€3.500</span><span class="small">eenmalig · + €275/mnd, stop wanneer je wil</span></div>
+          <a class="go" href="FRAIM Module 02 - E-mailmarketing.html">Bekijk module 02 →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="marq">
+    <div class="track">
+      <span>BOUW <i></i> BEZIT <i></i> BESPAAR <i></i> WEBSITEREDESIGN <i></i> SEO <i></i> E-MAILMARKETING <i></i> AUTOMATIONS <i></i> CONVERSIE <i></i> </span>
+      <span>BOUW <i></i> BEZIT <i></i> BESPAAR <i></i> WEBSITEREDESIGN <i></i> SEO <i></i> E-MAILMARKETING <i></i> AUTOMATIONS <i></i> CONVERSIE <i></i> </span>
     </div>
   </div>
 </header>
 
-<section class="ticker-strip" aria-hidden="true">
-  <div class="ticker-track">
-    <span>BOUW · BEZIT · BESPAAR · EMAIL · EIGEN · SYSTEEM · RETENTIE · GROEI · AUTOMATIE · BOUW · BEZIT · BESPAAR · EMAIL · EIGEN · SYSTEEM · RETENTIE · GROEI · AUTOMATIE · </span>
-    <span>BOUW · BEZIT · BESPAAR · EMAIL · EIGEN · SYSTEEM · RETENTIE · GROEI · AUTOMATIE · BOUW · BEZIT · BESPAAR · EMAIL · EIGEN · SYSTEEM · RETENTIE · GROEI · AUTOMATIE · </span>
-  </div>
-</section>
-
-<section class="email-showcase">
-  <div class="showcase-sticky">
-    <div class="showcase-label">Gegenereerd door FRAIM &nbsp;·&nbsp; FuelYourBody &amp; MX&nbsp;Meals</div>
-    <div class="showcase-cards">
-
-      <!-- Card 1: FYB High Protein Soup -->
-      <div class="email-card">
-        <img src="email-mockups/1.png" alt="FuelYourBody email — High Protein Soup" style="width:100%;display:block;">
-      </div>
-
-      <!-- Card 2: FYB High Protein Soup (herhaling) -->
-      <div class="email-card">
-        <img src="email-mockups/1.png" alt="FuelYourBody email — High Protein Soup" style="width:100%;display:block;">
-      </div>
-
-      <!-- Card 3: FYB Ovengerechten -->
-      <div class="email-card">
-        <img src="email-mockups/2.png" alt="FuelYourBody email — Ovengerechten" style="width:100%;display:block;">
-      </div>
-
-      <!-- Card 4: FYB Ovengerechten (herhaling) -->
-      <div class="email-card">
-        <img src="email-mockups/2.png" alt="FuelYourBody email — Ovengerechten" style="width:100%;display:block;">
-      </div>
-
-      <!-- Card 5: MX Meals -->
-      <div class="email-card">
-        <img src="email-mockups/3.png" alt="MX Meals email — Echte Fuel voor Riders" style="width:100%;display:block;">
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<main>
-
-<section class="about-dark" data-screen-label="Agency-trap">
-  <div class="container">
-    <h2 class="about-head reveal">De <em>"agency-trap".</em></h2>
-    <p class="about-body1 reveal" style="--delay: 60ms;">Drie frustraties die elk DTC-merk tegenkomt. Geen ervan wordt opgelost door nóg een bureau in te huren.</p>
-    <div class="about-problems reveal" style="--delay: 140ms;">
-      <div class="ap-item">
-        <span class="ap-mk">(i)</span>
-        <div>
-          <p class="ap-text">Je betaalt €3.000+/mnd aan een bureau voor werk dat 80% repetitief is.</p>
-          <span class="ap-annot">(herhaling. terugkerend. onzichtbaar.)</span>
-        </div>
-      </div>
-      <div class="ap-item">
-        <span class="ap-mk">(ii)</span>
-        <div>
-          <p class="ap-text">Je interne marketeer of jij kan niet alles: strategie, copy, design &amp; data.</p>
-          <span class="ap-annot">(één persoon. vier rollen.)</span>
-        </div>
-      </div>
-      <div class="ap-item">
-        <span class="ap-mk">(iii)</span>
-        <div>
-          <p class="ap-text">Generieke AI-output klinkt als generieke AI-output. Niet als jouw merk.</p>
-          <span class="ap-annot">(prompts ≠ een systeem.)</span>
-        </div>
-      </div>
-    </div>
-    <div class="about-stats reveal" style="--delay: 280ms;">
-      <div class="about-stat">
-        <div class="figure">14 dagen</div>
-        <div class="lbl">Vaste oplevering</div>
-      </div>
-      <div class="about-stat">
-        <div class="figure">€32k+</div>
-        <div class="lbl">Bespaard per jaar vs. bureau</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section data-screen-label="Cijfers">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="num">01</span>
-      <div class="right">
-        <h2 class="title">Drie verschillen die <em>alles veranderen.</em></h2>
-      </div>
-    </div>
-    <div class="stat-grid">
-      <div class="stat-card reveal">
-        <span class="stamp">№ 01 · BESPAAR TIJD</span>
-        <div class="figure"><span class="cnt" data-count="14">14</span> dagen</div>
-        <span class="note">vaste oplevering, vaste scope. op dag 15 runt je team het.</span>
-      </div>
-      <div class="stat-card reveal" style="--delay: 100ms;">
-        <span class="stamp">№ 02 · BESPAAR GELD</span>
-        <div class="figure"><em>€<span class="cnt" data-count="32">32</span>k</em> bespaard/jr</div>
-        <span class="note">door één middelgroot retentiebureau te vervangen in je eerste jaar.</span>
-      </div>
-      <div class="stat-card reveal" style="--delay: 200ms;">
-        <span class="stamp">№ 03 · 100% CONTROLE</span>
-        <div class="figure"><span class="cnt" data-count="100">100</span><em>%</em></div>
-        <span class="note">het systeem, de prompts, flows en docs staan in jouw accounts — stop wanneer je wil en houd alles.</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section id="system" data-screen-label="Systeem">
-  <div class="container">
-    <div class="ivory-panel reveal">
-      <div class="ip-head">
-        <span class="pill-badge">Wat we bouwen</span>
-        <h2>Wat we het <em>best</em> bouwen.</h2>
-      </div>
-      <div class="ip-list">
-        <div class="ip-row">
-          <span class="ip-num">01</span>
-          <span class="ip-title">Het Claude-<em>project</em></span>
-          <span class="ip-desc">Het brein. Merkstem, producten, klanten, aanbiedingen, do's en don'ts — vastgelegd zodat elke prompt klinkt alsof je 'm zelf schreef. Ingericht in jouw account, niet de onze.</span>
-        </div>
-        <div class="ip-row">
-          <span class="ip-num">02</span>
-          <span class="ip-title">De Prompt-<em>bibliotheek</em></span>
-          <span class="ip-desc">De instructies. 25 in de praktijk geteste prompts voor het werk dat je elke week doet — campagnes, flows, briefings, audits. Met versiebeheer, zodat je nooit meer met een leeg scherm begint.</span>
-        </div>
-        <div class="ip-row is-accent">
-          <span class="ip-num">03</span>
-          <span class="ip-title">De Klaviyo-<em>implementatie</em><span class="tag">Dag 14</span></span>
-          <span class="ip-desc">De motor. Welkomstreeks, verlaten winkelmand, post-purchase en win-back — geschreven in jouw stem, live en omzet draaiend terwijl je slaapt. Aanpasbaar door iedereen in je team.</span>
-        </div>
-        <div class="ip-row">
-          <span class="ip-num">04</span>
-          <span class="ip-title">Het Operationele <em>handboek</em></span>
-          <span class="ip-desc">De overdracht. Een SOP plus twee opgenomen trainingscalls, zodat het systeem geen black box is — je team bezit en runt het zodra wij weg zijn.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="why" data-screen-label="Waarom Fraim">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="num">03</span>
-      <div class="right">
-        <h2 class="title">Waarom Fraim <em>bestaat.</em></h2>
-      </div>
-    </div>
-    <div class="story-block reveal" style="--delay: 80ms;">
-      <p>We zaten te lang aan de andere kant van de tafel.</p>
-      <p>We hebben bureaus betaald, bureaus binnengehaald, bureaus ontslagen. We zagen het patroon: een bureau verdient aan herhaling. Hoe meer mails ze schrijven, hoe meer ze factureren. Hoe complexer je flow, hoe langer je vastzit. Het model is niet kwaadaardig — het is gewoon onvermijdelijk gebouwd op jouw afhankelijkheid.</p>
-      <p>Tegelijk zagen we wat AI inmiddels kan. Niet de prompt-tips van YouTube. Echte systemen, opgebouwd uit jouw merk, jouw klant-taal, jouw data. Mails die klinken alsof jij ze schreef terwijl je in een meeting zat.</p>
-      <p>Iedereen die de tijd neemt kan dit zelf bouwen. Maar het kost honderden uren proberen, falen, prompts verfijnen, en uitvogelen waarom je welcome flow op week drie lekt. Of je laat ons het bouwen — in jouw account, met jouw merk, in 14 dagen. Daarna run jij het.</p>
-      <p class="closing">Bureau-kwaliteit. AI-snelheid. Jouw eigendom.</p>
-    </div>
-  </div>
-</section>
-
-<section id="deliverables" data-screen-label="Wat je krijgt">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="num">04</span>
-      <div class="right">
-        <h2 class="title">Wat er <em>in jouw account</em> belandt.</h2>
-        <span class="sub">Twee onderdelen: een eenmalige build die voor altijd van jou is, en een dunne terugkerende laag die het systeem actueel houdt.</span>
-      </div>
-    </div>
-    <div class="deliv reveal">
-      <div class="pack">
-        <header>
-          <h3>Eenmalige<br><em>build</em></h3>
-          <div class="price">€3.500<small>geleverd in 14 dagen</small></div>
-        </header>
-        <ul>
-          <li><span class="ix">i.</span><span class="what">Merkstem-document<span class="qty">(10–15 pagina's)</span></span></li>
-          <li><span class="ix">ii.</span><span class="what">Custom Claude-project<span class="qty">(volledig ingericht)</span></span></li>
-          <li><span class="ix">iii.</span><span class="what">Promptbibliotheek<span class="qty">(25 prompts)</span></span></li>
-          <li><span class="ix">iv.</span><span class="what">Klaviyo-flows: welkom, winkelmand, post-purchase, win-back<span class="qty">(4 flows)</span></span></li>
-          <li><span class="ix">v.</span><span class="what">SOP — hoe je het systeem bedient<span class="qty">(1 doc)</span></span></li>
-          <li><span class="ix">vi.</span><span class="what">Trainingscalls<span class="qty">(2 × 1u, opgenomen)</span></span></li>
-          <li><span class="ix">vii.</span><span class="what">Support na lancering<span class="qty">(14 dagen)</span></span></li>
-        </ul>
-      </div>
-      <div class="pack">
-        <header>
-          <h3>Maandelijkse<br><em>laag</em></h3>
-          <div class="price">€275/mnd<small>stop wanneer je wil</small></div>
-        </header>
-        <ul>
-          <li><span class="ix">i.</span><span class="what">Claude-project-updates terwijl je business evolueert</span></li>
-          <li><span class="ix">ii.</span><span class="what">Maandelijkse strategiecall<span class="qty">(30 min)</span></span></li>
-          <li><span class="ix">iii.</span><span class="what">Async support<span class="qty">(4 vragen/mnd · &lt;48u)</span></span></li>
-          <li><span class="ix">iv.</span><span class="what">Nieuwe prompt-templates zodra we ze ontwikkelen</span></li>
-          <li><span class="ix">v.</span><span class="what">Model-upgrades<span class="qty">(bijv. Claude 5 bij release)</span></span></li>
-          <li><span class="ix">vi.</span><span class="what">Stop wanneer je wil — je houdt het systeem</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="cases" data-screen-label="Cases">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="num">06</span>
-      <div class="right">
-        <h2 class="title">Cases — <em>twee perspectieven.</em></h2>
-        <span class="sub">Elk merk zit op een ander punt. We delen twee cases vanuit twee invalshoeken — herken jezelf in welke past.</span>
-      </div>
-    </div>
-    <div class="cases-grid reveal" style="--delay: 80ms;">
-      <div class="case-card">
-        <span class="case-label">Case 01 · FuelYourBody</span>
-        <h3>Drie aktes: bureau → eigen beheer → Fraim.</h3>
-        <p class="case-pitch">Vier jaar email-marketing in één pagina. Voor merken die de eerste twee fases hebben doorlopen of nu in fase 2 vastlopen.</p>
-        <table>
-          <tr><th>Akte</th><th>Periode</th><th>Tijdsinvestering</th></tr>
-          <tr><td>Bureau</td><td>2022–2024</td><td>Briefen + reviewen</td></tr>
-          <tr><td>Eigen beheer</td><td>2025–2026</td><td>16–24 uur/week</td></tr>
-          <tr><td>Fraim</td><td>2026–heden</td><td>Doel: 2–3 uur/week</td></tr>
-        </table>
-        <a href="case-fuelyourbody.html" class="case-cta">Lees de volledige case →</a>
-      </div>
-      <div class="case-card">
-        <span class="case-label">Case 02 · MX Meals</span>
-        <h3>Greenfield: vanaf nul gebouwd.</h3>
-        <p class="case-pitch">Voor merken die net beginnen of nog geen serieus email-programma hebben. Geen erfenis, geen migratie — direct het systeem opbouwen.</p>
-        <table>
-          <tr><th>Onderdeel</th><th>Status</th></tr>
-          <tr><td>Flows live</td><td>✓</td></tr>
-          <tr><td>Operationeel systeem</td><td>✓</td></tr>
-          <tr><td>60-dagen meetbare data</td><td>Volgt</td></tr>
-        </table>
-        <a href="case-mxmeals.html" class="case-cta">Lees de volledige case →</a>
-      </div>
-    </div>
-    <p class="cases-note reveal" style="--delay: 120ms;"><em>Eerlijke noot:</em> FYB en MX Meals zijn merken uit dezelfde portfolio als Fraim. Wij waren bij beide tegelijk de bouwer en betrokken bij de operatie. Wat dit waardevol maakt als cases: het zijn echte builds op echte merken, niet hypothetische voorbeelden.</p>
-  </div>
-</section>
-
-<section id="process" data-screen-label="Proces">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="num">07</span>
-      <div class="right">
-        <h2 class="title">Van dag nul <em>naar eigenaarschap.</em></h2>
-        <span class="sub">Een vast schema. Geen eindeloze discovery-rondes. Op dag 15 run je het zelf.</span>
-      </div>
-    </div>
-    <div class="process">
-      <div class="step reveal">
-        <span class="day">Dag 00 <em>(focus)</em></span>
-        <h4>Kickoff &amp; <em>commitment.</em></h4>
-        <p>Gesprek van 90 minuten om scope, succesmetrics en toegang af te stemmen. 50% aanbetaling reserveert het build-venster.</p>
-        <span class="foot">(90 min · 50% vooraf.)</span>
-      </div>
-      <div class="step reveal" style="--delay: 60ms;">
-        <span class="day">Dag 01–03 <em>(extractie)</em></span>
-        <h4>Merkstem-<em>extractie.</em></h4>
-        <p>We nemen je bestaande content door — e-mails, productpagina's, social, founder-interviews — en stellen een Merkstem-document van 10–15 pagina's samen.</p>
-        <span class="foot">(document · 10–15 pagina's.)</span>
-      </div>
-      <div class="step reveal" style="--delay: 120ms;">
-        <span class="day">Dag 04–07 <em>(bouw)</em></span>
-        <h4>Systeem-<em>build.</em></h4>
-        <p>Claude-project ingericht. Promptbibliotheek geschreven en getest tegen je echte klantdata. Klaviyo-flows opgezet in jouw account.</p>
-        <span class="foot">(claude · 25 prompts · 4 flows.)</span>
-      </div>
-      <div class="step reveal" style="--delay: 180ms;">
-        <span class="day">Dag 08–14 <em>(lancering)</em></span>
-        <h4>Training &amp; <em>soft launch.</em></h4>
-        <p>Twee opgenomen trainingscalls van 1 uur. Eerste testcampagne gaat eruit. Flows gaan live. We blijven 14 dagen bereikbaar voor support na lancering.</p>
-        <span class="foot">(2× 1u · live flows.)</span>
-      </div>
-      <div class="step reveal" style="--delay: 240ms;">
-        <span class="day">Dag 15+ <em>(voor altijd)</em></span>
-        <h4>Jij <em>runt het.</em></h4>
-        <p>De dunne terugkerende laag start: model-upgrades, nieuwe prompts, maandelijkse strategiecall van 30 min. Stop wanneer je wil — je houdt het systeem.</p>
-        <span class="foot">(doorlopend · stop wanneer je wil.)</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="pricing" data-screen-label="Prijs">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="num">08</span>
-      <div class="right">
-        <h2 class="title">Eén prijs. <em>(Geen retainer-val.)</em></h2>
-        <span class="sub">Betaal één keer voor de build. Een dunne maandlaag houdt het scherp. Stop wanneer je wil — je loopt weg met alles.</span>
-      </div>
-    </div>
-    <div class="price-block reveal">
-      <span class="corner">FRAIM Setup · 2026</span>
-      <div class="price-grid">
-        <div>
-          <h3>Eenmalig gebouwd.<br><em>Voor altijd van jou.</em></h3>
-          <p class="psub">Een vast bedrag voor het systeem. Een klein maandbedrag voor upgrades. Geen verrassingen, geen scope creep, geen afscheidskosten.</p>
-          <div class="ctas">
-            <a href="#cta" class="btn btn-primary">Neem contact op <span class="arr">↗</span></a>
-            <a href="#deliverables" class="btn btn-ghost">Wat is inbegrepen</a>
-          </div>
-        </div>
-        <div class="figure">
-          <div class="row">
-            <span class="big">€3.500</span>
-            <span class="unit">eenmalig</span>
-          </div>
-          <div class="sub-row">
-            <span class="med">+ €275</span>
-            <span class="unit">/ maand</span>
-          </div>
-          <ul class="details">
-            <li><span class="k">Levering</span><span class="v"><em>14 dagen, vast schema</em></span></li>
-            <li><span class="k">Betaling</span><span class="v">50% bij kickoff, 50% bij go-live</span></li>
-            <li><span class="k">Inbegrepen</span><span class="v">Build + 14 dagen support</span></li>
-            <li><span class="k">Maandelijks</span><span class="v">Claude-updates, prompts, strategiecall</span></li>
-            <li><span class="k">Stoppen</span><span class="v"><em>wanneer je wil — systeem blijft van jou</em></span></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="who" data-screen-label="Voor wie">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="num">09</span>
-      <div class="right">
-        <h2 class="title">Voor wie dit is <em>(en voor wie niet.)</em></h2>
-        <span class="sub">FRAIM werkt alleen bij merken die het systeem zelf willen bedienen. Is dat niet zo, dan loopt dit niet goed af.</span>
-      </div>
-    </div>
-    <div class="who">
-      <div class="col fit reveal">
-        <header>
-          <h3>Een goede <em>match.</em></h3>
-          <span class="ix">(i)</span>
-        </header>
-        <ul>
-          <li><span class="sym">→</span><span class="text">DTC-merken met €1M+ jaaromzet</span></li>
-          <li><span class="sym">→</span><span class="text">Klaviyo al aanwezig en gekoppeld</span></li>
-          <li><span class="sym">→</span><span class="text">Minstens één interne marketeer die dit gaat bedienen</span></li>
-          <li><span class="sym">→</span><span class="text">Een AI-positief team — bereid te leren, niet bedreigd</span></li>
-          <li><span class="sym">→</span><span class="text">Beauty, wellness, fashion, supplementen, premium food</span></li>
-        </ul>
-      </div>
-      <div class="col notfit reveal" style="--delay: 100ms;">
-        <header>
-          <h3>Geen <em>match.</em></h3>
-          <span class="ix">(ii)</span>
-        </header>
-        <ul>
-          <li><span class="sym">×</span><span class="text">Merken onder €500K jaaromzet</span></li>
-          <li><span class="sym">×</span><span class="text">Geen interne marketeer — niemand om het aan over te dragen</span></li>
-          <li><span class="sym">×</span><span class="text">Op zoek naar een "done-for-you"-dienst voor altijd</span></li>
-          <li><span class="sym">×</span><span class="text">Niet geïnteresseerd in hoe AI echt werkt</span></li>
-          <li><span class="sym">×</span><span class="text">B2B, marktplaatsen of niet-Klaviyo-stacks</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="faq" data-screen-label="FAQ">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="num">10</span>
-      <div class="right">
-        <h2 class="title">Vragen <em>die klanten ons het meest stellen.</em></h2>
-        <span class="sub">Staat je vraag er niet bij, dan stel je 'm op de call. Niets ingestudeerd.</span>
-      </div>
-    </div>
-    <div class="faq reveal">
-      <details class="q">
-        <summary><span class="qix">(i)</span><span>Vervangt dit mijn e-mailmarketeer?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Nee — het maakt ze ongeveer <em>3× productiever.</em> Ze schrijven geen eerste versies meer maar redigeren sterke. Ze briefen geen copy meer maar lanceren campagnes. Het systeem geeft ze hefboom; het neemt hun baan niet af.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qix">(ii)</span><span>Wat gebeurt er als Claude geüpdatet wordt?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Gedekt door de maandlaag. Als er een nieuw model uitkomt <em>(bijv. Claude 5)</em>, migreren we je project, hertesten we de prompts en scherpen we aan wat nodig is. Jij hoeft niks te doen.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qix">(iii)</span><span>Wat als ik geen Klaviyo gebruik?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Voorlopig: alleen Klaviyo. Daar gebeurt 90% van de DTC-retentie, en door diep op één tool te gaan kunnen we levering op dag 14 garanderen. Andere ESP's komen misschien later — <em>nog niet.</em></div>
-      </details>
-      <details class="q">
-        <summary><span class="qix">(iv)</span><span>Hoe verschilt dit van een bureau inhuren?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Jij bezit het systeem, wij niet. Een bureau verhuurt je hun team en hun tools — stop en je raakt allebei kwijt. Bij FRAIM staan het Claude-project, de prompts, de flows en de docs in <em>jouw accounts.</em> Stop de maandlaag en je houdt alles.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qix">(v)</span><span>Kan ik het maandabonnement opzeggen?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Altijd, zonder vragen. Je houdt alles — het Claude-project, de promptbibliotheek, de flows, de docs. Je krijgt alleen geen model-updates en maandelijkse strategiecall meer.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qix">(vi)</span><span>Kan ik dit zelf bouwen?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Ja — en overweeg het zeker. Reken op <em>80+ uur</em> aan merkstem, prompt-engineering, flows bouwen en testen. Wij doen het in 14 dagen omdat we het al vaker deden. Is je tijd minder dan ~€45/uur waard, doe het dan zelf.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qix">(vii)</span><span>Werkt dit voor B2B?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Nee. <em>Alleen DTC e-commerce.</em> Het systeem is afgestemd op consumenten-aankoopcycli, transactionele triggers en Klaviyo's commerce-native datamodel. B2B-retentie is een ander probleem.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qix">(viii)</span><span>Welke garanties bieden jullie?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer"><em>Eerlijk antwoord:</em> geen niet-goed-geld-terug-garantie. Wat we garanderen is levering op dag 14 en een systeem dat werkt op dag 15. Breekt iets dat wij bouwden, dan repareren we het. Bedien je het systeem niet, dan ligt dat aan jou — en dat hadden we op de discovery-call moeten zien.</div>
-      </details>
-      <details class="q">
-        <summary><span class="qix">(ix)</span><span>Hoeveel klanten nemen jullie per maand aan?</span><span class="toggle" aria-hidden="true"></span></summary>
-        <div class="answer">Maximaal twee builds parallel. Het 14-daagse venster is niet onderhandelbaar en de kwaliteit daalt erna. <em>Zit de agenda vol, dan zeggen we dat op de strategiecall.</em></div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<section class="lezen-section">
-  <div class="container">
-    <div class="lezen-header reveal">
-      <h2>Lezen</h2>
-      <p>Lange stukken voor wie verder wil graven. Geen wekelijkse nieuwsbrief, geen tips &amp; tricks. Alleen wat het waard is om te schrijven.</p>
-    </div>
-    <div class="lezen-grid">
-      <div class="lezen-card is-live reveal">
-        <h4>De vier flows die elk DTC-merk eerst moet hebben (en in welke volgorde)</h4>
-        <p>Negen op de tien DTC-merken hebben tussen de 8 en 15 flows aan. De meeste leveren niets op. Vier flows zorgen voor 80–90% van de email-omzet — als ze in de juiste volgorde staan.</p>
-        <a href="blog-vier-flows.html" class="lezen-cta">Lees →</a>
-      </div>
-      <div class="lezen-card reveal" style="--delay: 60ms;">
-        <h4>Wat een bureau je nooit vertelt over hun retainer-model</h4>
-        <p>Een retainer is gebouwd op herhaling. Hoe meer werk ze doen, hoe meer je betaalt — en hoe minder reden je hebt om ooit te stoppen. Wat er echt achter het model zit.</p>
-        <span class="soon">Binnenkort.</span>
-      </div>
-      <div class="lezen-card reveal" style="--delay: 120ms;">
-        <h4>Het verschil tussen ChatGPT gebruiken en een retentie-systeem hebben</h4>
-        <p>Een prompt sturen en een systeem hebben zijn twee verschillende dingen. Het verschil zit niet in de tool — het zit in de structuur, het geheugen en de consistentie eromheen.</p>
-        <span class="soon">Binnenkort.</span>
-      </div>
-      <div class="lezen-card reveal" style="--delay: 180ms;">
-        <h4>Onboarding Baseline: hoe je weet wat je email-programma echt doet</h4>
-        <p>Voordat je iets verbetert, moet je weten wat je hebt. Een baseline audit in vier stappen: flows, campagnes, deliverability en list health — in minder dan een middag.</p>
-        <span class="soon">Binnenkort.</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<div class="final-wrap">
-  <div class="container">
-    <div class="final on-green reveal" id="cta" data-screen-label="Slot-CTA">
+<section id="samen">
+  <div class="wrap">
+    <div class="combine">
       <div>
-        <div class="eyebrow">Aan de slag</div>
-        <h2>Bezit je retentie <em>in 14 dagen.</em></h2>
-        <p class="sub">Eén gesprek van 30 minuten. Past het, dan plannen we je kickoff. Zo niet, dan zeg ik je met wie je beter kunt praten.</p>
-        <div class="ctas">
-          <a href="mailto:info@yourfraim.nl?subject=Strategie-gesprek" class="btn btn-primary">Neem contact op <span class="arr">↗</span></a>
-          <a href="mailto:info@yourfraim.nl" class="btn btn-ghost">info@yourfraim.nl</a>
-        </div>
+        <span class="eyebrow">Samen sterker</span>
+        <h3>Eén merkstem. <span class="em">Twee kanalen.</span></h3>
+        <p>De merkstem die we voor je e-mailmarketing vastleggen is precies de stem die je site nodig heeft. Doe je beide modules, dan wordt dat werk één keer gedaan — en klinkt je welkomstmail als je homepage.</p>
       </div>
-      <div class="orbit" aria-hidden="true">
-        <svg class="ring" viewBox="0 0 200 200">
-          <defs><path id="orbitPath2" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" /></defs>
-          <text><textPath href="#orbitPath2" startOffset="0%">BOUW · BEZIT · BEHOUD · LEVER · BOUW · BEZIT · BEHOUD · LEVER · </textPath></text>
-        </svg>
-        <div class="core"><div class="globe"><span class="merid"></span></div></div>
+      <div class="stats">
+        <div class="stat"><span class="n">30 dgn</span><span class="l">Beide modules, één traject</span></div>
+        <div class="stat"><span class="n">€1.500</span><span class="l">Voordeel bij de combi-build</span></div>
+        <div class="stat"><span class="n">100%</span><span class="l">In jouw accounts, van jou</span></div>
+        <div class="stat"><span class="n">€32k+</span><span class="l">Bespaard per jaar vs. bureau</span></div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<section id="principe">
+  <div class="wrap">
+    <div class="shead">
+      <span class="num">01</span>
+      <h2>Waarom dit <span class="em">anders werkt.</span></h2>
+      <p>Een bureau verdient aan herhaling. Wij verdienen aan oplevering. Dat verschil bepaalt alles — wat we bouwen, hoe lang het duurt, en wie het daarna bezit.</p>
+    </div>
+    <div class="princ">
+      <div class="card">
+        <span class="k">№ 01</span>
+        <h4>Vaste scope, vaste datum</h4>
+        <p>10 of 14 dagen, afgesproken vooraf. Geen discovery-rondes die doorlopen, geen scope creep, geen verrassing op de factuur.</p>
+      </div>
+      <div class="card">
+        <span class="k">№ 02</span>
+        <h4>Alles in jouw accounts</h4>
+        <p>Het Claude-project, de prompts, de automations, de site en de docs staan bij jou. Stop wanneer je wil en je houdt letterlijk alles.</p>
+      </div>
+      <div class="card">
+        <span class="k">№ 03</span>
+        <h4>Je team runt het</h4>
+        <p>We leveren een systeem plus de training om het te bedienen. Op dag 11 — of dag 15 — heb je ons niet meer nodig.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="cta">
+      <span class="eyebrow">Aan de slag</span>
+      <h2>Bezit je systeem.<br /><span class="em">Niet je bureau.</span></h2>
+      <p>Eén gesprek van 30 minuten. Daarna nog steeds interesse? Dan plannen we direct een kickoff en starten we het traject.</p>
+      <div class="btns"><a class="btn pri" href="mailto:info@yourfraim.nl?subject=Strategie-gesprek">Neem contact op ↗</a><a class="btn sec" href="mailto:info@yourfraim.nl">info@yourfraim.nl</a></div>
+    </div>
+  </div>
+</section>
 
 <footer>
-  <div class="container">
-    <div class="foot-top">
-      <div class="foot-signup">
-        <h3><em>Schrijf je in</em> en benut de kracht van FRAIM.</h3>
-        <div class="capture">
-          <span class="ph">E-mailadres</span>
-          <a href="mailto:info@yourfraim.nl" class="go" aria-label="Inschrijven">→</a>
-        </div>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <span class="flock"><span class="your">YOUR</span><span class="mk">FRAIM</span></span>
+        <p style="margin:20px 0 0;max-width:34ch;font-size:14.5px;line-height:1.6;color:var(--bone-3)">Eenmalig gebouwd. <span class="em" style="color:var(--bone-2)">Voor altijd van jou.</span></p>
       </div>
-      <div class="foot-col">
-        <div class="colhead">Het systeem</div>
+      <div>
+        <h5>Modules</h5>
         <ul>
-          <li><a href="#system">Componenten</a></li>
-          <li><a href="#cases">Cases</a></li>
-          <li><a href="#deliverables">Wat je krijgt</a></li>
-          <li><a href="#pricing">Prijs</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="FRAIM Module 01 - Website Redesign.html">Websiteredesign &amp; SEO</a></li>
+          <li><a href="FRAIM Module 02 - E-mailmarketing.html">E-mailmarketingsysteem</a></li>
+          <li><a href="#samen">Combi-build</a></li>
+          <li><a href="#principe">Principe</a></li>
         </ul>
       </div>
-      <div class="foot-col">
-        <div class="colhead">Bedrijf</div>
+      <div>
+        <h5>Bedrijf</h5>
         <ul>
           <li><a href="mailto:info@yourfraim.nl">info@yourfraim.nl</a></li>
-          <li><a href="blog.html">Lezen</a></li>
-          <li><a href="#cta">Neem contact op</a></li>
-          <li><a href="privacy.html">Privacyverklaring</a></li>
+          <li><a href="#contact">Neem contact op</a></li>
+          <li><a href="#top">Privacyverklaring</a></li>
         </ul>
       </div>
     </div>
-    <div class="foot-bottom">
-      <a href="#top" class="wordmark-box"><span class="wordmark">FR<span class="macron">AI</span>M</span></a>
-      <span>Eenmalig gebouwd. <em>Voor altijd van jou.</em></span>
+    <div class="fbot">
       <span>© 2026 FRAIM — KvK 42058158 · NL / BE</span>
+      <span>E-mailmarketing &amp; web, in jouw bezit.</span>
     </div>
   </div>
 </footer>
 
-<aside id="tweaks-panel" class="tweaks-panel" aria-hidden="true">
-  <header>
-    <span class="ttl">Tweaks <em>(accent.)</em></span>
-    <button class="tp-close" aria-label="Tweaks sluiten">×</button>
-  </header>
-  <div class="tp-label">kies de neon.</div>
-  <div class="tp-row">
-    <button data-tweak-accent="lime" class="tp-swatch active">
-      <span class="sw" style="background:#C0F53D"></span><em>creamy dawn</em>
-    </button>
-    <button data-tweak-accent="acid" class="tp-swatch">
-      <span class="sw" style="background:#C6FF1F"></span><em>acid lime</em>
-    </button>
-    <button data-tweak-accent="mint" class="tp-swatch">
-      <span class="sw" style="background:#6EF5B0"></span><em>cool mint</em>
-    </button>
-  </div>
-  <div class="tp-hint">accent bepaalt de gloed, cijfers, pills, orbit &amp; de macron-streep.</div>
-</aside>
-
 <script>
-  // Sticky nav
-  const topnav = document.getElementById('topnav');
-  const onScroll = () => topnav.classList.toggle('scrolled', window.scrollY > 16);
-  document.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach((el) => io.observe(el));
-  setTimeout(() => document.body.classList.add('force-reveal'), 1600);
-
-  // Counter animation
-  const counters = document.querySelectorAll('.stat-card .figure .cnt[data-count]');
-  const cntIo = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      const span = e.target;
-      const target = parseInt(span.dataset.count, 10);
-      const duration = 1200;
-      const start = performance.now();
-      const tick = (now) => {
-        const p = Math.min((now - start) / duration, 1);
-        const ease = 1 - Math.pow(1 - p, 3);
-        span.textContent = Math.round(ease * target);
-        if (p < 1) requestAnimationFrame(tick);
-        else span.textContent = target;
-      };
-      requestAnimationFrame(tick);
-      cntIo.unobserve(span);
-    });
-  }, { threshold: 0.5 });
-  counters.forEach((el) => cntIo.observe(el));
-
-  // Smooth scroll with nav offset
-  document.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href').slice(1);
-      if (!id) return;
-      const el = document.getElementById(id);
-      if (!el) return;
-      e.preventDefault();
-      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 64, behavior: 'smooth' });
+(function(){
+  var sel='.mod,.card,.tier';
+  document.querySelectorAll(sel).forEach(function(el){
+    el.addEventListener('pointermove',function(e){
+      var r=el.getBoundingClientRect();
+      el.style.setProperty('--mx',(e.clientX-r.left)+'px');
+      el.style.setProperty('--my',(e.clientY-r.top)+'px');
     });
   });
+})();
+</script>
+<script>
+(function(){
+  var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var sel=['.hero .eyebrow','.hero .tagrow','.hero h1','.hero .sub','.hero .btns','.back','.kpis .kpi','.mods .mod','.shead','.card','.tier','.step','.deliv .row','.panel','.combine','.plist li','.addon','.cta','.marq'].join(',');
+  var els=Array.prototype.slice.call(document.querySelectorAll(sel));
 
-  // Hamburger menu
-  const hamburger = document.getElementById('navHamburger');
-  const mobileMenu = document.getElementById('navMobileMenu');
-  if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      const open = mobileMenu.classList.toggle('open');
-      hamburger.classList.toggle('open', open);
-      hamburger.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
-    });
-    mobileMenu.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        hamburger.classList.remove('open');
-      });
+  function countUp(el){
+    var raw=el.getAttribute('data-count'), target=parseFloat(raw);
+    if(isNaN(target)||el.dataset.counted)return;
+    el.dataset.counted='1';el.dataset.animating='1';
+    var pre=el.getAttribute('data-pre')||'', suf=el.getAttribute('data-suf')||'';
+    var dec=(raw.split('.')[1]||'').length, sep=el.getAttribute('data-sep')==='1';
+    var t0=null, dur=1100, ticked=false, net;
+    function fmt(v){
+      var s=dec?v.toFixed(dec):String(Math.round(v));
+      if(sep)s=s.replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+      return pre+s+suf;
+    }
+    function step(ts){
+      if(!ticked){ticked=true;el.textContent=fmt(0)}
+      if(!t0)t0=ts;
+      var p=Math.min((ts-t0)/dur,1), e=1-Math.pow(1-p,3);
+      el.textContent=fmt(target*e);
+      if(p<1)requestAnimationFrame(step);
+      else{clearTimeout(net);delete el.dataset.animating;el.textContent=el.getAttribute('data-final')}
+    }
+    net=setTimeout(function(){delete el.dataset.animating;el.textContent=el.getAttribute('data-final')},dur+300);
+    requestAnimationFrame(step);
+  }
+
+  document.querySelectorAll('.kpi .n,.stat .n,.tier .amt,.mod .price .big').forEach(function(host){
+    var el=host;
+    if(host.children.length){
+      var tn=null,i;
+      for(i=host.childNodes.length-1;i>=0;i--){
+        if(host.childNodes[i].nodeType===3&&host.childNodes[i].nodeValue.trim()){tn=host.childNodes[i];break}
+      }
+      if(!tn)return;
+      var wrap=document.createElement('span');
+      wrap.textContent=tn.nodeValue;
+      host.replaceChild(wrap,tn);
+      el=wrap;
+    }
+    var txt=el.textContent.trim();
+    var m=txt.match(/^(.*?)((?:\d{1,3}(?:\.\d{3})+|\d+(?:[.,]\d+)?))(.*)$/);
+    if(!m)return;
+    var num=m[2].replace(/\./g,'').replace(',','.');
+    if(!num||isNaN(parseFloat(num)))return;
+    el.setAttribute('data-count',num);
+    el.setAttribute('data-pre',m[1]);
+    el.setAttribute('data-suf',m[3]);
+    if(/\d\.\d{3}/.test(m[2]))el.setAttribute('data-sep','1');
+    el.setAttribute('data-final',txt);
+  });
+
+  function show(el){
+    if(el.classList.contains('in'))return;
+    el.classList.add('in');
+    el.querySelectorAll('[data-count]').forEach(countUp);
+    if(el.hasAttribute('data-count'))countUp(el);
+  }
+  function showAll(){
+    els.forEach(show);
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var fin=el.getAttribute('data-final');
+      if(fin&&el.textContent!==fin&&!el.dataset.animating)el.textContent=fin;
     });
   }
 
-  // Email showcase — sticky scroll-driven fan-out
-  const showcase       = document.querySelector('.email-showcase');
-  const showcaseSticky = document.querySelector('.showcase-sticky');
-  const emailCards     = document.querySelectorAll('.email-card');
-  if (showcase && emailCards.length && window.innerWidth > 820) {
-    const startX = [280, 130, 0, -130, -280];
-    const startR = [-7,  -3,  0,   3,    7];
-    const startS = [0.85, 0.91, 1, 0.91, 0.85];
-    const startY = [30,  12,   0,  12,   30];
-    emailCards.forEach((c, i) => { c.style.zIndex = String(5 - Math.abs(i - 2)); });
-    const easeOut = t => 1 - Math.pow(1 - t, 3);
+  if(reduce||!('IntersectionObserver'in window)){showAll();return}
 
-    const onShowcaseScroll = () => {
-      const rect  = showcase.getBoundingClientRect();
-      const total = showcase.offsetHeight - showcaseSticky.offsetHeight;
-      const p     = easeOut(Math.max(0, Math.min(1, -rect.top / total)));
-      emailCards.forEach((c, i) => {
-        c.style.transform = `translateX(${startX[i]*(1-p)}px) translateY(${startY[i]*(1-p)}px) rotate(${startR[i]*(1-p)}deg) scale(${startS[i]+(1-startS[i])*p})`;
-      });
-    };
-    document.addEventListener('scroll', onShowcaseScroll, { passive: true });
-    onShowcaseScroll();
-  }
+  els.forEach(function(el){el.setAttribute('data-rv','')});
+  var rafOK=false;
+  requestAnimationFrame(function(){rafOK=true});
+  setTimeout(function(){
+    if(!rafOK){showAll();return}
+    document.documentElement.classList.add('rv-ready');
+    start();
+  },100);
 
-  // Mobile showcase — start stacked, fan out on scroll into view
-  if (showcase && emailCards.length && window.innerWidth <= 820) {
-    const mobileFan = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { showcase.classList.add('fanned'); mobileFan.unobserve(e.target); }
-      });
-    }, { threshold: 0.35 });
-    mobileFan.observe(showcase);
-  }
-
-  // FAQ: close others on open
-  document.querySelectorAll('details.q').forEach((d) => {
-    d.addEventListener('toggle', () => {
-      if (d.open) document.querySelectorAll('details.q').forEach((o) => { if (o !== d) o.open = false; });
-    });
-  });
-
-  // Tweaks panel
-  const panel = document.getElementById('tweaks-panel');
-  const tweaks = { accent: 'lime' };
-
-  function applyTweaks() {
-    document.body.setAttribute('data-accent', tweaks.accent);
-    panel.querySelectorAll('[data-tweak-accent]').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.tweakAccent === tweaks.accent);
+  function revealVisible(){
+    var h=window.innerHeight||document.documentElement.clientHeight;
+    els.forEach(function(el){
+      if(el.classList.contains('in'))return;
+      var r=el.getBoundingClientRect();
+      if(r.top<h*.94&&r.bottom>0)show(el);
     });
   }
-  applyTweaks();
 
-  window.addEventListener('message', (e) => {
-    if (!e.data || typeof e.data !== 'object') return;
-    if (e.data.type === '__activate_edit_mode') panel.classList.add('open');
-    else if (e.data.type === '__deactivate_edit_mode') panel.classList.remove('open');
-  });
-  try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch (_) {}
-
-  panel.querySelector('.tp-close').addEventListener('click', () => {
-    panel.classList.remove('open');
-    try { window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*'); } catch (_) {}
-  });
-  panel.querySelectorAll('[data-tweak-accent]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      tweaks.accent = btn.dataset.tweakAccent;
-      applyTweaks();
+  function start(){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting)return;
+      var el=en.target;
+      io.unobserve(el);
+      var i=el.parentElement?Array.prototype.indexOf.call(el.parentElement.children,el):0;
+      setTimeout(function(){show(el)},Math.min(i,5)*70);
     });
+  },{rootMargin:'0px 0px -6% 0px',threshold:.08});
+  els.forEach(function(el){io.observe(el)});
+
+  requestAnimationFrame(revealVisible);
+  ['scroll','resize','wheel','touchmove'].forEach(function(ev){
+    window.addEventListener(ev,revealVisible,{passive:true});
   });
+  document.addEventListener('scroll',revealVisible,{passive:true,capture:true});
+  setTimeout(showAll,1200);
+  }
+})();
 </script>
 </body>
 </html>
